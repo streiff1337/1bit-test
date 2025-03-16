@@ -1,0 +1,14 @@
+.news-list {
+    margin: 20px 0;
+}
+.news-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+.news-item h2 {
+    margin: 0;
+    font-size: 20px;
+}
+.news-item p {
+    margin: 5px 0;
+}
