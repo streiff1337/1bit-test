@@ -15,13 +15,13 @@ if (!Loader::includeModule('iblock')) {
 
 $infoBlockList = [];
 try {
-    $infoBlockList = IblockTable::getList([
+    $infoBlocks = IblockTable::getList([
         'select' => ['ID', 'NAME'],
         'filter' => ['=ACTIVE' => 'Y'],
         'order' => ['SORT' => 'ASC'],
     ])->fetchAll();
 
-    foreach ($infoBlockList as $infoBlock) {
+    foreach ($infoBlocks as $infoBlock) {
         $infoBlockList[$infoBlock['ID']] = "{$infoBlock['NAME']} [{$infoBlock['ID']}]";
     }
 } catch (Exception $exception) {
