@@ -1,3 +1,4 @@
 .DS_Store
 /bitrix/cache/
 /bitrix/managed_cache/
+*.log
