@@ -1,6 +1,6 @@
 <?php
 
-use Bitrix\Iblock\EO_Element_Result;
+use Bitrix\Main\ORM\Query\Result;
 use Bitrix\Main;
 use Bitrix\Main\Loader;
 use Bitrix\Iblock\ElementTable;
@@ -13,6 +13,12 @@ class NewsListComponent extends CBitrixComponent
     const DEFAULT_ELEMENTS_COUNT = 10;
     const DEFAULT_IBLOCK_ID = 1;
 
+    /**
+     * Prepares component parameters.
+     *
+     * @param array $arParams Component input parameters.
+     * @return array Processed parameters.
+     */
     public function onPrepareComponentParams($arParams): array
     {
         $arParams['ELEMENTS_PER_PAGE'] = intval($arParams['ELEMENTS_PER_PAGE']) ?: self::DEFAULT_ELEMENTS_COUNT;
@@ -20,6 +26,10 @@ class NewsListComponent extends CBitrixComponent
         return $arParams;
     }
 
+    /**
+     * Main component execution method.
+     * Validates modules, checks infoblock existence, and loads the news list.
+     */
     public function executeComponent(): void
     {
         try {
@@ -32,6 +42,11 @@ class NewsListComponent extends CBitrixComponent
         }
     }
 
+    /**
+     * Checks if the iblock module is installed.
+     *
+     * @throws Main\LoaderException If the module is not found.
+     */
     protected function checkModules(): void
     {
         if (!Loader::includeModule('iblock')) {
@@ -39,6 +54,11 @@ class NewsListComponent extends CBitrixComponent
         }
     }
 
+    /**
+     * Checks if the specified infoblock exists.
+     *
+     * @throws Exception If the infoblock is not found.
+     */
     protected function checkIBlockExists(): void
     {
         $infoBlock = IblockTable::getList([
@@ -47,10 +67,18 @@ class NewsListComponent extends CBitrixComponent
         ])->fetch();
 
         if (!$infoBlock) {
-            throw new \Exception(Loc::getMessage("IBLOCK_NOT_FOUND"));
+            throw new Exception(Loc::getMessage("IBLOCK_NOT_FOUND"));
         }
     }
 
+    /**
+     * Retrieves a list of news with pagination.
+     *
+     * @return array ['ITEMS' => news array, 'NAV' => navigation object]
+     * @throws Main\ArgumentException
+     * @throws Main\ObjectPropertyException
+     * @throws Main\SystemException
+     */
     protected function getNewsList(): array
     {
         $pageNavigation = $this->prepareNavigation();
@@ -64,6 +92,11 @@ class NewsListComponent extends CBitrixComponent
         return ['ITEMS' => $formattedNewsItems, 'NAV' => $pageNavigation];
     }
 
+    /**
+     * Initializes the pagination object.
+     *
+     * @return PageNavigation Pagination object.
+     */
     protected function prepareNavigation(): PageNavigation
     {
         $pageNavigation = new PageNavigation('page');
@@ -73,28 +106,44 @@ class NewsListComponent extends CBitrixComponent
         return $pageNavigation;
     }
 
-    protected function fetchNewsData(int $offset, int $limit): EO_Element_Result
+    /**
+     * Fetches news data from the infoblock.
+     *
+     * @param int $offset Offset for pagination.
+     * @param int $limit Number of records per page.
+     * @return Result Query result containing news data.
+     * @throws Main\ArgumentException
+     * @throws Main\ObjectPropertyException
+     * @throws Main\SystemException
+     */
+    protected function fetchNewsData(int $offset, int $limit): Result
     {
         return ElementTable::getList([
-            'select' => ['ID', 'NAME', 'PREVIEW_TEXT', 'DATE_ACTIVE_FROM'],
+            'select' => ['ID', 'NAME', 'PREVIEW_TEXT', 'ACTIVE_FROM'],
             'filter' => [
                 'IBLOCK_ID' => $this->arParams["IBLOCK_ID"],
                 'ACTIVE' => 'Y',
             ],
-            'order' => ['DATE_ACTIVE_FROM' => 'DESC'],
+            'order' => ['ACTIVE_FROM' => 'DESC'],
             'count_total' => true,
             'offset' => $offset,
             'limit' => $limit,
         ]);
     }
 
+    /**
+     * Formats news data before passing it to the template.
+     *
+     * @param array $rawNewsItems Raw data fetched from the database.
+     * @return array Formatted news array.
+     */
     protected function formatNewsItems(array $rawNewsItems): array
     {
-        return array_map(static function ($newsItem) {
+        return array_map(function ($newsItem) {
             return [
                 'ID' => $newsItem['ID'],
                 'TITLE' => $newsItem['NAME'],
-                'DATE' => $newsItem['DATE_ACTIVE_FROM'],
+                'DATE' => $newsItem['ACTIVE_FROM'],
                 'PREVIEW' => $newsItem['PREVIEW_TEXT'],
             ];
         }, $rawNewsItems);
