@@ -1,3 +1,7 @@
+.idea
+*.iml
+out
+gen
 .env
 docker/dbdata
 docker/logs
