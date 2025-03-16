@@ -46,10 +46,8 @@ import {
 
 import { $insertNodeToNearestRoot } from 'ui.lexical.utils';
 
-import type TextEditor from '../../text-editor';
+import { type TextEditor } from '../../text-editor';
 import type { SchemeValidationOptions } from '../../types/scheme-validation-options';
-
-import './table.css';
 
 import TableDialog from './table-dialog';
 
@@ -106,7 +104,7 @@ export class TablePlugin extends BasePlugin
 					return {
 						node: $createTableCellNode(),
 						after: (childLexicalNodes: Array<LexicalNode>): Array<LexicalNode> => {
-							return $normalizeTextNodes(childLexicalNodes, this.getEditor());
+							return $normalizeTextNodes(childLexicalNodes);
 						},
 					};
 				},
@@ -117,7 +115,7 @@ export class TablePlugin extends BasePlugin
 					return {
 						node: $createTableCellNode(TableCellHeaderStates.ROW),
 						after: (childLexicalNodes: Array<LexicalNode>): Array<LexicalNode> => {
-							return $normalizeTextNodes(childLexicalNodes, this.getEditor());
+							return $normalizeTextNodes(childLexicalNodes);
 						},
 					};
 				},

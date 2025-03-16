@@ -1,6 +1,8 @@
 import { Type } from 'main.core';
+import type { BBCodeToStringOptions } from '../nodes/root-node';
 import { BBCodeScheme } from './bbcode-scheme';
 import { BBCodeTagScheme } from './node-schemes/tag-scheme';
+import { type BBCodeContentNode, BBCodeNode } from '../nodes/node';
 import { typeof BBCodeElementNode } from '../nodes/element-node';
 import type { BBCodeSchemeOptions } from './bbcode-scheme';
 
@@ -20,12 +22,6 @@ export class DefaultBBCodeScheme extends BBCodeScheme
 				canBeEmpty: false,
 			}),
 			new BBCodeTagScheme({
-				name: ['span'],
-				group: ['#inline'],
-				allowedChildren: ['#text', '#linebreak', '#inline'],
-				canBeEmpty: false,
-			}),
-			new BBCodeTagScheme({
 				name: ['img'],
 				group: ['#inlineBlock'],
 				allowedChildren: ['#text'],
@@ -36,6 +32,13 @@ export class DefaultBBCodeScheme extends BBCodeScheme
 				group: ['#inline'],
 				allowedChildren: ['#text', '#format', 'img'],
 				canBeEmpty: false,
+				stringify(node: BBCodeElementNode): BBCodeElementNode {
+					const openingTag = node.getOpeningTag();
+					const closingTag = node.getClosingTag();
+					const content = node.getContent();
+
+					return `${openingTag}${content}${closingTag}`;
+				},
 			}),
 			new BBCodeTagScheme({
 				name: 'p',
@@ -51,24 +54,61 @@ export class DefaultBBCodeScheme extends BBCodeScheme
 				stringify: BBCodeTagScheme.defaultBlockStringifier,
 				allowedIn: ['#root', '#shadowRoot'],
 				canBeEmpty: false,
+				onNotAllowedChildren: ({ node, children }): BBCodeElementNode => {
+					const notAllowedChildren: Set<string> = new Set(['#tab', '#linebreak']);
+					const bePropagated: Array<BBCodeContentNode> = [];
+					children.forEach((child: BBCodeContentNode) => {
+						if (
+							notAllowedChildren.has(child.getName())
+							|| (
+								child.getName() === '#text'
+								&& /^\s+$/.test(child.getContent())
+							)
+						)
+						{
+							child.remove();
+						}
+						else
+						{
+							bePropagated.push(child);
+						}
+					});
+
+					node.propagateChild(...bePropagated);
+				},
 			}),
 			new BBCodeTagScheme({
 				name: ['*'],
 				allowedChildren: ['#text', '#linebreak', '#inline', '#inlineBlock'],
-				stringify: (node: BBCodeElementNode) => {
+				stringify: (node: BBCodeElementNode, scheme: BBCodeScheme, toStringOptions: BBCodeToStringOptions) => {
 					const openingTag: string = node.getOpeningTag();
-					const content: string = node.getContent().trim();
+					const content: string = node.getContent(toStringOptions).trim();
 
 					return `${openingTag}${content}`;
 				},
 				allowedIn: ['list'],
+				onNotAllowedChildren: ({ node, children }): BBCodeElementNode => {
+					const bePropagated: Array<BBCodeContentNode> = [];
+					children.forEach((child: BBCodeContentNode) => {
+						if (child.getName() === '#tab')
+						{
+							child.remove();
+						}
+						else
+						{
+							bePropagated.push(child);
+						}
+					});
+
+					node.propagateChild(...bePropagated);
+				},
 			}),
 			new BBCodeTagScheme({
 				name: 'table',
 				group: ['#block'],
 				allowedChildren: ['tr'],
 				stringify: BBCodeTagScheme.defaultBlockStringifier,
-				allowedIn: ['#root', 'quote', 'spoiler'],
+				allowedIn: ['#root', 'td', 'th', 'quote', 'spoiler'],
 				canBeEmpty: false,
 			}),
 			new BBCodeTagScheme({
@@ -95,6 +135,14 @@ export class DefaultBBCodeScheme extends BBCodeScheme
 				stringify: BBCodeTagScheme.defaultBlockStringifier,
 				allowedChildren: ['#text', '#linebreak', '#tab'],
 				allowedIn: ['#root', '#shadowRoot'],
+				convertChild: (child: BBCodeContentNode, scheme: BBCodeScheme, toStringOptions: BBCodeToStringOptions): BBCodeContentNode => {
+					if (['#linebreak', '#tab', '#text'].includes(child.getName()))
+					{
+						return child;
+					}
+
+					return scheme.createText(child.toString(toStringOptions));
+				},
 			}),
 			new BBCodeTagScheme({
 				name: 'video',

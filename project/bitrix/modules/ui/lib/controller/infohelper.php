@@ -14,14 +14,16 @@ class InfoHelper extends Engine\Controller
 {
 	private const POPUP_PROVIDER_TEST_CODE_LIST = [];
 
-	public function getInitParamsAction(string $type = FeaturePromoter\ProviderType::SLIDER, string $code = '', string $currentUrl = ''): array
+	public function getInitParamsAction(
+		string $type = FeaturePromoter\ProviderType::SLIDER,
+		string $code = '',
+		string $currentUrl = '',
+		?string $featureId = null
+	): array
 	{
-		if (FeaturePromoter\ProviderType::POPUP === $type)
-		{
-			return (new FeaturePromoter\Popup($code, $currentUrl))->getRendererParameters();
-		}
+		$configuration = new FeaturePromoter\ProviderConfiguration($type, $code, $currentUrl, $featureId);
 
-		return (new FeaturePromoter\Slider($currentUrl))->getRendererParameters();
+		return (new FeaturePromoter\ProviderFactory())->createProvider($configuration)->getRendererParameters();
 	}
 
 	public function activateDemoLicenseAction()
@@ -61,8 +63,8 @@ class InfoHelper extends Engine\Controller
 		}
 		else
 		{
-			$lkeySign = Application::getInstance()->getLicense()->getHashLicenseKey();
-			$url = 'https://www.1c-bitrix.ru/buy_tmp/key_update.php?license_key=' . $lkeySign . '&tobasket=y&action=b24subscr';
+			$license = Application::getInstance()->getLicense();
+			$url = $license->getDomainStoreLicense() . '/key_update.php?license_key=' . $license->getHashLicenseKey() . '&tobasket=y&action=b24subscr';
 		}
 
 		return [

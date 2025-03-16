@@ -44,7 +44,7 @@ this.BX.UI = this.BX.UI || {};
 	    if ('value' in options) {
 	      this.setValue(options.value);
 	    }
-	    if ('emptyMessage' in options) {
+	    if ('emptyMessage' in options && main_core.Type.isStringFilled(options.emptyMessage)) {
 	      this.emptyMessage = options.emptyMessage;
 	    } else {
 	      this.emptyMessage = main_core.Loc.getMessage('UI_STEP_PROCESSING_EMPTY_ERROR') || '';
@@ -96,19 +96,17 @@ this.BX.UI = this.BX.UI || {};
 	    return this.container;
 	  }
 	  showWarning(message) {
+	    const messageText = message != null ? message : this.emptyMessage;
 	    const alertId = this.id + '_alert';
 	    const optionElement = this.container.querySelector('#' + alertId);
 	    if (optionElement) {
-	      if (main_core.Type.isStringFilled(message)) {
+	      if (main_core.Type.isStringFilled(messageText)) {
 	        const messageElement = optionElement.querySelector('.ui-alert-message');
-	        messageElement.innerHTML = message;
+	        messageElement.innerHTML = messageText;
 	      }
 	      optionElement.style.display = 'block';
-	    } else {
-	      const message = message ? message : this.emptyMessage;
-	      if (main_core.Type.isStringFilled(message)) {
-	        this.container.appendChild(main_core.Tag.render(_t7 || (_t7 = _`<div id="${0}" class="${0}"></div>`), alertId, DialogStyle.ProcessOptionsObligatory)).appendChild(main_core.Tag.render(_t8 || (_t8 = _`<span class="ui-alert-message">${0}</span>`), message));
-	      }
+	    } else if (main_core.Type.isStringFilled(messageText)) {
+	      this.container.appendChild(main_core.Tag.render(_t7 || (_t7 = _`<div id="${0}" class="${0}"></div>`), alertId, DialogStyle.ProcessOptionsObligatory)).appendChild(main_core.Tag.render(_t8 || (_t8 = _`<span class="ui-alert-message">${0}</span>`), messageText));
 	    }
 	    return this;
 	  }
@@ -761,7 +759,8 @@ this.BX.UI = this.BX.UI || {};
 	      overlay: true,
 	      resizable: true,
 	      minWidth: Number.parseInt(this.getSetting('minWidth', 500)),
-	      maxWidth: Number.parseInt(this.getSetting('maxWidth', 1000))
+	      maxWidth: Number.parseInt(this.getSetting('maxWidth', 1000)),
+	      ...this._settings.popupOptions
 	    });
 	    if (!this.popupWindow.isShown()) {
 	      this.popupWindow.show();
@@ -1417,7 +1416,7 @@ this.BX.UI = this.BX.UI || {};
 	    if (this.endpointType === EndpointType.Controller) {
 	      this.ajaxPromise = BX.ajax.runAction(this.controller + '.' + this.getAction(), params).then(this._onRequestSuccess.bind(this), this._onRequestFailure.bind(this));
 	    } else if (this.endpointType === EndpointType.Component) {
-	      params.data.mode = this.componentMode;
+	      params.mode = this.componentMode;
 	      if ('signedParameters' in params.data) {
 	        params.signedParameters = params.data.signedParameters;
 	        delete params.data.signedParameters;
@@ -1460,7 +1459,7 @@ this.BX.UI = this.BX.UI || {};
 	        this.setController(this.controllerDefault);
 	        this.ajaxPromise = BX.ajax.runAction(this.controller + '.cancel', params).then(this._onRequestSuccess.bind(this), this._onRequestFailure.bind(this));
 	      } else if (this.endpointType === EndpointType.Component) {
-	        params.data.mode = this.componentMode;
+	        params.mode = this.componentMode;
 	        if ('signedParameters' in params.data) {
 	          params.signedParameters = params.data.signedParameters;
 	          delete params.data.signedParameters;
@@ -1500,7 +1499,7 @@ this.BX.UI = this.BX.UI || {};
 	        this.setController(this.controllerDefault);
 	        this.ajaxPromise = BX.ajax.runAction(this.controller + '.finalize', params);
 	      } else if (this.endpointType === EndpointType.Component) {
-	        params.data.mode = this.componentMode;
+	        params.mode = this.componentMode;
 	        if ('signedParameters' in params.data) {
 	          params.signedParameters = params.data.signedParameters;
 	          delete params.data.signedParameters;
@@ -1993,7 +1992,8 @@ this.BX.UI = this.BX.UI || {};
 	          stop: BX.delegate(this.stop, this),
 	          dialogShown: typeof this.handlers.dialogShown == 'function' ? this.handlers.dialogShown : null,
 	          dialogClosed: typeof this.handlers.dialogClosed == 'function' ? this.handlers.dialogClosed : null
-	        }
+	        },
+	        popupOptions: this.options.popupOptions
 	      });
 	    }
 	    return this.dialog;

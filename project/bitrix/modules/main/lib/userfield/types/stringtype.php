@@ -109,7 +109,20 @@ class StringType extends BaseType
 				? $userField['EDIT_FORM_LABEL'] : $userField['FIELD_NAME']
 		);
 
+		if (is_array($value))
+		{
+			return [
+				'id' => $userField['FIELD_NAME'],
+				'text' => Loc::getMessage('USER_TYPE_STRING_VALUE_IS_MULTIPLE',
+					[
+						'#FIELD_NAME#' => $fieldName,
+					]
+				),
+			];
+		}
+
 		$msg = [];
+
 		if($value != '' && mb_strlen($value) < $userField['SETTINGS']['MIN_LENGTH'])
 		{
 			$msg[] = [
@@ -137,10 +150,11 @@ class StringType extends BaseType
 				),
 			];
 		}
+
 		if(
 			!empty($userField['SETTINGS']['REGEXP'])
 			&& (string) $value !== ''
-			&& !preg_match($userField['SETTINGS']['REGEXP'], $value)
+			&& !preg_match($userField['SETTINGS']['REGEXP'] . 'u', $value)
 		)
 		{
 			$msg[] = [
@@ -155,6 +169,7 @@ class StringType extends BaseType
 				),
 			];
 		}
+
 		return $msg;
 	}
 

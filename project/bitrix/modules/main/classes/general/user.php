@@ -7,6 +7,7 @@
  * @copyright 2001-2024 Bitrix
  */
 
+use Bitrix\Extranet;
 use Bitrix\Main;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Authentication;
@@ -24,6 +25,7 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Security\Random;
 use Bitrix\Main\Security\Password;
 use Bitrix\Main\GroupTable;
+use Bitrix\Main\DB\SqlExpression;
 
 IncludeModuleLangFile(__FILE__);
 
@@ -189,13 +191,6 @@ class CAllUser extends CDBResult
 		);
 	}
 
-	/**
-	 * @deprecated Does nothing.
-	 */
-	public static function err_mess()
-	{
-	}
-
 	public function Add($arFields)
 	{
 		/** @global CUserTypeManager $USER_FIELD_MANAGER */
@@ -270,23 +265,12 @@ class CAllUser extends CDBResult
 
 			CFile::SaveForDB($arFields, "WORK_LOGO", 'main');
 
-			$arInsert = $DB->PrepareInsert("b_user", $arFields);
-
 			if (!is_set($arFields, "DATE_REGISTER"))
 			{
-				$arInsert[0] .= ", DATE_REGISTER";
-				$arInsert[1] .= ", " . $DB->GetNowFunction();
+				$arFields["~DATE_REGISTER"] = $DB->GetNowFunction();
 			}
 
-			$strSql = "
-				INSERT INTO b_user (
-					" . $arInsert[0] . "
-				) VALUES (
-					" . $arInsert[1] . "
-				)
-			";
-			$DB->Query($strSql);
-			$ID = $DB->LastID();
+			$ID = $DB->Add('b_user', $arFields);
 
 			$USER_FIELD_MANAGER->Update("USER", $ID, $arFields);
 
@@ -349,7 +333,7 @@ class CAllUser extends CDBResult
 	public static function GetDropDownList($strSqlSearch = "and ACTIVE='Y'", $strSqlOrder = "ORDER BY ID, NAME, LAST_NAME")
 	{
 		global $DB;
-		$connection = \Bitrix\Main\Application::getConnection();
+		$connection = Main\Application::getConnection();
 		$helper = $connection->getSqlHelper();
 
 		$strSql = "
@@ -1449,6 +1433,8 @@ class CAllUser extends CDBResult
 
 		if ($arUser = $result->Fetch())
 		{
+			$groups = Main\UserTable::getUserGroupIds($arUser["ID"]);
+
 			$data = [
 				"LOGIN" => $arUser["LOGIN"],
 				"EMAIL" => $arUser["EMAIL"],
@@ -1462,10 +1448,10 @@ class CAllUser extends CDBResult
 				"EXTERNAL_AUTH_ID" => $arUser["EXTERNAL_AUTH_ID"],
 				"XML_ID" => $arUser["XML_ID"],
 				"ADMIN" => false,
-				"POLICY" => static::getPolicy($arUser["ID"])->getValues(),
+				"POLICY" => static::getPolicy($groups)->getValues(),
 				"AUTO_TIME_ZONE" => trim((string)$arUser["AUTO_TIME_ZONE"]),
 				"TIME_ZONE" => $arUser["TIME_ZONE"],
-				"GROUPS" => Main\UserTable::getUserGroupIds($arUser["ID"]),
+				"GROUPS" => $groups,
 				"CONTEXT" => json_encode($context),
 			];
 
@@ -1692,27 +1678,6 @@ class CAllUser extends CDBResult
 	}
 
 	/**
-	 * @deprecated Does nothing.
-	 */
-	public function GetSessionHash()
-	{
-	}
-
-	/**
-	 * @deprecated Does nothing.
-	 */
-	public function GetPasswordHash($PASSWORD_HASH)
-	{
-	}
-
-	/**
-	 * @deprecated Does nothing.
-	 */
-	public function SavePasswordHash()
-	{
-	}
-
-	/**
 	 * Authenticates the user and then authorizes him
 	 * @param string $login
 	 * @param string $password
@@ -1917,7 +1882,7 @@ class CAllUser extends CDBResult
 			"FROM b_user U  " .
 			"WHERE U.LOGIN='" . $DB->ForSQL($arParams["LOGIN"]) . "' ";
 
-		if (isset($arParams["EXTERNAL_AUTH_ID"]) && $arParams["EXTERNAL_AUTH_ID"] != '')
+		if (!empty($arParams["EXTERNAL_AUTH_ID"]))
 		{
 			//external user
 			$strSql .= " AND EXTERNAL_AUTH_ID='" . $DB->ForSql($arParams["EXTERNAL_AUTH_ID"]) . "'";
@@ -2179,9 +2144,17 @@ class CAllUser extends CDBResult
 					if ($intranet && empty($currentUser["UF_DEPARTMENT"]))
 					{
 						// only intranet AND extranet users are countable
-						if ($license->isExtraCountable())
+						if ($license->isExtraCountable() && Main\Loader::includeModule('extranet'))
 						{
+							$extranetServiceContainer = Extranet\Service\ServiceContainer::getInstance();
+
+							if ($extranetServiceContainer->getCollaberService()->isCollaberById($user_id))
+							{
+								return true;
+							}
+
 							$groupId = (int)Option::get('extranet', 'extranet_group');
+
 							if ($groupId > 0 && in_array($groupId, static::GetUserGroup($user_id)))
 							{
 								return false;
@@ -2246,6 +2219,11 @@ class CAllUser extends CDBResult
 	{
 		/** @global CMain $APPLICATION */
 		global $DB, $APPLICATION;
+
+		if (!is_string($LOGIN) || !is_string($CHECKWORD) || !is_string($PASSWORD) || !is_string($CONFIRM_PASSWORD) || !is_string($phoneNumber) || !is_string($currentPassword))
+		{
+			return ["MESSAGE" => GetMessage("main_change_pass_error") . "<br>", "TYPE" => "ERROR"];
+		}
 
 		$arParams = [
 			"LOGIN" => &$LOGIN,
@@ -2324,29 +2302,26 @@ class CAllUser extends CDBResult
 				"WHERE LOGIN='" . $DB->ForSql($arParams["LOGIN"]) . "'" .
 				(
 					// $arParams["EXTERNAL_AUTH_ID"] can be changed in the OnBeforeUserChangePassword event
-				$arParams["EXTERNAL_AUTH_ID"] != '' ?
-					"	AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' " :
-					"	AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
+					!empty($arParams["EXTERNAL_AUTH_ID"])
+						? " AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' "
+						: " AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
 				)
 			);
 			CTimeZone::Enable();
 
 			if (!($res = $db_check->Fetch()))
 			{
-				return ["MESSAGE" => GetMessage('LOGIN_NOT_FOUND1'), "TYPE" => "ERROR", "FIELD" => "LOGIN"];
+				if ($arParams["CHECKWORD"] != '')
+				{
+					return ["MESSAGE" => GetMessage("CHECKWORD_INCORRECT1") . "<br>", "TYPE" => "ERROR", "FIELD" => "CHECKWORD"];
+				}
+				return ["MESSAGE" => GetMessage("main_change_pass_incorrect_pass") . "<br>", "TYPE" => "ERROR", "FIELD" => "CURRENT_PASSWORD"];
 			}
 
 			$userId = $res["ID"];
 		}
 
 		$policy = static::getPolicy($userId);
-		$arPolicy = $policy->getValues();
-
-		$passwordErrors = static::CheckPasswordAgainstPolicy($arParams["PASSWORD"], $arPolicy);
-		if (!empty($passwordErrors))
-		{
-			return ["MESSAGE" => implode("<br>", $passwordErrors) . "<br>", "TYPE" => "ERROR"];
-		}
 
 		if (!$phoneAuth)
 		{
@@ -2399,15 +2374,8 @@ class CAllUser extends CDBResult
 							}
 						}
 					}
-
-					if ($passwordCorrect)
+					else
 					{
-						$passwordErrors = static::CheckPasswordAgainstPolicy($arParams["PASSWORD"], $arPolicy, $res["ID"]);
-						if (!empty($passwordErrors))
-						{
-							return ["MESSAGE" => implode("<br>", $passwordErrors) . "<br>", "TYPE" => "ERROR"];
-						}
-
 						$APPLICATION->SetNeedCAPTHA(false);
 					}
 				}
@@ -2432,6 +2400,12 @@ class CAllUser extends CDBResult
 					$arParams["SITE_ID"] = SITE_ID;
 				}
 			}
+		}
+
+		$passwordErrors = static::CheckPasswordAgainstPolicy($arParams["PASSWORD"], $policy->getValues(), $userId);
+		if (!empty($passwordErrors))
+		{
+			return ["MESSAGE" => implode("<br>", $passwordErrors) . "<br>", "TYPE" => "ERROR"];
 		}
 
 		// change the password
@@ -2573,9 +2547,9 @@ class CAllUser extends CDBResult
 				"WHERE ID = '" . $ID . "'" .
 				(
 					// $arParams["EXTERNAL_AUTH_ID"] can be changed in the OnBeforeSendUserInfo event
-				isset($arParams["EXTERNAL_AUTH_ID"]) && $arParams["EXTERNAL_AUTH_ID"] != '' ?
-					"	AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' " :
-					"	AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
+					!empty($arParams["EXTERNAL_AUTH_ID"])
+						? " AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' "
+						: " AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
 				);
 
 			$DB->Query($strSql);
@@ -2586,9 +2560,9 @@ class CAllUser extends CDBResult
 			"FROM b_user u " .
 			"WHERE ID='" . $ID . "'" .
 			(
-			isset($arParams["EXTERNAL_AUTH_ID"]) && $arParams["EXTERNAL_AUTH_ID"] != '' ?
-				"	AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' " :
-				"	AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
+				!empty($arParams["EXTERNAL_AUTH_ID"])
+					? " AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' "
+					: " AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
 			)
 		);
 
@@ -2672,7 +2646,7 @@ class CAllUser extends CDBResult
 		if ($bOk)
 		{
 			$found = false;
-			if ($arParams["PHONE_NUMBER"] != '')
+			if (is_string($arParams["PHONE_NUMBER"]) && $arParams["PHONE_NUMBER"] != '')
 			{
 				//user registered by phone number
 
@@ -2702,12 +2676,12 @@ class CAllUser extends CDBResult
 					}
 				}
 			}
-			elseif ($arParams["LOGIN"] != '' || $arParams["EMAIL"] != '')
+			elseif ((is_string($arParams["LOGIN"]) && $arParams["LOGIN"] != '') || (is_string($arParams["EMAIL"]) && $arParams["EMAIL"] != ''))
 			{
 				$confirmation = (Option::get('main', 'new_user_registration_email_confirmation', 'N') == 'Y');
 
 				$strSql = '';
-				if ($arParams["LOGIN"] != '')
+				if (is_string($arParams["LOGIN"]) && $arParams["LOGIN"] != '')
 				{
 					$strSql =
 						"SELECT ID, LID, ACTIVE, BLOCKED, CONFIRM_CODE, LOGIN, EMAIL, NAME, LAST_NAME, LANGUAGE_ID " .
@@ -2716,12 +2690,12 @@ class CAllUser extends CDBResult
 						"	AND (ACTIVE='Y' OR NOT(CONFIRM_CODE IS NULL OR CONFIRM_CODE='')) " .
 						(
 							// $arParams["EXTERNAL_AUTH_ID"] can be changed in the OnBeforeUserSendPassword event
-						isset($arParams["EXTERNAL_AUTH_ID"]) && $arParams["EXTERNAL_AUTH_ID"] != '' ?
-							"	AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' " :
-							"	AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
+							!empty($arParams["EXTERNAL_AUTH_ID"])
+								? " AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' "
+								: " AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
 						);
 				}
-				if ($arParams["EMAIL"] != '')
+				if (is_string($arParams["EMAIL"]) && $arParams["EMAIL"] != '')
 				{
 					if ($strSql != '')
 					{
@@ -2733,9 +2707,9 @@ class CAllUser extends CDBResult
 						"WHERE EMAIL='" . $DB->ForSQL($arParams["EMAIL"]) . "' " .
 						"	AND (ACTIVE='Y' OR NOT(CONFIRM_CODE IS NULL OR CONFIRM_CODE='')) " .
 						(
-						isset($arParams["EXTERNAL_AUTH_ID"]) && $arParams["EXTERNAL_AUTH_ID"] != '' ?
-							"	AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' " :
-							"	AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
+							!empty($arParams["EXTERNAL_AUTH_ID"])
+								? " AND EXTERNAL_AUTH_ID='" . $DB->ForSQL($arParams["EXTERNAL_AUTH_ID"]) . "' "
+								: " AND (EXTERNAL_AUTH_ID IS NULL OR EXTERNAL_AUTH_ID='') "
 						);
 				}
 				$res = $DB->Query($strSql);
@@ -3773,7 +3747,7 @@ class CAllUser extends CDBResult
 		}
 		else
 		{
-			$rs = static::GetList('id', 'asc', ["ID_EQUAL_EXACT" => intval($ID)], ["SELECT" => ["UF_*"]]);
+			$rs = static::GetList('', '', ["ID_EQUAL_EXACT" => intval($ID)], ["SELECT" => ["UF_*"]]);
 			if ($userID > 0 && $ID == $userID)
 			{
 				self::$CURRENT_USER = [$rs->Fetch()];
@@ -4290,9 +4264,9 @@ class CAllUser extends CDBResult
 		$ID = intval($ID);
 
 		$rsUser = $DB->Query("
-			SELECT ID, LOGIN, NAME, LAST_NAME, EXTERNAL_AUTH_ID, PERSONAL_PHOTO, WORK_LOGO 
-			FROM b_user 
-			WHERE ID = {$ID} 
+			SELECT ID, LOGIN, NAME, LAST_NAME, EXTERNAL_AUTH_ID, PERSONAL_PHOTO, WORK_LOGO
+			FROM b_user
+			WHERE ID = {$ID}
 				AND ID <> 1
 		");
 		$arUser = $rsUser->Fetch();
@@ -4455,11 +4429,9 @@ class CAllUser extends CDBResult
 	 */
 	public static function getPolicy($userId)
 	{
-		global $DB;
-
 		static $cache = [];
 
-		$cacheId = md5(serialize($userId));
+		$cacheId = md5(serialize(is_array($userId) ? $userId : (int)$userId));
 		if (isset($cache[$cacheId]))
 		{
 			return $cache[$cacheId];
@@ -4492,30 +4464,48 @@ class CAllUser extends CDBResult
 			}
 			if ($arGroups)
 			{
-				$sql =
-					"SELECT G.ID GROUP_ID, G.SECURITY_POLICY " .
-					"FROM b_group G " .
-					"WHERE G.ID in (" . implode(", ", $arGroups) . ")";
-				$rs = $DB->Query($sql);
-				while ($ar = $rs->Fetch())
+				$result = GroupTable::getList([
+					'select' => ['GROUP_ID' => 'ID', 'SECURITY_POLICY'],
+					'filter' => [
+						'=ID' => $arGroups,
+						'=ACTIVE' => 'Y',
+					],
+					'cache' => ['ttl' => 86400],
+				]);
+
+				while ($row = $result->fetch())
 				{
-					$arPolicies[] = $ar;
+					$arPolicies[] = $row;
 				}
 			}
 		}
 		elseif (intval($userId) > 0)
 		{
-			$sql =
-				"SELECT UG.GROUP_ID, G.SECURITY_POLICY " .
-				"FROM b_user_group UG, b_group G " .
-				"WHERE UG.USER_ID = " . intval($userId) . ' ' .
-				"AND UG.GROUP_ID = G.ID " .
-				"AND ((UG.DATE_ACTIVE_FROM IS NULL) OR (UG.DATE_ACTIVE_FROM <= " . $DB->CurrentTimeFunction() . ")) " .
-				"AND ((UG.DATE_ACTIVE_TO IS NULL) OR (UG.DATE_ACTIVE_TO >= " . $DB->CurrentTimeFunction() . ")) ";
-			$rs = $DB->Query($sql);
-			while ($ar = $rs->Fetch())
+			$nowTimeExpression = new SqlExpression(
+				Main\Application::getConnection()->getSqlHelper()->getCurrentDateTimeFunction()
+			);
+
+			$result = GroupTable::getList([
+				'select' => ['GROUP_ID' => 'ID', 'SECURITY_POLICY'],
+				'filter' => [
+					'=UserGroup:GROUP.USER_ID' => $userId,
+					'=ACTIVE' => 'Y',
+					[
+						'LOGIC' => 'OR',
+						'=UserGroup:GROUP.DATE_ACTIVE_FROM' => null,
+						'<=UserGroup:GROUP.DATE_ACTIVE_FROM' => $nowTimeExpression,
+					],
+					[
+						'LOGIC' => 'OR',
+						'=UserGroup:GROUP.DATE_ACTIVE_TO' => null,
+						'>=UserGroup:GROUP.DATE_ACTIVE_TO' => $nowTimeExpression,
+					],
+				],
+			]);
+
+			while ($row = $result->fetch())
 			{
-				$arPolicies[] = $ar;
+				$arPolicies[] = $row;
 			}
 		}
 
@@ -5751,6 +5741,7 @@ class CAllUser extends CDBResult
 	 * @param string $phoneNumber
 	 * @param string $smsTemplate
 	 * @param string|null $siteId
+	 *
 	 * @return Main\Result
 	 */
 	public static function SendPhoneCode($phoneNumber, $smsTemplate, $siteId = null)

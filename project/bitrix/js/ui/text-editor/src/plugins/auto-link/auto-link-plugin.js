@@ -19,12 +19,13 @@ import {
 } from 'ui.lexical.link';
 
 import BasePlugin from '../base-plugin';
-import type TextEditor from '../../text-editor';
+import { type TextEditor } from '../../text-editor';
 
+import type { BBCodeExportConversion, BBCodeExportOutput } from '../../bbcode';
 import type { SchemeValidationOptions } from '../../types/scheme-validation-options';
 
 const URL_REGEX = (
-	/((https?:\/\/(www\.)?)|(www\.))[\w#%+.:=@~-]{1,256}\.[\d()A-Za-z]{1,6}\b([\w#%&()+./:=?@~-]*)/
+	/((https?:\/\/(www\.)?)|(www\.))[\w#%+.:=@~-]{1,256}\.[\d()A-Za-z]{1,6}\b([\w#%&()+./:=?@[\]~-]*)(?<![%()+.:\]-])/
 );
 
 const EMAIL_REGEX = (
@@ -69,6 +70,19 @@ export class AutoLinkPlugin extends BasePlugin
 	static getNodes(editor: TextEditor): Array<Class<LexicalNode>>
 	{
 		return [AutoLinkNode];
+	}
+
+	exportBBCode(): BBCodeExportConversion
+	{
+		return {
+			autolink: (): BBCodeExportOutput => {
+				const scheme = this.getEditor().getBBCodeScheme();
+
+				return {
+					node: scheme.createElement({ name: 'url' }),
+				};
+			},
+		};
 	}
 
 	validateScheme(): SchemeValidationOptions | null
@@ -162,6 +176,11 @@ function endsWithSeparator(textContent: string): boolean
 function startsWithSeparator(textContent: string): boolean
 {
 	return isSeparator(textContent[0]);
+}
+
+function startsWithFullStop(textContent: string): boolean
+{
+	return /^\.[\dA-Za-z]+/.test(textContent);
 }
 
 function isPreviousNodeValid(node: LexicalNode): boolean
@@ -337,7 +356,7 @@ function handleBadNeighbors(textNode: TextNode, matchers: Array<LinkMatcher>, on
 	const nextSibling = textNode.getNextSibling();
 	const text = textNode.getTextContent();
 
-	if ($isAutoLinkNode(previousSibling) && !startsWithSeparator(text))
+	if ($isAutoLinkNode(previousSibling) && (!startsWithSeparator(text) || startsWithFullStop(text)))
 	{
 		previousSibling.append(textNode);
 		handleLinkEdit(previousSibling, matchers, onChange);

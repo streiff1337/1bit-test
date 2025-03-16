@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Bitrix Framework
  * @package bitrix
  * @subpackage main
- * @copyright 2001-2014 Bitrix
+ * @copyright 2001-2024 Bitrix
  */
 
 namespace Bitrix\Main\Data;
@@ -14,8 +15,7 @@ use Bitrix\Main\Diag;
 
 class Cache
 {
-	/** @var ICacheEngine | \ICacheBackend */
-	protected $cacheEngine;
+	protected CacheEngineInterface $cacheEngine;
 
 	protected $content;
 	protected $vars;
@@ -46,7 +46,7 @@ class Cache
 		// Events can't be used here because events use cache
 		$cacheType = 'files';
 		$v = Config\Configuration::getValue('cache');
-		if ($v != null && isset($v['type']) && !empty($v['type']))
+		if (!empty($v['type']))
 		{
 			$cacheType = $v['type'];
 		}
@@ -120,12 +120,12 @@ class Cache
 	{
 		$obj = static::createCacheEngine();
 		$class = get_class($obj);
-		if (($pos = mb_strrpos($class, "\\")) !== false)
+		if (($pos = strrpos($class, "\\")) !== false)
 		{
-			$class = mb_substr($class, $pos + 1);
+			$class = substr($class, $pos + 1);
 		}
 
-		return mb_strtolower($class);
+		return strtolower($class);
 	}
 
 	/**
@@ -141,6 +141,11 @@ class Cache
 	public function __construct($cacheEngine)
 	{
 		$this->cacheEngine = $cacheEngine;
+	}
+
+	public function getConfig(): array
+	{
+		return $this->cacheEngine->getConfig();
 	}
 
 	public static function setShowCacheStat($showCacheStat)
@@ -266,7 +271,7 @@ class Cache
 			Diag\CacheTracker::add(0, "", $baseDir, $initDir, "", "C");
 		}
 
-		return $this->cacheEngine->clean($baseDir, $initDir);
+		$this->cacheEngine->clean($baseDir, $initDir);
 	}
 
 	public function initCache($ttl, $uniqueString, $initDir = false, $baseDir = 'cache')
@@ -308,14 +313,6 @@ class Cache
 			{
 				$read = $this->cacheEngine->getReadBytes();
 				$path = $this->cacheEngine->getCachePath();
-			}
-			elseif ($this->cacheEngine instanceof \ICacheBackend)
-			{
-				/** @noinspection PhpUndefinedFieldInspection */
-				$read = $this->cacheEngine->read;
-
-				/** @noinspection PhpUndefinedFieldInspection */
-				$path = $this->cacheEngine->path;
 			}
 
 			Diag\CacheTracker::addCacheStatBytes($read);
@@ -429,14 +426,7 @@ class Cache
 				$written = $this->cacheEngine->getWrittenBytes();
 				$path = $this->cacheEngine->getCachePath();
 			}
-			elseif ($this->cacheEngine instanceof \ICacheBackend)
-			{
-				/** @noinspection PhpUndefinedFieldInspection */
-				$written = $this->cacheEngine->written;
 
-				/** @noinspection PhpUndefinedFieldInspection */
-				$path = $this->cacheEngine->path;
-			}
 			Diag\CacheTracker::addCacheStatBytes($written);
 			Diag\CacheTracker::add($written, $path, $this->baseDir, $this->initDir, $this->filename, 'W');
 		}
@@ -464,75 +454,24 @@ class Cache
 		return $this->isStarted;
 	}
 
-	public static function clearCache($full = false, $initDir = ''): bool
+	/**
+	 * @deprecated Use \Bitrix\Main\Data\Cache::cleanDir().
+	 * @param $full
+	 * @param $initDir
+	 */
+	public static function clearCache($full = false, $initDir = ''): void
 	{
-		if (($full !== true) && ($full !== false) && ($initDir === '') && is_string($full))
+		if ($initDir === '' && is_string($full))
 		{
 			$initDir = $full;
 			$full = true;
 		}
 
-		$res = true;
-
 		if ($full === true)
 		{
-			$obCache = static::createInstance();
-			$obCache->cleanDir($initDir, 'cache');
+			$cache = static::createInstance();
+			$cache->cleanDir($initDir, 'cache');
 		}
-
-		$path = Main\Loader::getPersonal('cache' . $initDir);
-		if (is_dir($path) && ($handle = opendir($path)))
-		{
-			while (($file = readdir($handle)) !== false)
-			{
-				if ($file === '.' || $file === '..')
-				{
-					continue;
-				}
-
-				if (is_dir($path . '/' . $file))
-				{
-					if (!static::clearCache($full, $initDir . '/' . $file))
-					{
-						$res = false;
-					}
-					else
-					{
-						@chmod($path . '/' . $file, BX_DIR_PERMISSIONS);
-						//We suppress error handle here because there may be valid cache files in this dir
-						@rmdir($path . '/' . $file);
-					}
-				}
-				elseif ($full)
-				{
-					@chmod($path . '/' . $file, BX_FILE_PERMISSIONS);
-					if (!unlink($path . '/' . $file))
-					{
-						$res = false;
-					}
-				}
-				elseif (str_ends_with($file, '.php'))
-				{
-					$c = static::createInstance();
-					if ($c->isCacheExpired($path . '/' . $file))
-					{
-						@chmod($path . '/' . $file, BX_FILE_PERMISSIONS);
-						if (!unlink($path . '/' . $file))
-						{
-							$res = false;
-						}
-					}
-				}
-				else
-				{
-					//We should skip unknown file
-					//it will be deleted with full cache cleanup
-				}
-			}
-			closedir($handle);
-		}
-
-		return $res;
 	}
 
 	/**
@@ -542,5 +481,15 @@ class Cache
 	public function forceRewriting($mode)
 	{
 		$this->forceRewriting = (bool) $mode;
+	}
+
+	public static function delayedDelete(): void
+	{
+		static::createInstance()->cacheEngine->delayedDelete();
+	}
+
+	public static function addCleanPath(): void
+	{
+		static::createInstance()->cacheEngine->addCleanPath();
 	}
 }

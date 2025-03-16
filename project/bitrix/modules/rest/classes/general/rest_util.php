@@ -497,7 +497,10 @@ class CRestUtil
 	{
 		global $USER;
 
-		if(CModule::IncludeModule('oauth'))
+		if(
+			\Bitrix\Rest\Integration\OAuthModule::isSupported()
+			&& CModule::IncludeModule('oauth')
+		)
 		{
 			if(is_array($scope))
 			{
@@ -663,6 +666,7 @@ class CRestUtil
 		}
 
 		\Bitrix\Rest\EventTable::deleteByApp($appId);
+		\Bitrix\Rest\EventOfflineTable::deleteByApp($appId);
 		\Bitrix\Rest\PlacementTable::deleteByApp($appId);
 
 		if($bClean)
@@ -901,11 +905,12 @@ class CRestUtil
 
 	public static function getLanguage()
 	{
+		/** @todo Use SiteTable::getDefaultLanguageId() */
 		$languageId = '';
-
 		$siteIterator = \Bitrix\Main\SiteTable::getList(array(
-			'select' => array('LANGUAGE_ID'),
-			'filter' => array('=DEF' => 'Y', '=ACTIVE' => 'Y')
+			'select' => array('LID', 'LANGUAGE_ID'),
+			'filter' => array('=DEF' => 'Y', '=ACTIVE' => 'Y'),
+			'cache' => ['ttl' => 86400],
 		));
 		if($site = $siteIterator->fetch())
 		{

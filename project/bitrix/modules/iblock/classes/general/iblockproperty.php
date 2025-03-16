@@ -123,7 +123,7 @@ class CAllIBlockProperty
 				ORDER BY ".implode(", ", $arSqlOrder)."
 			";
 
-		$res = $DB->Query($strSql, false, "FILE: ".__FILE__."<br> LINE: ".__LINE__);
+		$res = $DB->Query($strSql);
 
 		return new CIBlockPropertyResult($res);
 	}
@@ -251,6 +251,7 @@ class CAllIBlockProperty
 			$arFields["MULTIPLE"]="N";
 		if(is_set($arFields, "LIST_TYPE") && $arFields["LIST_TYPE"]!="C")
 			$arFields["LIST_TYPE"]="L";
+		$arFields['IS_REQUIRED'] = ($arFields['IS_REQUIRED'] ?? 'N') === 'Y' ? 'Y' : 'N';
 
 		if(!$this->CheckFields($arFields))
 		{
@@ -261,42 +262,51 @@ class CAllIBlockProperty
 		{
 			$arFields["VERSION"] = CIBlockElement::GetIBVersion($arFields["IBLOCK_ID"]);
 			unset($arFields["ID"]);
-			if(isset($arFields["USER_TYPE"]))
+			if (isset($arFields['USER_TYPE']))
 			{
-				$arUserType = CIBlockProperty::GetUserType($arFields["USER_TYPE"]);
-				if(array_key_exists("ConvertToDB", $arUserType))
+				$arUserType = [];
+				$userTypeId = (string)$arFields['USER_TYPE'];
+				if ($userTypeId !== '')
 				{
-					$arValue = array(
-						"VALUE" => $arFields["DEFAULT_VALUE"],
-						"DEFAULT_VALUE" => true
-					);
-					$arValue = call_user_func_array($arUserType["ConvertToDB"], array($arFields, $arValue));
-					if(is_array($arValue) && isset($arValue["VALUE"]) && mb_strlen($arValue["VALUE"]))
-						$arFields["DEFAULT_VALUE"] = $arValue["VALUE"];
-					else
-						$arFields["DEFAULT_VALUE"] = false;
+					$arUserType = CIBlockProperty::GetUserType($userTypeId);
 				}
-				if(array_key_exists("PrepareSettings", $arUserType))
+				if (isset($arUserType['ConvertToDB']))
 				{
-					$arFieldsResult = call_user_func_array($arUserType["PrepareSettings"], array($arFields));
+					$arValue = [
+						'VALUE' => $arFields['DEFAULT_VALUE'],
+						'DEFAULT_VALUE' => true,
+					];
+					$arValue = call_user_func_array(
+						$arUserType['ConvertToDB'],
+						[$arFields, $arValue]
+					);
+					$arFields['DEFAULT_VALUE'] = $this->prepareDefaultValue($arValue);
+					unset($arValue);
+				}
+				if (isset($arUserType['PrepareSettings']))
+				{
+					$arFieldsResult = call_user_func_array(
+						$arUserType['PrepareSettings'],
+						[$arFields]
+					);
 					if (is_array($arFieldsResult) && array_key_exists('USER_TYPE_SETTINGS', $arFieldsResult))
 					{
 						$arFields = array_merge($arFields, $arFieldsResult);
-						$arFields["USER_TYPE_SETTINGS"] = serialize($arFields["USER_TYPE_SETTINGS"]);
+						$arFields['USER_TYPE_SETTINGS'] = serialize($arFields['USER_TYPE_SETTINGS']);
 					}
 					else
 					{
-						$arFields["USER_TYPE_SETTINGS"] = serialize($arFieldsResult);
+						$arFields['USER_TYPE_SETTINGS'] = serialize($arFieldsResult);
 					}
 				}
 				else
 				{
-					$arFields["USER_TYPE_SETTINGS"] = false;
+					$arFields['USER_TYPE_SETTINGS'] = false;
 				}
 			}
 			else
 			{
-				$arFields["USER_TYPE_SETTINGS"] = false;
+				$arFields['USER_TYPE_SETTINGS'] = false;
 			}
 
 			unset($arFields['TIMESTAMP_X']);
@@ -419,15 +429,32 @@ class CAllIBlockProperty
 			}
 		}
 
-		if(isset($arFields["USER_TYPE"]))
+		if (isset($arFields['USER_TYPE']))
 		{
-			$arUserType = CIBlockProperty::GetUserType($arFields["USER_TYPE"]);
-			if(isset($arUserType["CheckFields"]))
+			if ($ID === false)
 			{
-				$value=array("VALUE"=>$arFields["DEFAULT_VALUE"]);
-				$arError = call_user_func_array($arUserType["CheckFields"],array($arFields,$value));
-				if(is_array($arError) && count($arError)>0)
-					$this->LAST_ERROR .= implode("<br>", $arError)."<br>";
+				$arFields['DEFAULT_VALUE'] ??= false;
+			}
+			$arUserType = CIBlockProperty::GetUserType($arFields['USER_TYPE']);
+			if (
+				isset($arUserType['CheckFields'])
+				&& ($ID === false || array_key_exists('DEFAULT_VALUE', $arFields))
+			)
+			{
+				$value = [
+					'VALUE' => $arFields['DEFAULT_VALUE'],
+				];
+				$arError = call_user_func_array(
+					$arUserType['CheckFields'],
+					[
+						$arFields,
+						$value
+					]
+				);
+				if (!empty($arError) && is_array($arError))
+				{
+					$this->LAST_ERROR .= implode('<br>', $arError) . '<br>';
+				}
 			}
 		}
 
@@ -505,28 +532,46 @@ class CAllIBlockProperty
 			}
 			if (!empty($arUserType))
 			{
-				if(array_key_exists("ConvertToDB", $arUserType))
+				if (array_key_exists('DEFAULT_VALUE', $arFields))
 				{
-					$arValue = array(
-						"VALUE" => $arFields["DEFAULT_VALUE"],
-						"DEFAULT_VALUE" => true
-					);
-					$arValue = call_user_func_array($arUserType["ConvertToDB"], array($arFields, $arValue));
-					if(is_array($arValue) && isset($arValue["VALUE"]) && mb_strlen($arValue["VALUE"]))
-						$arFields["DEFAULT_VALUE"] = $arValue["VALUE"];
+					if (isset($arUserType['ConvertToDB']))
+					{
+						$arValue = [
+							'VALUE' => $arFields['DEFAULT_VALUE'],
+							'DEFAULT_VALUE' => true,
+						];
+						$arValue = call_user_func_array(
+							$arUserType['ConvertToDB'],
+							[$arFields, $arValue]
+						);
+						$arFields['DEFAULT_VALUE'] = $this->prepareDefaultValue($arValue);
+						unset($arValue);
+					}
 					else
-						$arFields["DEFAULT_VALUE"] = false;
+					{
+						if (!is_scalar($arFields['DEFAULT_VALUE']))
+						{
+							$arFields['DEFAULT_VALUE'] = false;
+						}
+					}
 				}
 
-				if(array_key_exists("PrepareSettings", $arUserType))
+				if (isset($arUserType['PrepareSettings']))
 				{
 					if (!isset($arFields["USER_TYPE_SETTINGS"]))
 					{
-						$oldData = Iblock\PropertyTable::getList(array(
-							'select' => array('ID', 'PROPERTY_TYPE', 'USER_TYPE', 'USER_TYPE_SETTINGS'),
-							'filter' => array('=ID' => $ID)
-						))->fetch();
-						if (!empty($oldData) && is_array($oldData))
+						$oldData = Iblock\PropertyTable::getRow([
+							'select' => [
+								'ID',
+								'PROPERTY_TYPE',
+								'USER_TYPE',
+								'USER_TYPE_SETTINGS',
+							],
+							'filter' => [
+								'=ID' => $ID,
+							],
+						]);
+						if (!empty($oldData))
 						{
 							if ($arFields["USER_TYPE"] == $oldData["USER_TYPE"] && !empty($oldData["USER_TYPE_SETTINGS"]))
 							{
@@ -805,22 +850,54 @@ class CAllIBlockProperty
 
 		$runtime = [];
 		$filter = [];
+
+		$iblockFilter = [];
 		if (!empty($iblockIdList) && !empty($iblockCode))
 		{
-			$filter[] = [
+			$iblockFilter[] = [
 				'LOGIC' => 'OR',
-				'@IBLOCK.ID' => $iblockIdList,
-				'@IBLOCK.CODE' => $iblockCodeList
+				'@ID' => $iblockIdList,
+				'@CODE' => $iblockCodeList
 			];
 		}
 		elseif (!empty($iblockIdList))
 		{
-			$filter['@IBLOCK.ID'] = $iblockIdList;
+			$iblockFilter['@ID'] = $iblockIdList;
 		}
 		elseif (!empty($iblockCodeList))
 		{
-			$filter['@IBLOCK.CODE'] = $iblockCodeList;
+			$iblockFilter['@CODE'] = $iblockCodeList;
 		}
+		if (!empty($iblockFilter))
+		{
+			$iblockIds = [];
+			$iterator = Iblock\IblockTable::getList([
+				'select' => [
+					'ID',
+				],
+				'filter' => $iblockFilter,
+				'cache' => [
+					'ttl' => 86400,
+				],
+			]);
+			while ($row = $iterator->fetch())
+			{
+				$iblockId = (int)$row['ID'];
+				$iblockIds[$iblockId] = $iblockId;
+			}
+			unset(
+				$iblockId,
+				$row,
+				$iterator,
+			);
+			if (empty($iblockIds))
+			{
+				return false;
+			}
+			$filter['@IBLOCK_ID'] = $iblockIds;
+			unset($iblockIds);
+		}
+		unset($iblockFilter);
 
 		$propertyId = null;
 		$propertyCode = null;
@@ -860,9 +937,11 @@ class CAllIBlockProperty
 					$propertyCode = $upperId;
 				}
 			}
-			unset($value);
-			unset($preparedId);
-			unset($upperId);
+			unset(
+				$value,
+				$preparedId,
+				$upperId,
+			);
 		}
 
 		if ($propertyId !== null)
@@ -881,6 +960,7 @@ class CAllIBlockProperty
 				$fieldName = '=UPPER_PROPERTY_CODE';
 				$runtime[] = self::getUpperExpressionFields();
 			}
+			unset($connection);
 			if ($existsValuePostfix)
 			{
 				$filter[] = [
@@ -1382,5 +1462,34 @@ class CAllIBlockProperty
 	public function getLastError(): string
 	{
 		return $this->LAST_ERROR;
+	}
+
+	/**
+	 * Prepare default value for custom property type.
+	 *
+	 * @param mixed $value ConvertToDB method result for custom property type.
+	 * @return string|bool|int|float
+	 */
+	protected function prepareDefaultValue(mixed $value): string|bool|int|float
+	{
+		$result = false;
+		if (
+			is_array($value)
+			&& isset($value['VALUE'])
+		)
+		{
+			$defaultValue = $value['VALUE'];
+			if (
+				(is_string($defaultValue) && $defaultValue !== '')
+				|| is_int($defaultValue)
+				|| is_float($defaultValue)
+				|| ($defaultValue === true)
+			)
+			{
+				$result = $defaultValue;
+			}
+		}
+
+		return $result;
 	}
 }

@@ -712,8 +712,7 @@ this.BX.UI = this.BX.UI || {};
 	  }, {
 	    key: "setHint",
 	    value: function setHint(key) {
-	      var moreElement = this.renderMoreElement(this.getHelpdeskCode()).outerHTML;
-	      var more = !main_core.Type.isNil(this.getHelpdeskCode()) ? moreElement : '';
+	      var more = main_core.Type.isNil(this.getHelpdeskCode()) ? '' : this.renderMoreElement(this.getHelpdeskCode()).outerHTML;
 	      var hint = this.getHint(key);
 	      babelHelpers.classPrivateFieldGet(this, _hintTitleElement).innerText = !main_core.Type.isNil(hint) ? babelHelpers.classPrivateFieldGet(this, _hintTitle) : '';
 	      babelHelpers.classPrivateFieldGet(this, _hintDescElement$1).innerHTML = !main_core.Type.isNil(hint) ? hint + ' ' + more : '';
@@ -1093,7 +1092,7 @@ this.BX.UI = this.BX.UI || {};
 	}(BaseField);
 	function _renderNode2() {
 	  var node = main_core.Tag.render(_templateObject2$6 || (_templateObject2$6 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t<textarea\n\t\t\t\tclass=\"ui-ctl-element\"\n\t\t\t\tname=\"", "\"\n\t\t\t\tplaceholder=\"", "\"\n\t\t\t\t", "\n\t\t\t></textarea>\n\t\t"])), main_core.Text.encode(this.getName()), main_core.Text.encode(babelHelpers.classPrivateFieldGet(this, _placeholder)), this.isEnable() ? '' : 'readonly');
-	  node.value = main_core.Text.encode(babelHelpers.classPrivateFieldGet(this, _defaultValue));
+	  node.value = babelHelpers.classPrivateFieldGet(this, _defaultValue);
 	  return node;
 	}
 

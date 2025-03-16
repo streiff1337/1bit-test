@@ -313,18 +313,18 @@ class Manager
 			// and add template rules for main
 			if ($siteId)
 			{
-				$fields = array(
+				$fields = [
 					'SORT' => 0,
 					'SITE_ID' => $siteId,
 					'CONDITION' => 'CSite::inDir(\'' . $subDirSite . $basePathOriginal . '\')',
-					'TEMPLATE' => self::getTemplateId($siteId)
-				);
+					'TEMPLATE' => self::getTemplateId($siteId),
+				];
 				$check = \Bitrix\Main\SiteTemplateTable::getList(array(
-					 'filter' => array(
+					 'filter' => [
 						 '=SITE_ID' => $fields['SITE_ID'],
 						 '=CONDITION' => $fields['CONDITION'],
-						 '=TEMPLATE' => $fields['TEMPLATE']
-					 )
+						 '=TEMPLATE' => $fields['TEMPLATE'],
+					 ],
 				 ))->fetch();
 				if (!$check)
 				{
@@ -333,11 +333,11 @@ class Manager
 					);
 					\Bitrix\Main\UrlRewriter::add(
 						$siteId,
-						array(
+						[
 							'ID' => 'bitrix:landing.pub',
 							'PATH' => $subDirSite. $basePathOriginal . 'index.php',
-							'CONDITION' => '#^' . $subDirSite. $basePathOriginal . '#'
-						)
+							'CONDITION' => '#^' . $subDirSite. $basePathOriginal . '#',
+						]
 					);
 				}
 			}
@@ -394,9 +394,9 @@ class Manager
 	 */
 	public static function getPublicationPath($siteCode = null, $siteId = null, $createPubPath = false)
 	{
-		$tyePublicationPath = Site\Type::getPublicationPath();
+		$typePublicationPath = Site\Type::getPublicationPath();
 
-		$basePath = $tyePublicationPath;
+		$basePath = $typePublicationPath;
 		if ($basePath === null)
 		{
 			$basePath = self::getOption(
@@ -1036,6 +1036,15 @@ class Manager
 	}
 
 	/**
+	 * Check is current hit is ajax
+	 * @return bool
+	 */
+	public static function isAjaxRequest(): bool
+	{
+		return Application::getInstance()->getContext()->getRequest()->isAjaxRequest();
+	}
+
+	/**
 	 * Get current host.
 	 * @return string
 	 */
@@ -1082,6 +1091,36 @@ class Manager
 	}
 
 	/**
+	 * Get URL of external template preview server.
+	 * Can be rewrite by LANDING_PREVIEW_URL constant.
+	 * @return string
+	 */
+	public static function getPreviewHost(): string
+	{
+		if (!defined('LANDING_PREVIEW_URL'))
+		{
+			define('LANDING_PREVIEW_URL', 'https://preview.bitrix24.site');
+		}
+
+		return LANDING_PREVIEW_URL;
+	}
+
+	/**
+	 * Get webhook to the external template preview server.
+	 * Can be rewrite by LANDING_PREVIEW_WEBHOOK constant.
+	 * @return string
+	 */
+	public static function getPreviewWebhook(): string
+	{
+		if (!defined('LANDING_PREVIEW_WEBHOOK'))
+		{
+			define('LANDING_PREVIEW_WEBHOOK', 'https://preview.bitrix24.site/rest/1/gvsn3ngrn7vb4t1m/');
+		}
+
+		return LANDING_PREVIEW_WEBHOOK;
+	}
+
+	/**
 	 * Is B24 portal?
 	 * @return bool
 	 */
@@ -1112,6 +1151,15 @@ class Manager
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Is b24 portal hosted no cloud (not box)
+	 * @return bool
+	 */
+	public static function isB24Cloud(): bool
+	{
+		return self::isB24() && ModuleManager::isModuleInstalled('bitrix24');
 	}
 
 
@@ -1425,9 +1473,9 @@ class Manager
 				'SITE_ID',
 			],
 			'filter' => [
-				'ACTIVE' => 'Y',
-				'DELETED' => 'N',
-				'ID' => $lid,
+				'=ACTIVE' => 'Y',
+				'=DELETED' => 'N',
+				'=ID' => $lid,
 			],
 		]);
 		if ($row = $res->fetch())

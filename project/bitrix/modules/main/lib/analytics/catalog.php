@@ -153,8 +153,8 @@ class Catalog
 		// debug info
 		global $USER;
 
-		$data['real_user_id'] = $USER->getId() ?: 0;
-		$data['is_admin'] = (int) $USER->IsAdmin();
+		$data['real_user_id'] = (int)$USER?->getId();
+		$data['is_admin'] = (int)$USER?->IsAdmin();
 		$data['admin_section'] = (int) (defined('ADMIN_SECTION') && ADMIN_SECTION);
 		$data['admin_panel'] = (int) \CTopPanel::shouldShowPanel();
 
@@ -233,9 +233,9 @@ class Catalog
 		// add debug info
 		global $USER;
 
-		$data['real_user_id'] = $USER->getId() ?: 0;
+		$data['real_user_id'] = (int)$USER?->getId();
+		$data['is_admin'] = (int)$USER?->IsAdmin();
 		$data['cookie_size'] = count($_COOKIE);
-		$data['is_admin'] = (int) $USER->IsAdmin();
 		$data['admin_section'] = (int) (defined('ADMIN_SECTION') && ADMIN_SECTION);
 		$data['admin_panel'] = (int) \CTopPanel::shouldShowPanel();
 
@@ -350,7 +350,7 @@ class Catalog
 		$products = array();
 
 		$result = \CSaleBasket::getList(
-			array(), $arFilter = array('ORDER_ID' => $orderId), false, false,
+			array(), array('ORDER_ID' => $orderId), false, false,
 			array('PRODUCT_ID', 'RECOMMENDATION', 'QUANTITY', 'PRICE', 'CURRENCY', 'MODULE')
 		);
 

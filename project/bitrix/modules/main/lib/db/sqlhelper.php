@@ -333,7 +333,6 @@ abstract class SqlHelper
 
 		$tableFields = $this->connection->getTableFields($tableName);
 
-		// one registry
 		$tableFields = array_change_key_case($tableFields, CASE_UPPER);
 		$fields = array_change_key_case($fields, CASE_UPPER);
 
@@ -840,6 +839,22 @@ abstract class SqlHelper
 	}
 
 	/**
+	 * Returns case insensitive like expression.
+	 * <p>
+	 * All parameters are SQL unsafe.
+	 *
+	 * @abstract
+	 * @param string $field Database field or expression.
+	 * @param string $value String to match.
+	 *
+	 * @return string
+	 */
+	public function getIlikeOperator($field, $value)
+	{
+		throw new Main\NotImplementedException('Method should be implemented in a child class.');
+	}
+
+	/**
 	 * Returns identifier for usage in VALUES.
 	 *
 	 * @abstract
@@ -1167,5 +1182,16 @@ abstract class SqlHelper
 		}
 
 		return $tables;
+	}
+
+	/**
+	 * Checks is the field type is BIG
+	 *
+	 * @param $type
+	 * @return bool
+	 */
+	public function isBigType($type): bool
+	{
+		return false;
 	}
 }

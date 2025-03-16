@@ -5,7 +5,7 @@ use Bitrix\Main\ModuleTable;
 
 class CSiteCheckerTest
 {
-	const MIN_PHP_VER = '8.0.0';
+	const MIN_PHP_VER = '8.1.0';
 
 	public $arTestVars;
 	public $percent;
@@ -502,7 +502,6 @@ class CSiteCheckerTest
 		$arMods = [
 			'fsockopen' => GetMessage("SC_SOCKET_F"),
 			'xml_parser_create' => GetMessage("SC_MOD_XML"),
-			'preg_match' => GetMessage("SC_MOD_PERL_REG"),
 			'imagettftext' => "Free Type Text",
 			'gzcompress' => "Zlib",
 			'imagecreatetruecolor' => GetMessage("SC_MOD_GD"),
@@ -624,9 +623,11 @@ class CSiteCheckerTest
 				$tmp = $_SERVER['DOCUMENT_ROOT'] . '/bitrix/tmp/bitrix-env.version';
 				if (!file_exists($tmp) || time() - filemtime($tmp) > 86400)
 				{
-					$ob = new CHTTP();
-					$ob->http_timeout = 5;
-					$ob->Download('https://repos.1c-bitrix.ru/yum/bitrix-env.version', $tmp);
+					$http = new \Bitrix\Main\Web\HttpClient([
+						"socketTimeout" => 5,
+						"streamTimeout" => 5,
+					]);
+					$http->download('https://repos.1c-bitrix.ru/yum/bitrix-env.version', $tmp);
 				}
 
 				if (file_exists($tmp))
@@ -701,22 +702,16 @@ class CSiteCheckerTest
 
 	function check_mail($big = false)
 	{
-		$body = "Test message.\nDelete it.";
+		$eol = \Bitrix\Main\Mail\Mail::getMailEol();
+		$body = "Test message. Delete it.{$eol}";
 		if ($big)
 		{
-			$str = file_get_contents(__FILE__);
-			if (!$str)
-			{
-				return $this->Result(false, GetMessage('SC_CHECK_FILES'));
-			}
-
-			$body = str_repeat($str, 2);
+			$body = str_repeat($body, 8000);
 		}
 
 		$startTime = microtime(true);
 		if ($big)
 		{
-			$eol = \Bitrix\Main\Mail\Mail::getMailEol();
 			$val = mail("hosting_test@bitrixsoft.com", "Bitrix site checker" . $eol . "\tmultiline subject", $body, 'BCC: noreply@bitrixsoft.com');
 		}
 		else
@@ -1015,9 +1010,11 @@ class CSiteCheckerTest
 			$url = 'https://www.bitrixsoft.com/upload/lib/cafile.pem';
 		}
 
-		$ob = new CHTTP();
-		$ob->http_timeout = 5;
-		if ($ob->Download($url, $this->cafile) && is_file($this->cafile) && filesize($this->cafile) > 0)
+		$http = new \Bitrix\Main\Web\HttpClient([
+			"socketTimeout" => 5,
+			"streamTimeout" => 5,
+		]);
+		if ($http->download($url, $this->cafile) && is_file($this->cafile) && filesize($this->cafile) > 0)
 		{
 			return true;
 		}
@@ -1095,7 +1092,7 @@ class CSiteCheckerTest
 			$boundary = '--------' . md5(checker_get_unique_id());
 
 			$POST = "--$boundary\r\n";
-			$POST .= 'Content-Disposition: form-data; name="test_file"; filename="site_checker.bin' . "\r\n";
+			$POST .= 'Content-Disposition: form-data; name="test_file"; filename="site_checker.bin"' . "\r\n";
 			$POST .= 'Content-Type: image/gif' . "\r\n";
 			$POST .= "\r\n";
 			$POST .= $binaryData . "\r\n";
@@ -1645,13 +1642,13 @@ class CSiteCheckerTest
 			return $this->Result(null, GetMessage("MAIN_SC_NO_IM"));
 		}
 
-		if ($this->arTestVars['push_stream_warn'])
+		if (!empty($this->arTestVars['push_stream_warn']))
 		{
 			return $this->Result(null, GetMessage("MAIN_SC_NO_PUSH_STREAM_VIDEO_2"));
 		}
 		else
 		{
-			if ($this->arTestVars['push_stream_fail'])
+			if (!empty($this->arTestVars['push_stream_fail']))
 			{
 				return $this->Result(false, GetMessage("MAIN_SC_NO_PUSH_STREAM_VIDEO_2"));
 			}
@@ -2039,10 +2036,16 @@ class CSiteCheckerTest
 
 	function check_security()
 	{
-		$strError = '';
 		if (function_exists('apache_get_modules'))
 		{
 			$arLoaded = apache_get_modules();
+
+			if (!in_array('mod_rewrite', $arLoaded))
+			{
+				return $this->Result(false, GetMessage('SC_WARN_MOD_REWRITE') . "<br>");
+			}
+
+			$strError = '';
 			if (in_array('mod_security', $arLoaded))
 			{
 				$strError .= GetMessage('SC_WARN_SECURITY') . "<br>";
@@ -2051,12 +2054,12 @@ class CSiteCheckerTest
 			{
 				$strError .= GetMessage('SC_WARN_DAV') . "<br>";
 			}
+			if ($strError)
+			{
+				return $this->Result(null, $strError);
+			}
 		}
 
-		if ($strError)
-		{
-			return $this->Result(null, $strError);
-		}
 		return $this->Result(true, GetMessage("MAIN_SC_NO_CONFLICT"));
 	}
 
@@ -2305,9 +2308,10 @@ class CSiteCheckerTest
 	function check_pgsql_db_charset()
 	{
 		$connection = Application::getConnection();
+		$helper = $connection->getSqlHelper();
 		$strError = '';
 
-		$f = $connection->query('SHOW LC_CTYPE')->fetch();
+		$f = $connection->query('select datctype as LC_CTYPE from pg_database where datname = \'' . $helper->forSql($connection->getDatabase()) . '\'')->fetch();
 		$collation_database = $f['LC_CTYPE'];
 
 		if (!preg_match('/\.(UTF-8|UTF8)$/i', $collation_database))
@@ -2636,6 +2640,7 @@ class CSiteCheckerTest
 				TABLE_SCHEMA = '" . $DB->ForSql($DB->DBName) . "'
 				and TABLE_TYPE = 'BASE TABLE'
 				and TABLE_NAME like 'b\_%'
+				and CREATE_OPTIONS <> _ascii'row_format=DYNAMIC'
 				and (
 					UPPER(ROW_FORMAT) in ('REDUNDANT', 'COMPACT')
 					or ENGINE <> 'InnoDB'
@@ -3145,7 +3150,6 @@ class CSiteCheckerTest
 
 			foreach ($arTables as $table => $sql)
 			{
-				$tmp_table = 'site_checker_' . $table;
 				$arIndexes = [];
 				$rs = $DB->Query('SHOW INDEXES FROM ' . $DB->quote($table));
 				while ($f = $rs->Fetch())
@@ -3161,8 +3165,10 @@ class CSiteCheckerTest
 					}
 				}
 
+				$tmp_table = 'site_checker_' . $table;
 				$arIndexes_tmp = [];
 				$arFT = [];
+				$arUnique = [];
 				$rs = $DB->Query('SHOW INDEXES FROM ' . $DB->quote($tmp_table));
 				while ($f = $rs->Fetch())
 				{
@@ -3179,13 +3185,17 @@ class CSiteCheckerTest
 					{
 						$arFT[$f['Key_name']] = true;
 					}
+					if ($f['Non_unique'] == 0)
+					{
+						$arUnique[$f['Key_name']] = true;
+					}
 				}
 
 				foreach ($arIndexes_tmp as $name => $ix)
 				{
 					if (!in_array($ix, $arIndexes))
 					{
-						if ($arIndexes[$name])
+						if (!empty($arIndexes[$name]))
 						{
 							if ($name == 'PRIMARY') // dropping primary is not supported
 							{
@@ -3221,8 +3231,9 @@ class CSiteCheckerTest
 				while ($f_tmp = $rs->Fetch())
 				{
 					$tmp = TableFieldConstruct($f_tmp);
-					if ($f = $arColumns[strtolower($f_tmp['Field'])])
+					if (isset($arColumns[strtolower($f_tmp['Field'])]))
 					{
+						$f = $arColumns[strtolower($f_tmp['Field'])];
 						if (($cur = TableFieldConstruct($f)) != $tmp)
 						{
 							$sql = 'ALTER TABLE ' . $DB->quote($table) . ' CHANGE ' . $DB->quote($f['Field']) . ' ' . $tmp;
@@ -3285,7 +3296,23 @@ class CSiteCheckerTest
 							continue;
 						}
 
-						$sql = $name == 'PRIMARY' ? 'ALTER TABLE ' . $DB->quote($table) . ' ADD PRIMARY KEY (' . $ix . ')' : 'CREATE ' . ($arFT[$name] ? 'FULLTEXT ' : '') . 'INDEX ' . $DB->quote($name) . ' ON ' . $DB->quote($table) . ' (' . $ix . ')';
+						if ($name == 'PRIMARY')
+						{
+							$sql = 'ALTER TABLE ' . $DB->quote($table) . ' ADD PRIMARY KEY (' . $ix . ')';
+						}
+						else
+						{
+							$indexType = '';
+							if (!empty($arFT[$name]))
+							{
+								$indexType = 'FULLTEXT ';
+							}
+							elseif (!empty($arUnique[$name]))
+							{
+								$indexType = 'UNIQUE ';
+							}
+							$sql = 'CREATE ' . $indexType . 'INDEX ' . $DB->quote($name) . ' ON ' . $DB->quote($table) . ' (' . $ix . ')';
+						}
 						if ($this->fix_mode)
 						{
 							if (!$DB->Query($sql, true))
@@ -3381,6 +3408,7 @@ class CSiteCheckerTest
 
 		$step = 0;
 		$ar = null;
+		$success = true;
 		while (true)
 		{
 			$oTest = new CSiteCheckerTest($step, 1);
@@ -3422,6 +3450,8 @@ class CSiteCheckerTest
 					'NOTIFY_TYPE' => CAdminNotify::TYPE_NORMAL,
 				];
 				CAdminNotify::Add($error);
+
+				$success = false;
 				break;
 			}
 
@@ -3441,7 +3471,7 @@ class CSiteCheckerTest
 		$_SERVER['HTTP_USER_AGENT'] = '-';
 		CEventLog::Add([
 			"SEVERITY" => "WARNING",
-			"AUDIT_TYPE_ID" => isset($oTest->arTestVars['site_checker_success']) && $oTest->arTestVars['site_checker_success'] == 'Y' ? 'SITE_CHECKER_SUCCESS' : 'SITE_CHECKER_ERROR',
+			"AUDIT_TYPE_ID" => $success ? 'SITE_CHECKER_SUCCESS' : 'SITE_CHECKER_ERROR',
 			"MODULE_ID" => "main",
 			"ITEM_ID" => 'CSiteCheckerTest::CommonTest();',
 			"URL" => '-',
@@ -3711,7 +3741,7 @@ function InitPureDB()
 	 * @var $DBDebug
 	 * @var $DBDebugToFile
 	 */
-	require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/php_interface/dbconn.php");
+	require_once $_SERVER["DOCUMENT_ROOT"] . getLocalPath('php_interface/dbconn.php', BX_PERSONAL_ROOT);
 
 	require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/constants.php");
 

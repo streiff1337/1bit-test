@@ -1,3 +1,4 @@
+/* eslint-disable */
 this.BX = this.BX || {};
 (function (exports,ui_entitySelector,ui_notification,ui_icons_service,main_core_events,main_popup,main_core) {
 	'use strict';
@@ -4844,6 +4845,7 @@ this.BX = this.BX || {};
 	        return;
 	      }
 	      this.getFieldsListPopupContent().then(function (content) {
+	        var _this2$settings$popup;
 	        var _this2$getPreparedChe = _this2.getPreparedCheckboxListData(content),
 	          sections = _this2$getPreparedChe.sections,
 	          categories = _this2$getPreparedChe.categories,
@@ -4854,6 +4856,7 @@ this.BX = this.BX || {};
 	          parentType: 'filter'
 	        };
 	        _this2.checkboxListPopup = new BX.UI.CheckboxList({
+	          columnCount: (_this2$settings$popup = _this2.settings.popupColumnsCount) !== null && _this2$settings$popup !== void 0 ? _this2$settings$popup : 4,
 	          popupOptions: {
 	            width: _this2.settings.popupWidth
 	          },

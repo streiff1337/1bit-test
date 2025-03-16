@@ -38,7 +38,7 @@ describe('ui.bbcode.model/nodes', () => {
 			const node = scheme.createText('&#91;text&#93;');
 
 			assert.ok(node.getContent() === '&#91;text&#93;');
-			assert.ok(node.toString() === '&amp;#91;text&amp;#93;');
+			assert.ok(node.toString() === '&#91;text&#93;');
 		});
 
 		it('TextNode.setParent()', () => {
@@ -671,7 +671,7 @@ describe('ui.bbcode.model/nodes', () => {
 
 		xit('Table cell child filter', () => {
 			const td = scheme.createElement({
-				name: 'td'
+				name: 'td',
 			});
 
 			const table = scheme.createElement({ name: 'table' });
@@ -940,7 +940,7 @@ describe('ui.bbcode.model/nodes', () => {
 				const root = scheme.createRoot({
 					children: [
 						scheme.createText({ content: 'text' }),
-						scheme.createElement({ name: 'p' })
+						scheme.createElement({ name: 'p' }),
 					],
 				});
 
@@ -952,7 +952,7 @@ describe('ui.bbcode.model/nodes', () => {
 					children: [
 						scheme.createText({ content: 'text' }),
 						scheme.createNewLine(),
-						scheme.createElement({ name: 'p' })
+						scheme.createElement({ name: 'p' }),
 					],
 				});
 
@@ -1008,7 +1008,7 @@ describe('ui.bbcode.model/nodes', () => {
 				const root = scheme.createRoot({
 					children: [
 						scheme.createElement({ name: 'p' }),
-						scheme.createNewLine()
+						scheme.createNewLine(),
 					],
 				});
 
@@ -1736,6 +1736,26 @@ describe('ui.bbcode.model/nodes', () => {
 				assert.ok(children.at(3) === p4);
 			});
 		});
+
+		describe('ElementNode.trimLinebreaks()', () => {
+		    it('should removes all start and end linebreaks', () => {
+		        const element = scheme.createElement({
+					name: 'p',
+					children: [
+						scheme.createNewLine(),
+						scheme.createNewLine(),
+						scheme.createText('test'),
+						scheme.createNewLine(),
+						scheme.createNewLine(),
+					],
+				});
+
+				element.trimLinebreaks();
+
+				assert.ok(element.getChildrenCount() === 1);
+				assert.ok(element.getFirstChild().getContent() === 'test');
+		    });
+		});
 	});
 
 	describe('Default scheme rules', () => {
@@ -1747,20 +1767,18 @@ describe('ui.bbcode.model/nodes', () => {
 						scheme.createElement({ name: 'i' }),
 						scheme.createElement({ name: 'u' }),
 						scheme.createElement({ name: 's' }),
-						scheme.createElement({ name: 'span' }),
 						scheme.createText('text'),
 						scheme.createNewLine(),
 						scheme.createElement({ name: 'p' }),
 					],
 				});
 
-				assert.ok(b.getChildrenCount() === 6, '#1');
+				assert.ok(b.getChildrenCount() === 5, '#1');
 				assert.ok(b.getChildren().at(0).getName() === 'i', '#2');
 				assert.ok(b.getChildren().at(1).getName() === 'u', '#3');
 				assert.ok(b.getChildren().at(2).getName() === 's', '#4');
-				assert.ok(b.getChildren().at(3).getName() === 'span', '#5');
-				assert.ok(b.getChildren().at(4).getName() === '#text', '#6');
-				assert.ok(b.getChildren().at(5).getName() === '#linebreak', '#7');
+				assert.ok(b.getChildren().at(3).getName() === '#text', '#6');
+				assert.ok(b.getChildren().at(4).getName() === '#linebreak', '#7');
 			});
 
 			it('img, url should include only allowed child', () => {
@@ -1850,7 +1868,7 @@ describe('ui.bbcode.model/nodes', () => {
 			});
 
 			it('p should includes line breaks after opening tag and before closing tag', () => {
-			    const p = scheme.createElement({
+				const p = scheme.createElement({
 					name: 'p',
 					children: [
 						scheme.createText('test'),

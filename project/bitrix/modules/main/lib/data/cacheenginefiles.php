@@ -1,19 +1,23 @@
 <?php
+
 namespace Bitrix\Main\Data;
 
 use Bitrix\Main;
+use Bitrix\Main\Application;
+use Bitrix\Main\Config;
+use Bitrix\Main\Data\Internal\CacheCleanPathTable;
 
 class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 {
-	private $ttl;
-
-	//cache stats
-	private $written = false;
-	private $read = false;
-	private $path = '';
-
-	protected $useLock = false;
-	protected static $lockHandles = array();
+	private static CacheEngineFiles $instance;
+	protected int $written = 0;
+	protected int $read = 0;
+	protected string $path = '';
+	protected bool $useLock = false;
+	protected string $rootDirectory;
+	protected static array $lockHandles = [];
+	protected static array $cleanQueue = [];
+	protected static int $clusterGroup = 0;
 
 	/**
 	 * Engine constructor.
@@ -21,151 +25,148 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 	 */
 	public function __construct($options = [])
 	{
-		$config = Main\Config\Configuration::getValue("cache");
-		if ($config && is_array($config) && isset($config["use_lock"]))
+		$config = Config\Configuration::getValue('cache');
+
+		if (isset($config['use_lock']))
 		{
-			$this->useLock = (bool)$config["use_lock"];
+			$this->useLock = (bool)$config['use_lock'];
+		}
+		if (isset($options['actual_data']) && !$this->useLock)
+		{
+			$this->useLock = !$options['actual_data'];
 		}
 
-		if (!empty($options) && isset($options['actual_data']))
+		Application::getInstance()->addBackgroundJob(self::class.'::addCleanPath', [], Application::JOB_PRIORITY_LOW);
+
+		static::$clusterGroup = (defined('BX_CLUSTER_GROUP') ? (int)constant('BX_CLUSTER_GROUP') : 0);
+		$this->rootDirectory = $config['root_directory'] ?? Main\Loader::getDocumentRoot();
+
+		$key = $this->rootDirectory . BX_ROOT . '/cache/cacheCleanJob_lock.php';
+		if (!file_exists($key))
 		{
-			$this->useLock = !((bool) $options['actual_data']);
+			if ($handle = fopen($key, "wb+"))
+			{
+				fwrite($handle, 'lock');
+				fclose($handle);
+			}
 		}
+
+		if ($this->lock($key))
+		{
+			Application::getInstance()->addBackgroundJob(self::class . '::delayedDelete', [], Application::JOB_PRIORITY_LOW);
+		}
+
+		self::$instance = $this;
+	}
+
+	public static function getInstance(): CacheEngineFiles
+	{
+		if (!isset(self::$instance))
+		{
+			self::$instance = new static();
+		}
+
+		return self::$instance;
 	}
 
 	/**
 	 * Returns number of bytes read from disk or false if there was no read operation.
-	 *
-	 * @return integer|false
+	 * @return integer
 	 */
-	public function getReadBytes()
+	public function getReadBytes(): int
 	{
 		return $this->read;
 	}
 
 	/**
 	 * Returns number of bytes written to disk or false if there was no write operation.
-	 *
-	 * @return integer|false
+	 * @return integer
 	 */
-	public function getWrittenBytes()
+	public function getWrittenBytes(): int
 	{
 		return $this->written;
 	}
 
 	/**
 	 * Returns physical file path after read or write operation.
-	 *
 	 * @return string
 	 */
-	public function getCachePath()
+	public function getCachePath(): string
 	{
 		return $this->path;
 	}
 
 	/**
 	 * Returns true if cache can be read or written.
-	 *
 	 * @return bool
 	 */
-	public function isAvailable()
+	public function isAvailable(): bool
 	{
 		return true;
 	}
 
 	/**
 	 * Deletes physical file. Returns true on success.
-	 *
 	 * @param string $fileName Absolute physical path.
-	 *
 	 * @return void
 	 */
-	private static function unlink($fileName)
+	protected static function unlink(string $fileName): void
 	{
-		if (isset(self::$lockHandles[$fileName]) && self::$lockHandles[$fileName])
-		{
-			fclose(self::$lockHandles[$fileName]);
-			unset(self::$lockHandles[$fileName]);
-		}
+		static::unlock($fileName);
 
 		if (file_exists($fileName))
 		{
-			@chmod($fileName, BX_FILE_PERMISSIONS);
-			@unlink($fileName);
-		}
-	}
+			// Handle E_WARNING
+			set_error_handler(function () {
+				// noop
+			});
 
-	/**
-	 * Adds delayed delete worker agent.
-	 *
-	 * @return void
-	 */
-	private static function addAgent()
-	{
-		global $APPLICATION;
+			chmod($fileName, BX_FILE_PERMISSIONS);
+			unlink($fileName);
 
-		static $agentAdded = false;
-		if (!$agentAdded)
-		{
-			$agentAdded = true;
-			$agents = \CAgent::GetList(array("ID" => "DESC"), array("NAME" => "\\Bitrix\\Main\\Data\\CacheEngineFiles::delayedDelete(%"));
-			if (!$agents->Fetch())
-			{
-				$res = \CAgent::AddAgent(
-					"\\Bitrix\\Main\\Data\\CacheEngineFiles::delayedDelete();",
-					"main", //module
-					"Y", //period
-					1 //interval
-				);
-
-				if (!$res)
-					$APPLICATION->ResetException();
-			}
+			restore_error_handler();
 		}
 	}
 
 	/**
 	 * Generates very temporary file name by adding some random suffix to the file path.
 	 * Returns empty string on failure.
-	 *
 	 * @param string $fileName File path within document root.
-	 *
 	 * @return string
 	 */
-	private static function randomizeFile($fileName)
+	protected function randomizeFile(string $fileName): string
 	{
-		$documentRoot = Main\Loader::getDocumentRoot();
 		for ($i = 0; $i < 99; $i++)
 		{
 			$suffix = rand(0, 999999);
-			if (!file_exists($documentRoot.$fileName.$suffix))
-				return $fileName.$suffix;
+			if (!file_exists($this->rootDirectory . $fileName . $suffix))
+			{
+				return $fileName . $suffix;
+			}
 		}
-		return "";
+
+		return '';
 	}
 
 	/**
 	 * Cleans (removes) cache directory or file.
-	 *
 	 * @param string $baseDir Base cache directory (usually /bitrix/cache).
 	 * @param string $initDir Directory within base.
 	 * @param string $filename File name.
-	 *
 	 * @return void
 	 */
-	public function clean($baseDir, $initDir = '', $filename = '')
+	public function clean($baseDir, $initDir = '', $filename = ''): void
 	{
-		$documentRoot = Main\Loader::getDocumentRoot();
-		if (($filename !== false) && ($filename !== ""))
+		if (($filename !== false) && ($filename !== ''))
 		{
-			static::unlink($documentRoot.$baseDir.$initDir.$filename);
+			static::unlink($this->rootDirectory . $baseDir . $initDir . $filename);
 		}
 		else
 		{
-			$initDir = trim($initDir, "/");
-			if ($initDir == "")
+			$initDir = trim($initDir, '/');
+			if ($initDir == '')
 			{
-				$sourceDir = $documentRoot."/".trim($baseDir, "/");
+				$sourceDir = $this->rootDirectory . '/' . trim($baseDir, '/');
 				if (file_exists($sourceDir) && is_dir($sourceDir))
 				{
 					$dh = opendir($sourceDir);
@@ -174,36 +175,45 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 						while ($entry = readdir($dh))
 						{
 							if (preg_match("/^(\\.|\\.\\.|.*\\.~\\d+)\$/", $entry))
+							{
 								continue;
+							}
 
-							if (is_dir($sourceDir."/".$entry))
-								static::clean($baseDir, $entry);
-							elseif (is_file($sourceDir."/".$entry))
-								static::unlink($sourceDir."/".$entry);
+							if (is_dir($sourceDir . '/' . $entry))
+							{
+								$this->clean($baseDir, $entry);
+							}
+							elseif (is_file($sourceDir . '/' . $entry))
+							{
+								static::unlink($sourceDir . '/' . $entry);
+							}
 						}
 					}
 				}
 			}
 			else
 			{
-				$source = "/".trim($baseDir, "/")."/".$initDir;
-				$source = rtrim($source, "/");
+				$source = '/' . trim($baseDir, '/') . '/' . $initDir;
+				$source = rtrim($source, '/');
 				$delayedDelete = false;
 
-				if (!preg_match("/^(\\.|\\.\\.|.*\\.~\\d+)\$/", $source) && file_exists($documentRoot.$source))
+				if (!preg_match("/^(\\.|\\.\\.|.*\\.~\\d+)\$/", $source) && file_exists($this->rootDirectory . $source))
 				{
-					if (is_file($documentRoot.$source))
+					if (is_file($this->rootDirectory . $source))
 					{
-						static::unlink($documentRoot.$source);
+						static::unlink($this->rootDirectory . $source);
 					}
 					else
 					{
-						$target = static::randomizeFile($source.".~");
+						$target = $this->randomizeFile($source . '.~');
 						if ($target != '')
 						{
-							$con = Main\Application::getConnection();
-							$con->queryExecute("INSERT INTO b_cache_tag (SITE_ID, CACHE_SALT, RELATIVE_PATH, TAG) VALUES ('*', '*', '".$con->getSqlHelper()->forSql($target)."', '*')");
-							if (@rename($documentRoot.$source, $documentRoot.$target))
+							static::$cleanQueue[$target] = [
+								'PREFIX' => $target,
+								'CLUSTER_GROUP' => static::$clusterGroup
+							];
+
+							if (@rename($this->rootDirectory . $source, $this->rootDirectory . $target))
 							{
 								$delayedDelete = true;
 							}
@@ -212,9 +222,14 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 				}
 
 				if ($delayedDelete)
-					static::addAgent();
+				{
+					Application::getInstance()->getManagedCache()->read(3600, 'needClean');
+					Application::getInstance()->getManagedCache()->setImmediate('needClean', 'Y');
+				}
 				else
-					DeleteDirFilesEx($baseDir.$initDir);
+				{
+					DeleteDirFilesEx($baseDir . $initDir, $this->rootDirectory);
+				}
 			}
 		}
 	}
@@ -222,31 +237,26 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 	/**
 	 * Tries to put non-blocking exclusive lock on the file.
 	 * Returns true if file not exists, or lock was successfully got.
-	 *
 	 * @param string $fileName Absolute cache file path.
-	 *
 	 * @return boolean
 	 */
-	protected function lock($fileName)
+	protected static function lock(string $fileName): bool
 	{
 		$wouldBlock = 0;
 		self::$lockHandles[$fileName] = @fopen($fileName, "r+");
 		if (self::$lockHandles[$fileName])
 		{
 			flock(self::$lockHandles[$fileName], LOCK_EX | LOCK_NB, $wouldBlock);
-			//$wouldBlock === 1 someone else has the lock.
 		}
 		return $wouldBlock !== 1;
 	}
 
 	/**
 	 * Releases the lock obtained by lock method.
-	 *
 	 * @param string $fileName Absolute cache file path.
-	 *
 	 * @return void
 	 */
-	protected function unlock($fileName)
+	protected static function unlock(string $fileName): void
 	{
 		if (!empty(self::$lockHandles[$fileName]))
 		{
@@ -257,24 +267,23 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 
 	/**
 	 * Reads cache from the file. Returns true if file exists, not expired, and successfully read.
-	 *
 	 * @param mixed &$vars Cached result.
 	 * @param string $baseDir Base cache directory (usually /bitrix/cache).
 	 * @param string $initDir Directory within base.
 	 * @param string $filename File name.
 	 * @param integer $ttl Expiration period in seconds.
-	 *
 	 * @return boolean
 	 */
-	public function read(&$vars, $baseDir, $initDir, $filename, $ttl)
+	public function read(&$vars, $baseDir, $initDir, $filename, $ttl): bool
 	{
-		$documentRoot = Main\Loader::getDocumentRoot();
-		$fn = $documentRoot."/".ltrim($baseDir.$initDir, "/").$filename;
+		$fn = $this->rootDirectory . '/' . ltrim($baseDir . $initDir, '/') . $filename;
 
 		if (!file_exists($fn))
+		{
 			return false;
+		}
 
-		$ser_content = "";
+		$ser_content = '';
 		$dateexpire = 0;
 		$datecreate = 0;
 		$zeroDanger = false;
@@ -285,19 +294,23 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 			$INCLUDE_FROM_CACHE = 'Y';
 
 			if (!@include($fn))
+			{
 				return false;
+			}
 		}
 		else
 		{
-			$handle = fopen($fn, "rb");
+			$handle = fopen($fn, 'rb');
 			if (!$handle)
+			{
 				return false;
+			}
 
 			$datecreate = fread($handle, 2);
-			if ($datecreate == "BX")
+			if ($datecreate == 'BX')
 			{
 				$datecreate = fread($handle, 12);
-				$dateexpire = fread($handle, 12);
+				fread($handle, 12); // unused dateexpire
 			}
 			else
 			{
@@ -305,7 +318,6 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 			}
 		}
 
-		/* We suppress warning here in order not to break the compression under Zend Server */
 		$this->read = @filesize($fn);
 		$this->path = $fn;
 
@@ -314,7 +326,7 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 		{
 			if ($this->useLock)
 			{
-				if ($this->lock($fn))
+				if (static::lock($fn))
 				{
 					$res = false;
 				}
@@ -325,7 +337,7 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 			}
 		}
 
-		if($res == true)
+		if ($res)
 		{
 			if (is_array($vars))
 			{
@@ -337,7 +349,7 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 			}
 		}
 
-		if($handle)
+		if ($handle)
 		{
 			fclose($handle);
 		}
@@ -347,26 +359,27 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 
 	/**
 	 * Writes cache into the file.
-	 *
 	 * @param mixed $vars Cached result.
 	 * @param string $baseDir Base cache directory (usually /bitrix/cache).
 	 * @param string $initDir Directory within base.
 	 * @param string $filename File name.
 	 * @param integer $ttl Expiration period in seconds.
-	 *
 	 * @return void
 	 */
-	public function write($vars, $baseDir, $initDir, $filename, $ttl)
+	public function write($vars, $baseDir, $initDir, $filename, $ttl): void
 	{
-		static $search = array("\\", "'", "\0");
-		static $replace = array("\\\\", "\\'", "'.chr(0).'");
-		$documentRoot = Main\Loader::getDocumentRoot();
-		$folder = $documentRoot."/".ltrim($baseDir.$initDir, "/");
-		$fn = $folder.$filename;
-		$fnTmp = $folder.md5(mt_rand()).".tmp";
+		static $search = ["\\", "'", "\0"];
+		static $replace = ["\\\\", "\\'", "'.chr(0).'"];
+
+		$ttl = (int) $ttl;
+		$folder = $this->rootDirectory . '/' . ltrim($baseDir . $initDir, '/');
+		$fn = $folder . $filename;
+		$fnTmp = $folder . md5(mt_rand()) . '.tmp';
 
 		if (!CheckDirPath($fn))
+		{
 			return;
+		}
 
 		if ($handle = fopen($fnTmp, "wb+"))
 		{
@@ -374,15 +387,15 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 			{
 				$contents = "<?";
 				$contents .= "\nif(\$INCLUDE_FROM_CACHE!='Y')return false;";
-				$contents .= "\n\$datecreate = '".str_pad(time(), 12, "0", STR_PAD_LEFT)."';";
-				$contents .= "\n\$dateexpire = '".str_pad(time() + intval($ttl), 12, "0", STR_PAD_LEFT)."';";
-				$contents .= "\n\$ser_content = '".str_replace($search, $replace, serialize($vars))."';";
+				$contents .= "\n\$datecreate = '" . str_pad(time(), 12, "0", STR_PAD_LEFT) . "';";
+				$contents .= "\n\$dateexpire = '" . str_pad(time() + intval($ttl), 12, "0", STR_PAD_LEFT) . "';";
+				$contents .= "\n\$ser_content = '" . str_replace($search, $replace, serialize($vars)) . "';";
 				$contents .= "\nreturn true;";
 				$contents .= "\n?>";
 			}
 			else
 			{
-				$contents = "BX".str_pad(time(), 12, "0", STR_PAD_LEFT).str_pad(time() + intval($this->ttl), 12, "0", STR_PAD_LEFT);
+				$contents = "BX" . str_pad(time(), 12, "0", STR_PAD_LEFT) . str_pad(time() + $ttl, 12, "0", STR_PAD_LEFT);
 				$contents .= $vars;
 			}
 
@@ -391,36 +404,35 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 			$len = strlen($contents);
 
 			fclose($handle);
-
 			static::unlink($fn);
 
 			if ($this->written === $len)
+			{
 				rename($fnTmp, $fn);
+			}
 
 			static::unlink($fnTmp);
 
 			if ($this->useLock)
 			{
-				$this->unlock($fn);
+				static::unlock($fn);
 			}
 		}
 	}
 
 	/**
 	 * Returns true if cache file has expired.
-	 *
 	 * @param string $path Absolute physical path.
-	 *
 	 * @return boolean
 	 */
-	public function isCacheExpired($path)
+	public function isCacheExpired($path): bool
 	{
 		if (!file_exists($path))
 		{
 			return true;
 		}
 
-		$fileHandler = fopen($path, "rb");
+		$fileHandler = fopen($path, 'rb');
 		if ($fileHandler)
 		{
 			$header = fread($fileHandler, 150);
@@ -432,13 +444,15 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 		}
 
 		if (
-			preg_match("/dateexpire\\s*=\\s*'([\\d]+)'/im", $header, $match)
+			preg_match("/dateexpire\\s*=\\s*'(\\d+)'/im", $header, $match)
 			|| preg_match("/^BX\\d{12}(\\d{12})/", $header, $match)
 			|| preg_match("/^(\\d{12})/", $header, $match)
 		)
 		{
 			if ($match[1] == '' || doubleval($match[1]) < time())
+			{
 				return true;
+			}
 		}
 
 		return false;
@@ -446,46 +460,49 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 
 	/**
 	 * Deletes one cache directory. Works no longer than etime.
-	 *
 	 * @param integer $etime Timestamp when to stop working.
-	 * @param boolean $ar Record from b_cache_tag.
-	 *
+	 * @param array $path Record from b_cache_tag.
 	 * @return void
 	 */
-	protected static function deleteOneDir($etime = 0, $ar = false)
+	protected static function deleteOneDir(int $etime = 0, array $path = []): void
 	{
+		if (empty($path))
+		{
+			return;
+		}
+
 		$deleteFromQueue = false;
-		$dirName = Main\Loader::getDocumentRoot().$ar["RELATIVE_PATH"];
-		if ($ar["RELATIVE_PATH"] != '' && file_exists($dirName))
+		$root = CacheEngineFiles::getInstance()->rootDirectory;
+		$dirName = $root . $path['PREFIX'];
+
+		if ($path['PREFIX'] != '' && file_exists($dirName))
 		{
 			if (is_file($dirName))
 			{
-				DeleteDirFilesEx($ar["RELATIVE_PATH"]);
+				DeleteDirFilesEx($path['PREFIX'], $root);
 				$deleteFromQueue = true;
 			}
-			else
+			elseif (($dir = scandir($dirName)) !== false)
 			{
-				$dh = opendir($dirName);
-				if (is_resource($dh))
+				$counter = count($dir);
+				foreach ($dir as $file)
 				{
-					$counter = 0;
-					while (($file = readdir($dh)) !== false)
+					$counter--;
+					if ($file != '.' && $file != '..')
 					{
-						if ($file != "." && $file != "..")
-						{
-							DeleteDirFilesEx($ar["RELATIVE_PATH"]."/".$file);
-							$counter++;
-							if (time() > $etime)
-								break;
-						}
+						DeleteDirFilesEx($path['PREFIX'] . '/' . $file, $root);
 					}
-					closedir($dh);
 
-					if ($counter == 0)
+					if (time() > $etime)
 					{
-						rmdir($dirName);
-						$deleteFromQueue = true;
+						break;
 					}
+				}
+
+				if ($counter == 0)
+				{
+					rmdir($dirName);
+					$deleteFromQueue = true;
 				}
 			}
 		}
@@ -496,36 +513,46 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 
 		if ($deleteFromQueue)
 		{
-			$con = Main\Application::getConnection();
-			$con->queryExecute("DELETE FROM b_cache_tag WHERE ID = ".intval($ar["ID"]));
+			CacheCleanPathTable::delete($path['ID']);
 		}
 	}
 
 	/**
 	 * Agent function which deletes marked cache directories.
-	 *
-	 * @param integer $count Desired delete count.
-	 *
-	 * @return string
+	 * @return void
 	 */
-	public static function delayedDelete($count = 1)
+	public static function delayedDelete(): void
 	{
 		$delta = 10;
 		$deleted = 0;
-		$etime = time() + 2;
+		$etime = time() + 5;
 
-		$count = (int) $count;
+		$managedCache = Application::getInstance()->getManagedCache();
+		$needClean = $managedCache->read(3600, 'needClean');
+
+		if ($needClean != 'Y')
+		{
+			static::unlock(CacheEngineFiles::getInstance()->rootDirectory . BX_ROOT . '/cache/cacheCleanJob_lock.php');
+			return;
+		}
+
+		$count = (int)$managedCache->getImmediate(604800, 'delCount');
 		if ($count < 1)
 		{
 			$count = 1;
 		}
 
-		$con = Main\Application::getConnection();
-		$rs = $con->query("SELECT * from b_cache_tag WHERE TAG='*'", 0, $count + $delta);
-		while ($ar = $rs->fetch())
+		$paths = CacheCleanPathTable::query()
+			->setSelect(['ID', 'PREFIX'])
+			->where('CLEAN_FROM', '<=', new \Bitrix\Main\Type\DateTime())
+			->where('CLUSTER_GROUP', static::$clusterGroup)
+			->setLimit($count + $delta)
+			->exec();
+
+		while($path = $paths->fetch())
 		{
+			static::deleteOneDir($etime, $path);
 			$deleted++;
-			static::deleteOneDir($etime, $ar);
 
 			if (time() > $etime)
 			{
@@ -542,13 +569,37 @@ class CacheEngineFiles implements CacheEngineInterface, CacheEngineStatInterface
 			$count--;
 		}
 
-		if ($deleted > 0)
+		$managedCache->read(604800, 'delCount');
+		if ($deleted > $count)
 		{
-			return "\\Bitrix\\Main\\Data\\CacheEngineFiles::delayedDelete(" . $count . ");";
+			$managedCache->setImmediate('delCount', $deleted);
 		}
-		else
+		elseif ($deleted < $count && $count > 1)
 		{
-			return "";
+			$managedCache->setImmediate('delCount', $deleted);
 		}
+
+		if ($deleted == 0)
+		{
+			$managedCache->read(3600, 'needClean');
+			$managedCache->setImmediate('needClean', $deleted);
+		}
+
+		static::unlock(CacheEngineFiles::getInstance()->rootDirectory . BX_ROOT . '/cache/cacheCleanJob_lock.php');
+	}
+
+	public static function addCleanPath(): void
+	{
+		if (empty(static::$cleanQueue))
+		{
+			return;
+		}
+
+		foreach (array_chunk(static::$cleanQueue, 100) as $chunk)
+		{
+			CacheCleanPathTable::addMulti($chunk, true);
+		}
+
+		static::$cleanQueue = [];
 	}
 }

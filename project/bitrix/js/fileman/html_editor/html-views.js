@@ -372,6 +372,7 @@ class BXEditorIframeCopilot
 
 		this.bindHandlers();
 
+		BX.Event.EventEmitter.emit('onHtmlEditorCopilotInit', { copilot: this.copilot });
 		this.copilot.init();
 	}
 
@@ -566,7 +567,10 @@ class BXEditorIframeCopilot
 
 	handleResizeWindow()
 	{
-		this.copilot.adjustWidth(this.getCopilotWidth());
+		if (this.copilot.isShown())
+		{
+			this.copilot.adjustWidth(this.getCopilotWidth());
+		}
 	}
 
 	removeResultNodes()
@@ -675,6 +679,7 @@ class BXEditorIframeCopilot
 	show(showFromSpace = false)
 	{
 		this.copilot.setContext(this.contentEditable.innerText);
+		BX.Event.EventEmitter.emit('onHtmlEditorCopilotShow', { contexText: this.contentEditable.innerText });
 
 		this.insertResultNode.remove();
 		this.getSelection().getRangeAt(0).insertNode(this.insertResultNode);
@@ -709,6 +714,7 @@ class BXEditorIframeCopilot
 	showAtTheBottom()
 	{
 		this.copilot.setContext(this.contentEditable.innerText);
+		BX.Event.EventEmitter.emit('onHtmlEditorCopilotShow', { contexText: this.contentEditable.innerText });
 
 		this.insertResultNode.remove();
 
@@ -820,6 +826,7 @@ class BXEditorIframeCopilot
 
 	copilotButtonClickHandler()
 	{
+		BX.Event.EventEmitter.emit('onHtmlEditorCopilotShow', { contexText: this.contentEditable.innerText });
 		const adjustOptions = this.getAdjustOptions(this.getSelection().getRangeAt(0));
 
 		this.copilot.setSelectedText(this.getSelection().toString());
@@ -1085,6 +1092,13 @@ class BXEditorIframeCopilot
 		}
 
 		this.removeZwnbspSequence();
+
+		const range = selection.getRangeAt(0);
+		const contentEditableOffset = parseInt(getComputedStyle(this.contentEditable).paddingLeft);
+		if (range.getBoundingClientRect().x > contentEditableOffset)
+		{
+			return false;
+		}
 
 		if (selection.focusNode.outerHTML === '<span><br></span>' || selection.focusNode.outerHTML === '<div><br></div>')
 		{
@@ -2175,7 +2189,7 @@ var focusWithoutScrolling = function(element)
 			return true;
 		}
 
-		if (keyCode === this.editor.KEY_CODES["enter"] && !BX.browser.IsFirefox() && this.editor.action.IsSupported('insertLineBreak'))
+		if (keyCode === this.editor.KEY_CODES["enter"] && this.editor.action.IsSupported('insertLineBreak'))
 		{
 			if (BX.browser.IsIE10() || BX.browser.IsIE11())
 			{
@@ -2189,11 +2203,7 @@ var focusWithoutScrolling = function(element)
 				// Chrome 43.0.2357 in Mac puts visible space instead of invisible
 				if (BX.browser.IsMac())
 				{
-					var tmpId = "bx-editor-temp-" + Math.round(Math.random() * 1000000);
-					this.editor.action.Exec('insertHTML', '<span id="' + tmpId + '">' + this.editor.INVISIBLE_SPACE + '</span>');
-					var tmpElement = this.editor.GetIframeElement(tmpId);
-					if (tmpElement)
-						BX.remove(tmpElement);
+					return BX.PreventDefault(e);
 				}
 				else
 				{

@@ -34,7 +34,7 @@ import {
 	ListItemNode,
 } from 'ui.lexical.list';
 
-import type TextEditor from '../../text-editor';
+import { type TextEditor } from '../../text-editor';
 import type { SchemeValidationOptions } from '../../types/scheme-validation-options';
 import type {
 	BBCodeConversion,
@@ -43,8 +43,6 @@ import type {
 	BBCodeExportOutput,
 	BBCodeExportConversion,
 } from '../../bbcode';
-
-import './list.css';
 
 export class ListPlugin extends BasePlugin
 {

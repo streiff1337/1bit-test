@@ -52,7 +52,7 @@ import { $wrapNodeInElement, $findMatchingParent, mergeRegister } from 'ui.lexic
 import {
 	LinkNode,
 	TOGGLE_LINK_COMMAND,
-	toggleLink,
+	$toggleLink,
 	$createLinkNode,
 	$isLinkNode,
 	$isAutoLinkNode,
@@ -60,8 +60,7 @@ import {
 	type AutoLinkNode,
 } from 'ui.lexical.link';
 
-import type TextEditor from '../../text-editor';
-import './link.css';
+import { type TextEditor } from '../../text-editor';
 
 export const INSERT_LINK_DIALOG_COMMAND: LexicalCommand<string> = createCommand('INSERT_LINK_DIALOG_COMMAND');
 
@@ -185,7 +184,7 @@ export class LinkPlugin extends BasePlugin
 			(payload): boolean => {
 				if (payload === null)
 				{
-					toggleLink(payload);
+					$toggleLink(payload);
 
 					return true;
 				}
@@ -227,7 +226,7 @@ export class LinkPlugin extends BasePlugin
 						}
 						else
 						{
-							toggleLink(url, attributes);
+							$toggleLink(url, attributes);
 						}
 
 						return true;
@@ -330,7 +329,7 @@ export class LinkPlugin extends BasePlugin
 									this.getEditor().update(() => {
 										this.#restoreSelection();
 
-										this.getEditor().dispatchCommand(TOGGLE_LINK_COMMAND, { url, originalUrl });
+										this.getEditor().dispatchCommand(TOGGLE_LINK_COMMAND, { url, originalUrl, rel: null });
 										linkEditor.setEditMode(false);
 
 										const currentSelection: RangeSelection = $getSelection();
@@ -511,7 +510,7 @@ export class LinkPlugin extends BasePlugin
 				// If we select nodes that are elements then avoid applying the link.
 				if (!selection.getNodes().some((node) => $isElementNode(node)))
 				{
-					toggleLink(clipboardText);
+					$toggleLink(clipboardText);
 					event.preventDefault();
 
 					return true;
@@ -519,7 +518,7 @@ export class LinkPlugin extends BasePlugin
 
 				return false;
 			},
-			COMMAND_PRIORITY_LOW,
+			COMMAND_PRIORITY_NORMAL,
 		);
 	}
 

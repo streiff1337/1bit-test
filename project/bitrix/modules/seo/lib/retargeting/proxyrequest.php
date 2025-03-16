@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace Bitrix\Seo\Retargeting;
 
@@ -33,11 +33,22 @@ class ProxyRequest extends Request
 		$parameters['proxy_client_id'] = $this->getAuthAdapter()->getClientId();
 		$parameters['lang'] = LANGUAGE_ID;
 
+		if (!$engine->getInterface())
+		{
+			return false;
+		}
+
 		$transport = $engine->getInterface()->getTransport();
-		if ($params['timeout'])
+		if (isset($params['timeout']))
 		{
 			$transport->setTimeout($params['timeout']);
 		}
+
+		if (isset($params['streamTimeout']))
+		{
+			$transport->setStreamTimeout((int)$params['streamTimeout']);
+		}
+
 		$response = $transport->call($methodName, $parameters);
 		if ($response['result']['RESULT'])
 		{

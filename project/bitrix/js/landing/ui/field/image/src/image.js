@@ -166,7 +166,7 @@ export class Image extends TextField
 			});
 
 			this.aiButton = Image.createAiButton(this.compactMode);
-			this.aiButton.on("click", () => {
+			BX.bind(this.aiButton.layout, 'click', () => {
 				if (this.isAiImageActive)
 				{
 					this.onAiClick();
@@ -537,10 +537,16 @@ export class Image extends TextField
 
 	showCopilot()
 	{
-		this.copilotBindElement = this.dropzone.hidden ? this.preview : this.dropzone;
+		this.copilotBindElement = this.aiButton.layout;
+		const offsetY = 3;
+		const copilotBindElementPosition = this.copilotBindElement.getBoundingClientRect();
+
 		this.imageCopilot.show({
 			width: 500,
-			bindElement: this.copilotBindElement,
+			bindElement: {
+				top: copilotBindElementPosition.bottom + offsetY,
+				left: copilotBindElementPosition.left,
+			},
 		});
 		this.imageCopilot.adjustPosition({});
 	}

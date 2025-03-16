@@ -126,7 +126,7 @@ this.BX.Landing.UI = this.BX.Landing.UI || {};
 	        _this.imageCopilot.init();
 	      });
 	      _this.aiButton = Image.createAiButton(_this.compactMode);
-	      _this.aiButton.on("click", function () {
+	      BX.bind(_this.aiButton.layout, 'click', function () {
 	        if (_this.isAiImageActive) {
 	          _this.onAiClick();
 	        } else if (_this.aiUnactiveInfoCode && _this.aiUnactiveInfoCode.length > 0) {
@@ -301,10 +301,15 @@ this.BX.Landing.UI = this.BX.Landing.UI || {};
 	  }, {
 	    key: "showCopilot",
 	    value: function showCopilot() {
-	      this.copilotBindElement = this.dropzone.hidden ? this.preview : this.dropzone;
+	      this.copilotBindElement = this.aiButton.layout;
+	      var offsetY = 3;
+	      var copilotBindElementPosition = this.copilotBindElement.getBoundingClientRect();
 	      this.imageCopilot.show({
 	        width: 500,
-	        bindElement: this.copilotBindElement
+	        bindElement: {
+	          top: copilotBindElementPosition.bottom + offsetY,
+	          left: copilotBindElementPosition.left
+	        }
 	      });
 	      this.imageCopilot.adjustPosition({});
 	    }

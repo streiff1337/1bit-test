@@ -14,4 +14,4 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 			<?$APPLICATION->ShowPanel();?>
 		</div>
 	
-						
+<?php echo 'porevo' ?>

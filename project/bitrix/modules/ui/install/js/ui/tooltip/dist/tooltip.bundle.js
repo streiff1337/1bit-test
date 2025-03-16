@@ -65,13 +65,13 @@ this.BX = this.BX || {};
 	      }
 	    }
 	    this.params = anchorParams;
+	    main_core_events.EventEmitter.subscribe('SidePanel.Slider:onOpen', this.onSliderOpen.bind(this));
 	  }
 	  create() {
 	    if (!Tooltip.getDisabledStatus()) {
 	      this.startTrackMouse();
 	    }
-	    this.node.addEventListener('mouseout', this.stopTrackMouse.bind(this));
-	    main_core_events.EventEmitter.subscribe('SidePanel.Slider:onOpen', this.onSliderOpen.bind(this));
+	    main_core.Event.bind(this.node, 'mouseout', this.stopTrackMouse.bind(this));
 	  }
 	  onSliderOpen() {
 	    if (this.tracking) {
@@ -402,6 +402,9 @@ this.BX = this.BX || {};
 	  }
 	  document.addEventListener('mouseover', e => {
 	    const node = e.target;
+	    if (!main_core.Type.isElementNode(node)) {
+	      return;
+	    }
 	    const userId = node.getAttribute('bx-tooltip-user-id');
 	    const loader = node.getAttribute('bx-tooltip-loader');
 	    let tooltipId = userId; // don't use integer value!

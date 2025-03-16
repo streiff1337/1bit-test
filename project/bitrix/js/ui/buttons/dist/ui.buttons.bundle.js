@@ -516,6 +516,10 @@ this.BX = this.BX || {};
 	babelHelpers.defineProperty(ButtonColor, "LIGHT_BORDER", 'ui-btn-light-border');
 	babelHelpers.defineProperty(ButtonColor, "AI", 'ui-btn-color-ai');
 	babelHelpers.defineProperty(ButtonColor, "BASE_LIGHT", 'ui-btn-base-light');
+	babelHelpers.defineProperty(ButtonColor, "COLLAB", 'ui-btn-collab');
+	babelHelpers.defineProperty(ButtonColor, "PRIMARY_BORDER", 'ui-btn-primary-border');
+	babelHelpers.defineProperty(ButtonColor, "CURTAIN_PRIMARY", 'ui-btn-primary-curtain');
+	babelHelpers.defineProperty(ButtonColor, "CURTAIN_WARNING", 'ui-btn-primary-warning');
 
 	/**
 	 * @namespace {BX.UI}
@@ -591,6 +595,7 @@ this.BX = this.BX || {};
 	babelHelpers.defineProperty(ButtonIcon, "FORWARD", 'ui-btn-icon-forward');
 	babelHelpers.defineProperty(ButtonIcon, "COPY", 'ui-btn-icon-copy');
 	babelHelpers.defineProperty(ButtonIcon, "AI", 'ui-btn-icon-ai ui-icon-set__scope');
+	babelHelpers.defineProperty(ButtonIcon, "BUSINESS_NEW", 'ui-btn-icon-business-new');
 
 	/**
 	 * @namespace {BX.UI}
@@ -1134,6 +1139,7 @@ this.BX = this.BX || {};
 	babelHelpers.defineProperty(SplitButtonState, "MENU_DISABLED", 'ui-btn-menu-disabled');
 	babelHelpers.defineProperty(SplitButtonState, "CLOCKING", 'ui-btn-clock');
 	babelHelpers.defineProperty(SplitButtonState, "WAITING", 'ui-btn-wait');
+	babelHelpers.defineProperty(SplitButtonState, "AI_WAITING", 'ui-btn-ai-waiting');
 
 	/**
 	 * @namespace {BX.UI}

@@ -4,11 +4,11 @@ namespace Bitrix\Main\Engine\Response;
 
 use Bitrix\Main;
 use Bitrix\Main\Context;
-use Bitrix\Main\Text\Encoding;
+use Bitrix\Main\Web\Uri;
 
 class Redirect extends Main\HttpResponse
 {
-	/** @var string|Main\Web\Uri $url */
+	/** @var string */
 	private $url;
 	/** @var bool */
 	private $skipSecurity;
@@ -25,7 +25,7 @@ class Redirect extends Main\HttpResponse
 	}
 
 	/**
-	 * @return Main\Web\Uri|string
+	 * @return string
 	 */
 	public function getUrl()
 	{
@@ -33,12 +33,12 @@ class Redirect extends Main\HttpResponse
 	}
 
 	/**
-	 * @param Main\Web\Uri|string $url
+	 * @param string $url
 	 * @return $this
 	 */
 	public function setUrl($url)
 	{
-		$this->url = $url;
+		$this->url = (string)$url;
 
 		return $this;
 	}
@@ -91,6 +91,11 @@ class Redirect extends Main\HttpResponse
 		if (!$isExternal && !str_starts_with($url, "/"))
 		{
 			$url = $APPLICATION->GetCurDir() . $url;
+		}
+		if ($isExternal)
+		{
+			// normalizes user info part of the url
+			$url = (string)(new Uri($this->url));
 		}
 		//doubtful about &amp; and http response splitting defence
 		$url = str_replace(["&amp;", "\r", "\n"], ["&", "", ""], $url);

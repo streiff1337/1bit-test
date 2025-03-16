@@ -3,7 +3,7 @@
  * Bitrix Framework
  * @package bitrix
  * @subpackage main
- * @copyright 2001-2022 Bitrix
+ * @copyright 2001-2024 Bitrix
  */
 
 namespace Bitrix\Main\UI;
@@ -69,7 +69,7 @@ class Copyright
 			->setVendorName(Loc::getMessage("EPILOG_ADMIN_URL_MAIN_TEXT_".$vendor))
 			->setVendorUrl(Loc::getMessage("EPILOG_ADMIN_URL_MAIN_".$vendor))
 			->setSupportUrl(Loc::getMessage("EPILOG_ADMIN_URL_SUPPORT_".$vendor))
-			->setLicenceUrl("/bitrix/legal/license.php");
+			->setLicenceUrl(\CUpdateClient::getLicenseTextPath());
 	}
 
 	/**
@@ -668,8 +668,8 @@ In addition to the Google Terms of Service (http://www.google.com/accounts/TOS),
 				->setLicence(static::LICENCE_MIT),
 
 			// ui/install/js/ui/vue3/vue
-			(new static("Vue v3.2.40"))
-				->setCopyright("Copyright 2014-2022 Evan You")
+			(new static("Vue v3.5.4"))
+				->setCopyright("2018-present Yuxi (Evan) You and Vue contributors")
 				->setProductUrl("https://vuejs.org/")
 				->setLicence(static::LICENCE_MIT),
 
@@ -680,20 +680,20 @@ In addition to the Google Terms of Service (http://www.google.com/accounts/TOS),
 				->setLicence(static::LICENCE_MIT),
 
 			// ui/install/js/ui/vue3/vuex
-			(new static("Vuex v4.0.2"))
-				->setCopyright("Copyright 2021 Evan You")
+			(new static("Vuex v4.1.0"))
+				->setCopyright("Copyright 2022 Evan You")
 				->setProductUrl("https://vuex.vuejs.org/")
 				->setLicence(static::LICENCE_MIT),
 
 			// ui/install/js/ui/vue3/router
-			(new static("Vue-router v4.1.5"))
-				->setCopyright("Copyright 2022 Eduardo San Martin Morote")
+			(new static("Vue-router v4.4.4"))
+				->setCopyright("Copyright 2024 Eduardo San Martin Morote")
 				->setProductUrl("https://router.vuejs.org/")
 				->setLicence(static::LICENCE_MIT),
 
 			// ui/install/js/ui/vue3/pinia
-			(new static("Pinia v2.0.22"))
-				->setCopyright("Copyright 2022 Eduardo San Martin Morote")
+			(new static("Pinia v2.2.2"))
+				->setCopyright("Copyright 2024 Eduardo San Martin Morote")
 				->setProductUrl("https://pinia.vuejs.org/")
 				->setLicence(static::LICENCE_MIT),
 
@@ -709,31 +709,23 @@ In addition to the Google Terms of Service (http://www.google.com/accounts/TOS),
 				->setProductUrl("http://nivo.dev7studios.com")
 				->setLicence(static::LICENCE_MIT),
 
-			// fileman/install/js/fileman/player/videojs
-			(new static("Video.js v5.16.0"))
+			// ui/install/js/ui/player/video-js
+			(new static("Video.js 8.18.1"))
 				->setCopyright("Copyright Brightcove, Inc. <https://www.brightcove.com/>")
 				->setProductUrl("http://videojs.com/")
 				->setLicence(static::LICENCE_APACHE2),
 
-			// fileman/install/js/fileman/player/videojs
-			(new static("videojs-contrib-hls v5.2.1"))
-				->setCopyright("Copyright 2017 Brightcove, Inc. <https://www.brightcove.com/>")
+			// ui/install/js/ui/player/video-js/plugins/playlist
+			(new static("Video.js Playlist 6.0.0"))
+				->setCopyright("Copyright Brightcove, Inc. <https://www.brightcove.com/>")
+				->setProductUrl("https://github.com/videojs/videojs-playlist")
 				->setLicence(static::LICENCE_APACHE2),
 
-			// fileman/install/js/fileman/player/videojs
-			(new static("videojs-playlist-thumbs v0.1.5"))
-				->setCopyright("Copyright 2016 Emmanuel Alves <manel.pb@gmail.com>")
-				->setLicence(static::LICENCE_MIT),
-
-			// fileman/install/js/fileman/player/videojs
-			(new static("videojs-vimeo v2.0.2"))
-				->setCopyright("Copyright Benoit Tremblay <trembl.ben@gmail.com>")
-				->setLicence(static::LICENCE_MIT),
-
-			// fileman/install/js/fileman/player/videojs
-			(new static("videojs-youtube v2.0.2"))
-				->setCopyright("Copyright Benoit Tremblay <trembl.ben@gmail.com>")
-				->setLicence(static::LICENCE_MIT),
+			// ui/install/js/ui/player/video-js/plugins/playlist
+			(new static("Video.js Playlist UI 5.0.0"))
+				->setCopyright("Copyright Brightcove, Inc. <https://www.brightcove.com/>")
+				->setProductUrl("https://github.com/videojs/videojs-playlist-ui")
+				->setLicence(static::LICENCE_APACHE2),
 
 			// documentgenerator/lib/external
 			(new static("Petrovich v1.0.0"))
@@ -871,6 +863,28 @@ In addition to the Google Terms of Service (http://www.google.com/accounts/TOS),
 				->setProductUrl('https://github.com/nikic/PHP-Parser/')
 				->setLicence(static::LICENCE_BSD3)
 				->setLicenceUrl('https://github.com/nikic/PHP-Parser/blob/4.x/LICENSE'),
+
+			// ui/install/js/ui/linkify
+			// mobile/install/mobileapp/mobile/extensions/bitrix/linkify
+			(new static("Linkify"))
+				->setCopyright('Copyright (c) 2021 SoapBox Innovations Inc')
+				->setProductUrl('https://github.com/Hypercontext/linkifyjs')
+				->setLicence(static::LICENCE_MIT)
+				->setLicenceUrl('https://github.com/Hypercontext/linkifyjs/blob/main/LICENSE'),
+
+			// ui/install/js/ui/lexical
+			(new static("Lexical"))
+				->setCopyright('Copyright (c) Meta Platforms, Inc. and affiliates.')
+				->setProductUrl('https://github.com/facebook/lexical/')
+				->setLicence(static::LICENCE_MIT)
+				->setLicenceUrl('https://github.com/facebook/lexical/blob/main/LICENSE'),
+
+			// booking/lib/Internals/Recurr
+			(new static("Recurr"))
+				->setCopyright('Copyright (c) 2015 Shaun Simmons')
+				->setProductUrl('https://github.com/simshaun/recurr')
+				->setLicence(static::LICENCE_MIT)
+				->setLicenceUrl('https://github.com/simshaun/recurr/blob/master/LICENSE'),
 		];
 	}
 }

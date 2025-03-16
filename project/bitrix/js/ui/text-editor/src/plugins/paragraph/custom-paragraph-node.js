@@ -3,6 +3,8 @@
 import {
 	$createParagraphNode,
 	$isTextNode,
+	$hasUpdateTag,
+	$isRootNode,
 	ParagraphNode,
 	type RangeSelection,
 	type NodeKey,
@@ -10,8 +12,6 @@ import {
 	type DOMConversionMap,
 	type DOMConversionOutput,
 	type DOMConversion,
-	type LexicalNode,
-	type TextNode, $createTextNode,
 } from 'ui.lexical.core';
 
 import { NewLineMode } from '../../constants';
@@ -66,6 +66,11 @@ export class CustomParagraphNode extends ParagraphNode
 				this.insertAfter(newElement, restoreSelection);
 
 				return newElement;
+			}
+
+			if ($hasUpdateTag('paste'))
+			{
+				return super.insertNewAfter(selection, restoreSelection);
 			}
 		}
 
@@ -125,6 +130,47 @@ export class CustomParagraphNode extends ParagraphNode
 				priority: 1,
 			}),
 		};
+	}
+
+	collapseAtStart(): boolean
+	{
+		const children = this.getChildren();
+		// If we have an empty (trimmed) first paragraph and try and remove it,
+		// delete the paragraph as long as we have another sibling to go to
+		if (
+			children.length === 0
+			|| ($isTextNode(children[0]) && children[0].getTextContent().trim() === '')
+		)
+		{
+			const nextSibling = this.getNextSibling();
+			if (nextSibling !== null)
+			{
+				this.selectNext();
+				this.remove();
+
+				return true;
+			}
+
+			const prevSibling = this.getPreviousSibling();
+			if (prevSibling !== null)
+			{
+				this.selectPrevious();
+				this.remove();
+
+				return true;
+			}
+
+			const parentNode = this.getParent();
+			if (
+				parentNode !== null
+				&& !$isRootNode(parentNode)
+				&& Object.getPrototypeOf(parentNode).hasOwnProperty('collapseAtStart'))
+			{
+				return parentNode.collapseAtStart();
+			}
+		}
+
+		return false;
 	}
 
 	static importJSON(serializedParagraphNode: SerializedCustomParagraphNode): ParagraphNode

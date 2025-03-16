@@ -9,7 +9,7 @@ import {
 import { BBCodeScheme, BBCodeFragmentNode } from 'ui.bbcode.model';
 import * as NodeFormatters from './node-formatters';
 
-import 'ui.icon-set.actions';
+import 'ui.typography';
 
 export type HtmlFormatterOptions = FormatterOptions & {
 	linkSettings?: {
@@ -32,6 +32,8 @@ export type HtmlFormatterOptions = FormatterOptions & {
 			department: string,
 		},
 	},
+	fileMode: 'disk' | 'file',
+	containerMode: 'none' | 'void' | 'collapsed',
 };
 
 const globalSettings = Extension.getSettings('ui.bbcode.formatter.html-formatter');
@@ -43,16 +45,12 @@ export class HtmlFormatter extends Formatter
 {
 	#linkSettings: HtmlFormatterOptions['linkSettings'];
 	#mentionSettings: HtmlFormatterOptions['mention'];
+	#fileMode: HtmlFormatterOptions['fileMode'];
+	#containerMode: HtmlFormatterOptions['container'];
 
 	constructor(options: HtmlFormatterOptions = {})
 	{
-		super({
-			formatters: Object.values(NodeFormatters).map((FormatterClass: NodeFormatter) => {
-				return new FormatterClass();
-			}),
-		});
-
-		this.setNodeFormatters(options.formatters);
+		super();
 
 		this.setLinkSettings({
 			...globalSettings.linkSettings,
@@ -63,73 +61,16 @@ export class HtmlFormatter extends Formatter
 			...globalSettings.mention,
 			...options.mention,
 		});
-	}
 
-	static decodeAmpersand(source: ?string): string
-	{
-		if (Type.isStringFilled(source))
-		{
-			return source.replaceAll(/&amp;/gi, '&');
-		}
+		this.#fileMode = ['file', 'disk'].includes(options.fileMode) ? options.fileMode : null;
 
-		return '';
-	}
+		const defaultFormatters = Object.values(NodeFormatters).map((FormatterClass: NodeFormatter) => {
+			return new FormatterClass({ formatter: this });
+		});
 
-	static decodeSquareBrackets(source: ?string): string
-	{
-		if (Type.isStringFilled(source))
-		{
-			return source
-				.replaceAll(/&#91;/g, '[')
-				.replaceAll(/&#93;/g, ']');
-		}
-
-		return '';
-	}
-
-	static stripFormFeedCharacter(source: ?string): string
-	{
-		if (Type.isStringFilled(source))
-		{
-			return source.replaceAll(/\f/gi, '');
-		}
-
-		return '';
-	}
-
-	static encodeSingleQuotes(source: ?string): string
-	{
-		if (Type.isStringFilled(source))
-		{
-			return source.replaceAll('\'', '%27');
-		}
-
-		return '';
-	}
-
-	static isAbsolutePath(path: ?string): boolean
-	{
-		return String(path).startsWith('/');
-	}
-
-	isHrefStartsWithAllowedScheme(sourceHref: ?string): boolean
-	{
-		return (
-			Type.isStringFilled(sourceHref)
-			&& (new RegExp(`/^${this.getLinkSettings().allowedSchemes}/`)).test(sourceHref)
-		);
-	}
-
-	assignDefaultUrlScheme(sourceHref: ?string): string
-	{
-		if (Type.isStringFilled(sourceHref))
-		{
-			const defaultScheme: string = this.getLinkSettings().defaultScheme;
-
-			return `${defaultScheme}://${sourceHref}`;
-		}
-
-		return '';
+		this.setContainerMode(options.containerMode);
+		this.setNodeFormatters(defaultFormatters);
+		this.setNodeFormatters(options.formatters);
 	}
 
 	isShortLinkEnabled(): boolean
@@ -143,29 +84,6 @@ export class HtmlFormatter extends Formatter
 		);
 	}
 
-	makeSafeHref(sourceHref: ?string): string
-	{
-		if (Type.isStringFilled(sourceHref))
-		{
-			let preparedHref = HtmlFormatter.decodeAmpersand(sourceHref);
-			preparedHref = HtmlFormatter.decodeSquareBrackets(preparedHref);
-			preparedHref = HtmlFormatter.stripFormFeedCharacter(preparedHref);
-			preparedHref = HtmlFormatter.encodeSingleQuotes(preparedHref);
-
-			if (
-				!HtmlFormatter.isAbsolutePath(preparedHref)
-				&& !this.isHrefStartsWithAllowedScheme(preparedHref)
-			)
-			{
-				preparedHref = this.assignDefaultUrlScheme(preparedHref);
-			}
-
-			return preparedHref;
-		}
-
-		return '';
-	}
-
 	setLinkSettings(settings: HtmlFormatterOptions['linkSettings'])
 	{
 		this.#linkSettings = { ...settings };
@@ -176,6 +94,11 @@ export class HtmlFormatter extends Formatter
 		return this.#linkSettings;
 	}
 
+	getFileMode(): HtmlFormatterOptions['fileMode'] | null
+	{
+		return this.#fileMode;
+	}
+
 	setMentionSettings(settings: HtmlFormatterOptions['mention'])
 	{
 		this.#mentionSettings = { ...settings };
@@ -184,6 +107,36 @@ export class HtmlFormatter extends Formatter
 	getMentionSettings(): HtmlFormatterOptions['mention']
 	{
 		return this.#mentionSettings;
+	}
+
+	setContainerMode(mode: HtmlFormatterOptions['containerMode']): void
+	{
+		this.#containerMode = mode;
+	}
+
+	getContainerMode(): HtmlFormatterOptions['container']
+	{
+		return this.#containerMode;
+	}
+
+	isElement(source): boolean
+	{
+		if (source.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
+		{
+			return true;
+		}
+
+		if (source.nodeType !== Node.ELEMENT_NODE || this.#isVoidElement(source))
+		{
+			return false;
+		}
+
+		return Type.isUndefined(source.dataset.decorator);
+	}
+
+	#isVoidElement(source): boolean
+	{
+		return ['img', 'br', 'hr', 'input'].includes(source.tagName.toLowerCase());
 	}
 
 	getDefaultUnknownNodeCallback(options): (UnknownNodeCallbackOptions) => NodeFormatter | null

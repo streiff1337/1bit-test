@@ -577,7 +577,9 @@ this.BX.UI = this.BX.UI || {};
 	        bgColor: null,
 	        bgImage: null,
 	        border: null,
-	        borderRadius: null
+	        borderRadius: null,
+	        outline: null,
+	        outlineOffset: null
 	      };
 	      this.textColor = '';
 	      this.link = '';
@@ -1058,6 +1060,10 @@ this.BX.UI = this.BX.UI || {};
 	      } else {
 	        this.getAvatarContainer().style.removeProperty('border-radius');
 	      }
+	      const outline = this.getAvatarOption('outline');
+	      main_core.Dom.style(this.getAvatarContainer(), 'outline', outline);
+	      const outlineOffset = this.getAvatarOption('outlineOffset');
+	      main_core.Dom.style(this.getAvatarContainer(), 'outline-offset', outlineOffset);
 	      main_core.Dom.clean(this.getBadgeContainer());
 	      this.getBadges().forEach(badge => {
 	        badge.renderTo(this.getBadgeContainer());
@@ -3261,7 +3267,8 @@ this.BX.UI = this.BX.UI || {};
 	        maxWidth: this.getTagMaxWidth(),
 	        textColor: this.getTagTextColor(),
 	        bgColor: this.getTagBgColor(),
-	        fontWeight: this.getTagFontWeight()
+	        fontWeight: this.getTagFontWeight(),
+	        onclick: this.getTagOption('onclick')
 	      };
 	    }
 	  }, {
@@ -4145,6 +4152,8 @@ this.BX.UI = this.BX.UI || {};
 	  _t4$2,
 	  _t5$1,
 	  _t6;
+	function _classStaticPrivateMethodGet$1(receiver, classConstructor, method) { _classCheckPrivateStaticAccess$1(receiver, classConstructor); return method; }
+	function _classCheckPrivateStaticAccess$1(receiver, classConstructor) { if (receiver !== classConstructor) { throw new TypeError("Private static access of wrong provenance"); } }
 	let TagItem = /*#__PURE__*/function () {
 	  function TagItem(itemOptions) {
 	    babelHelpers.classCallCheck(this, TagItem);
@@ -4160,6 +4169,7 @@ this.BX.UI = this.BX.UI || {};
 	    babelHelpers.defineProperty(this, "fontWeight", null);
 	    babelHelpers.defineProperty(this, "link", null);
 	    babelHelpers.defineProperty(this, "onclick", null);
+	    babelHelpers.defineProperty(this, "clickable", null);
 	    babelHelpers.defineProperty(this, "deselectable", null);
 	    babelHelpers.defineProperty(this, "customData", null);
 	    babelHelpers.defineProperty(this, "cache", new main_core.Cache.MemoryCache());
@@ -4186,6 +4196,7 @@ this.BX.UI = this.BX.UI || {};
 	    this.setTextColor(options.textColor);
 	    this.setBgColor(options.bgColor);
 	    this.setFontWeight(options.fontWeight);
+	    this.setClickable(options.clickable);
 	  }
 	  babelHelpers.createClass(TagItem, [{
 	    key: "getId",
@@ -4234,9 +4245,11 @@ this.BX.UI = this.BX.UI || {};
 	    value: function getAvatar() {
 	      if (this.avatar !== null) {
 	        return this.avatar;
-	      } else if (this.getSelector().getTagAvatar() !== null) {
+	      }
+	      if (this.getSelector().getTagAvatar() !== null) {
 	        return this.getSelector().getTagAvatar();
-	      } else if (this.getEntityTagOption('avatar') !== null) {
+	      }
+	      if (this.getEntityTagOption('avatar') !== null) {
 	        return this.getEntityTagOption('avatar');
 	      }
 	      return this.getEntityItemOption('avatar');
@@ -4292,7 +4305,8 @@ this.BX.UI = this.BX.UI || {};
 	    value: function getTextColor() {
 	      if (this.textColor !== null) {
 	        return this.textColor;
-	      } else if (this.getSelector().getTagTextColor() !== null) {
+	      }
+	      if (this.getSelector().getTagTextColor() !== null) {
 	        return this.getSelector().getTagTextColor();
 	      }
 	      return this.getEntityTagOption('textColor');
@@ -4309,7 +4323,8 @@ this.BX.UI = this.BX.UI || {};
 	    value: function getBgColor() {
 	      if (this.bgColor !== null) {
 	        return this.bgColor;
-	      } else if (this.getSelector().getTagBgColor() !== null) {
+	      }
+	      if (this.getSelector().getTagBgColor() !== null) {
 	        return this.getSelector().getTagBgColor();
 	      }
 	      return this.getEntityTagOption('bgColor');
@@ -4326,7 +4341,8 @@ this.BX.UI = this.BX.UI || {};
 	    value: function getFontWeight() {
 	      if (this.fontWeight !== null) {
 	        return this.fontWeight;
-	      } else if (this.getSelector().getTagFontWeight() !== null) {
+	      }
+	      if (this.getSelector().getTagFontWeight() !== null) {
 	        return this.getSelector().getTagFontWeight();
 	      }
 	      return this.getEntityTagOption('fontWeight');
@@ -4343,7 +4359,8 @@ this.BX.UI = this.BX.UI || {};
 	    value: function getMaxWidth() {
 	      if (this.maxWidth !== null) {
 	        return this.maxWidth;
-	      } else if (this.getSelector().getTagMaxWidth() !== null) {
+	      }
+	      if (this.getSelector().getTagMaxWidth() !== null) {
 	        return this.getSelector().getTagMaxWidth();
 	      }
 	      return this.getEntityTagOption('maxWidth');
@@ -4365,7 +4382,7 @@ this.BX.UI = this.BX.UI || {};
 	  }, {
 	    key: "isDeselectable",
 	    value: function isDeselectable() {
-	      return this.deselectable !== null ? this.deselectable : this.getSelector().isDeselectable();
+	      return this.deselectable === null ? this.getSelector().isDeselectable() : this.deselectable;
 	    }
 	  }, {
 	    key: "getCustomData",
@@ -4383,16 +4400,41 @@ this.BX.UI = this.BX.UI || {};
 	      return this.onclick;
 	    }
 	  }, {
+	    key: "setClickable",
+	    value: function setClickable(flag) {
+	      if (main_core.Type.isBoolean(flag)) {
+	        this.clickable = flag;
+	      }
+	    }
+	  }, {
+	    key: "isClickable",
+	    value: function isClickable() {
+	      if (this.clickable !== null) {
+	        return this.clickable;
+	      }
+	      if (this.getSelector().getTagClickable() !== null) {
+	        return this.getSelector().getTagClickable();
+	      }
+	      if (this.getEntityTagOption('clickable') !== null) {
+	        return this.getEntityTagOption('clickable');
+	      }
+	      if (this.getEntityItemOption('clickable') !== null) {
+	        return this.getEntityItemOption('clickable');
+	      }
+	      return false;
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      const titleNode = this.getTitleNode();
 	      if (titleNode) {
+	        var _this$constructor;
 	        titleNode.renderTo(this.getTitleContainer());
-
-	        //Dom.attr(this.getContentContainer(), 'title', this.getTitle());
+	        const title = this.getTitleContainer().textContent;
+	        this.getContentContainer().setAttribute('title', _classStaticPrivateMethodGet$1(_this$constructor = this.constructor, TagItem, _sanitizeTitle$1).call(_this$constructor, title));
 	      } else {
 	        this.getTitleContainer().textContent = '';
-	        main_core.Dom.attr(this.getContentContainer(), 'title', '');
+	        main_core.Dom.attr(this.getContentContainer(), 'title', null);
 	      }
 	      const avatar = this.getAvatar();
 	      const bgImage = this.getAvatarOption('bgImage');
@@ -4405,10 +4447,14 @@ this.BX.UI = this.BX.UI || {};
 	      const bgSize = this.getAvatarOption('bgSize');
 	      const border = this.getAvatarOption('border');
 	      const borderRadius = this.getAvatarOption('borderRadius');
+	      const outline = this.getAvatarOption('outline');
+	      const outlineOffset = this.getAvatarOption('outlineOffset');
 	      main_core.Dom.style(this.getAvatarContainer(), 'background-color', bgColor);
 	      main_core.Dom.style(this.getAvatarContainer(), 'background-size', bgSize);
 	      main_core.Dom.style(this.getAvatarContainer(), 'border', border);
 	      main_core.Dom.style(this.getAvatarContainer(), 'border-radius', borderRadius);
+	      main_core.Dom.style(this.getAvatarContainer(), 'outline', outline);
+	      main_core.Dom.style(this.getAvatarContainer(), 'outline-offset', outlineOffset);
 	      const hasAvatar = avatar || bgColor && bgColor !== 'none' || bgImage && bgImage !== 'none';
 	      if (hasAvatar) {
 	        main_core.Dom.addClass(this.getContainer(), 'ui-tag-selector-tag--has-avatar');
@@ -4439,7 +4485,8 @@ this.BX.UI = this.BX.UI || {};
 				<div class="ui-tag-selector-item ui-tag-selector-tag">
 					${0}
 					${0}
-				</div>`), this.getContentContainer(), this.getRemoveIcon());
+				</div>
+			`), this.getContentContainer(), this.getRemoveIcon());
 	      });
 	    }
 	  }, {
@@ -4458,19 +4505,17 @@ this.BX.UI = this.BX.UI || {};
 						${0}
 					</a>
 				`), this.handleContainerClick.bind(this), this.getLink(), this.getAvatarContainer(), this.getTitleContainer());
-	        } else {
-	          const className = main_core.Type.isFunction(this.getOnclick()) ? ' ui-tag-selector-tag-content--clickable' : '';
-	          return main_core.Tag.render(_t3$2 || (_t3$2 = _$5`
-					<div 
-						class="ui-tag-selector-tag-content${0}" 
-						onclick="${0}"
-					>
-						${0}
-						${0}
-					</div>
-					
-				`), className, this.handleContainerClick.bind(this), this.getAvatarContainer(), this.getTitleContainer());
 	        }
+	        const className = this.isClickable() || this.getOnclick() !== null ? ' ui-tag-selector-tag-content--clickable' : '';
+	        return main_core.Tag.render(_t3$2 || (_t3$2 = _$5`
+				<div
+					class="ui-tag-selector-tag-content${0}"
+					onclick="${0}"
+				>
+					${0}
+					${0}
+				</div>
+			`), className, this.handleContainerClick.bind(this), this.getAvatarContainer(), this.getTitleContainer());
 	      });
 	    }
 	  }, {
@@ -4528,6 +4573,8 @@ this.BX.UI = this.BX.UI || {};
 	        Animation.handleAnimationEnd(this.getContainer(), 'ui-tag-selector-tag-remove').then(() => {
 	          main_core.Dom.remove(this.getContainer());
 	          resolve();
+	        }).catch(() => {
+	          // Fail silently
 	        });
 	      });
 	    }
@@ -4539,6 +4586,8 @@ this.BX.UI = this.BX.UI || {};
 	        Animation.handleAnimationEnd(this.getContainer(), 'ui-tag-selector-tag-show').then(() => {
 	          main_core.Dom.removeClass(this.getContainer(), 'ui-tag-selector-tag--show');
 	          resolve();
+	        }).catch(() => {
+	          // Fail silently
 	        });
 	      });
 	    }
@@ -4549,6 +4598,10 @@ this.BX.UI = this.BX.UI || {};
 	      if (main_core.Type.isFunction(fn)) {
 	        fn(this);
 	      }
+	      const selector = this.getSelector();
+	      selector.emit('TagItem:onClick', {
+	        item: this
+	      });
 	    }
 	  }, {
 	    key: "handleRemoveIconClick",
@@ -4561,6 +4614,9 @@ this.BX.UI = this.BX.UI || {};
 	  }]);
 	  return TagItem;
 	}();
+	function _sanitizeTitle$1(text) {
+	  return text.replaceAll(/[\t ]+/gm, ' ').replaceAll(/\n+/gm, '\n').trim();
+	}
 
 	let _$6 = t => t,
 	  _t$6,
@@ -4602,6 +4658,7 @@ this.BX.UI = this.BX.UI || {};
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "tagBgColor", null);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "tagFontWeight", null);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "tagMaxWidth", null);
+	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "tagClickable", null);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "dialog", null);
 	    _this.setEventNamespace('BX.UI.EntitySelector.TagSelector');
 	    const options = main_core.Type.isPlainObject(selectorOptions) ? selectorOptions : {};
@@ -4626,6 +4683,7 @@ this.BX.UI = this.BX.UI || {};
 	    _this.setTagTextColor(options.tagTextColor);
 	    _this.setTagBgColor(options.tagBgColor);
 	    _this.setTagFontWeight(options.tagFontWeight);
+	    _this.setTagClickable(options.tagClickable);
 	    if (main_core.Type.isPlainObject(options.dialogOptions)) {
 	      let selectedItems = main_core.Type.isArray(options.items) ? options.items : [];
 	      if (main_core.Type.isArray(options.dialogOptions.selectedItems)) {
@@ -5030,6 +5088,19 @@ this.BX.UI = this.BX.UI || {};
 	    value: function setTagAvatar(tagAvatar) {
 	      if (main_core.Type.isString(tagAvatar) || tagAvatar === null) {
 	        this.tagAvatar = tagAvatar;
+	        this.updateTags();
+	      }
+	    }
+	  }, {
+	    key: "getTagClickable",
+	    value: function getTagClickable() {
+	      return this.tagClickable;
+	    }
+	  }, {
+	    key: "setTagClickable",
+	    value: function setTagClickable(flag) {
+	      if (main_core.Type.isBoolean(flag) || flag === null) {
+	        this.tagClickable = flag;
 	        this.updateTags();
 	      }
 	    }
@@ -6699,6 +6770,7 @@ this.BX.UI = this.BX.UI || {};
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "height", 420);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "maxLabelWidth", 160);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "minLabelWidth", 45);
+	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "alwaysShowLabels", false);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "showAvatars", true);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "compactView", false);
 	    babelHelpers.defineProperty(babelHelpers.assertThisInitialized(_this), "activeTab", null);
@@ -6730,6 +6802,7 @@ this.BX.UI = this.BX.UI || {};
 	    _this.clearUnavailableItems = options.clearUnavailableItems === true;
 	    _this.compactView = options.compactView === true;
 	    _this.dropdownMode = main_core.Type.isBoolean(options.dropdownMode) ? options.dropdownMode : false;
+	    _this.alwaysShowLabels = main_core.Type.isBoolean(options.alwaysShowLabels) ? options.alwaysShowLabels : false;
 	    if (main_core.Type.isArray(options.entities)) {
 	      options.entities.forEach(entity => {
 	        _this.addEntity(entity);
@@ -7782,6 +7855,43 @@ this.BX.UI = this.BX.UI || {};
 	      return this.minLabelWidth;
 	    }
 	  }, {
+	    key: "expandLabels",
+	    value: function expandLabels(animate = true) {
+	      const freeSpace = parseInt(this.getPopup().getPopupContainer().style.left, 10);
+	      if (freeSpace > this.getMinLabelWidth()) {
+	        main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-hide');
+	        if (animate) {
+	          main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-show');
+	          main_core.Dom.style(this.getLabelsContainer(), 'max-width', `${Math.min(freeSpace, this.getMaxLabelWidth())}px`);
+	          Animation.handleTransitionEnd(this.getLabelsContainer(), 'max-width').then(() => {
+	            main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-show');
+	            main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--active');
+	          }).catch(() => {
+	            // fail silently
+	          });
+	        } else {
+	          main_core.Dom.style(this.getLabelsContainer(), 'max-width', `${Math.min(freeSpace, this.getMaxLabelWidth())}px`);
+	        }
+	      } else {
+	        main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--active');
+	      }
+	    }
+	  }, {
+	    key: "collapseLabels",
+	    value: function collapseLabels(animate = true) {
+	      main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-show');
+	      main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--active');
+	      if (animate) {
+	        main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-hide');
+	        Animation.handleTransitionEnd(this.getLabelsContainer(), 'max-width').then(() => {
+	          main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-hide');
+	        }).catch(() => {
+	          // fail silently
+	        });
+	      }
+	      main_core.Dom.style(this.getLabelsContainer(), 'max-width', null);
+	    }
+	  }, {
 	    key: "getTagSelector",
 	    value: function getTagSelector() {
 	      return this.tagSelector;
@@ -7976,7 +8086,7 @@ this.BX.UI = this.BX.UI || {};
 					onmouseenter="${0}"
 					onmouseleave="${0}"
 				></div>
-			`), this.handleLabelsMouseEnter.bind(this), this.handleLabelsMouseLeave.bind(this));
+			`), this.alwaysShowLabels ? null : this.handleLabelsMouseEnter.bind(this), this.alwaysShowLabels ? null : this.handleLabelsMouseLeave.bind(this));
 	      });
 	    }
 	  }, {
@@ -8357,6 +8467,12 @@ this.BX.UI = this.BX.UI || {};
 	          });
 	        });
 	      }
+	      if (this.alwaysShowLabels) {
+	        setTimeout(() => {
+	          // We have to call the method after adjustPosition()
+	          this.expandLabels(false);
+	        }, 0);
+	      }
 	    }
 	    /**
 	     * @private
@@ -8392,6 +8508,9 @@ this.BX.UI = this.BX.UI || {};
 	          const left = parseInt(this.getPopup().getPopupContainer().style.left, 10);
 	          if (left < this.getMinLabelWidth()) {
 	            main_core.Dom.style(this.getPopup().getPopupContainer(), 'left', `${this.getMinLabelWidth()}px`);
+	            this.collapseLabels(false);
+	          } else if (this.alwaysShowLabels) {
+	            this.expandLabels(false);
 	          }
 	        }
 	      });
@@ -8443,19 +8562,7 @@ this.BX.UI = this.BX.UI || {};
 	  }, {
 	    key: "handleLabelsMouseEnter",
 	    value: function handleLabelsMouseEnter() {
-	      const rect = main_core.Dom.getRelativePosition(this.getLabelsContainer(), this.getPopup().getTargetContainer());
-	      const freeSpace = rect.right;
-	      if (freeSpace > this.getMinLabelWidth()) {
-	        main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-hide');
-	        main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-show');
-	        main_core.Dom.style(this.getLabelsContainer(), 'max-width', `${Math.min(freeSpace, this.getMaxLabelWidth())}px`);
-	        Animation.handleTransitionEnd(this.getLabelsContainer(), 'max-width').then(() => {
-	          main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-show');
-	          main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--active');
-	        });
-	      } else {
-	        main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--active');
-	      }
+	      this.expandLabels();
 	    }
 	    /**
 	     * @private
@@ -8463,13 +8570,7 @@ this.BX.UI = this.BX.UI || {};
 	  }, {
 	    key: "handleLabelsMouseLeave",
 	    value: function handleLabelsMouseLeave() {
-	      main_core.Dom.addClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-hide');
-	      main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-show');
-	      main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--active');
-	      Animation.handleTransitionEnd(this.getLabelsContainer(), 'max-width').then(() => {
-	        main_core.Dom.removeClass(this.getLabelsContainer(), 'ui-selector-tab-labels--animate-hide');
-	      });
-	      main_core.Dom.style(this.getLabelsContainer(), 'max-width', null);
+	      this.collapseLabels();
 	    }
 	    /**
 	     * @private

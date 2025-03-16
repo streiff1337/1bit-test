@@ -56,7 +56,7 @@ namespace Bitrix\Main\Analytics {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Analytics\EO_CounterData wakeUp($data)
@@ -94,7 +94,7 @@ namespace Bitrix\Main\Analytics {
 	 * @method \Bitrix\Main\Analytics\EO_CounterData[] getAll()
 	 * @method bool remove(\Bitrix\Main\Analytics\EO_CounterData $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Analytics\EO_CounterData_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -107,8 +107,9 @@ namespace Bitrix\Main\Analytics {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_CounterData_Collection merge(?EO_CounterData_Collection $collection)
+	 * @method \Bitrix\Main\Analytics\EO_CounterData_Collection merge(?\Bitrix\Main\Analytics\EO_CounterData_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_CounterData_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Analytics\CounterDataTable */
@@ -123,10 +124,6 @@ namespace Bitrix\Main\Analytics {
 	 * @method EO_CounterData_Result exec()
 	 * @method \Bitrix\Main\Analytics\EO_CounterData fetchObject()
 	 * @method \Bitrix\Main\Analytics\EO_CounterData_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_CounterData_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -288,7 +285,7 @@ namespace Bitrix\Main\Authentication {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\EO_ApplicationPassword wakeUp($data)
@@ -345,7 +342,7 @@ namespace Bitrix\Main\Authentication {
 	 * @method \Bitrix\Main\Authentication\EO_ApplicationPassword[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\EO_ApplicationPassword $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\EO_ApplicationPassword_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -358,8 +355,9 @@ namespace Bitrix\Main\Authentication {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_ApplicationPassword_Collection merge(?EO_ApplicationPassword_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\EO_ApplicationPassword_Collection merge(?\Bitrix\Main\Authentication\EO_ApplicationPassword_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_ApplicationPassword_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\ApplicationPasswordTable */
@@ -374,10 +372,6 @@ namespace Bitrix\Main\Authentication {
 	 * @method EO_ApplicationPassword_Result exec()
 	 * @method \Bitrix\Main\Authentication\EO_ApplicationPassword fetchObject()
 	 * @method \Bitrix\Main\Authentication\EO_ApplicationPassword_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_ApplicationPassword_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -439,7 +433,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_GroupSubordinate wakeUp($data)
@@ -475,7 +469,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_GroupSubordinate[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_GroupSubordinate $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_GroupSubordinate_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -488,8 +482,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_GroupSubordinate_Collection merge(?EO_GroupSubordinate_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_GroupSubordinate_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_GroupSubordinate_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_GroupSubordinate_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\GroupSubordinateTable */
@@ -504,10 +499,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_GroupSubordinate_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_GroupSubordinate fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_GroupSubordinate_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_GroupSubordinate_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -609,7 +600,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_ModuleGroup wakeUp($data)
@@ -654,7 +645,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_ModuleGroup[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_ModuleGroup $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_ModuleGroup_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -667,8 +658,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_ModuleGroup_Collection merge(?EO_ModuleGroup_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_ModuleGroup_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_ModuleGroup_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_ModuleGroup_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\ModuleGroupTable */
@@ -683,10 +675,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_ModuleGroup_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_ModuleGroup fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_ModuleGroup_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_ModuleGroup_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -793,7 +781,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserAuthCode wakeUp($data)
@@ -839,7 +827,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserAuthCode[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_UserAuthCode $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserAuthCode_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -852,8 +840,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserAuthCode_Collection merge(?EO_UserAuthCode_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserAuthCode_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_UserAuthCode_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserAuthCode_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\UserAuthCodeTable */
@@ -868,10 +857,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_UserAuthCode_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserAuthCode fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserAuthCode_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserAuthCode_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -1013,7 +998,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin wakeUp($data)
@@ -1065,7 +1050,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -1078,8 +1063,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserDeviceLogin_Collection merge(?EO_UserDeviceLogin_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserDeviceLogin_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\UserDeviceLoginTable */
@@ -1094,10 +1080,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_UserDeviceLogin_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDeviceLogin_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserDeviceLogin_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -1197,6 +1179,16 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice resetCookable()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice unsetCookable()
 	 * @method \boolean fillCookable()
+	 * @method \int getAppPasswordId()
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice setAppPasswordId(\int|\Bitrix\Main\DB\SqlExpression $appPasswordId)
+	 * @method bool hasAppPasswordId()
+	 * @method bool isAppPasswordIdFilled()
+	 * @method bool isAppPasswordIdChanged()
+	 * @method \int remindActualAppPasswordId()
+	 * @method \int requireAppPasswordId()
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice resetAppPasswordId()
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice unsetAppPasswordId()
+	 * @method \int fillAppPasswordId()
 	 *
 	 * Common methods:
 	 * ---------------
@@ -1219,7 +1211,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserDevice wakeUp($data)
@@ -1255,6 +1247,8 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \string[] fillUserAgent()
 	 * @method \boolean[] getCookableList()
 	 * @method \boolean[] fillCookable()
+	 * @method \int[] getAppPasswordIdList()
+	 * @method \int[] fillAppPasswordId()
 	 *
 	 * Common methods:
 	 * ---------------
@@ -1267,7 +1261,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_UserDevice $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserDevice_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -1280,8 +1274,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserDevice_Collection merge(?EO_UserDevice_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_UserDevice_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserDevice_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\UserDeviceTable */
@@ -1296,10 +1291,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_UserDevice_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserDevice_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserDevice_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -1421,7 +1412,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserHitAuth wakeUp($data)
@@ -1470,7 +1461,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserHitAuth[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_UserHitAuth $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserHitAuth_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -1483,8 +1474,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserHitAuth_Collection merge(?EO_UserHitAuth_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserHitAuth_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_UserHitAuth_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserHitAuth_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\UserHitAuthTable */
@@ -1499,10 +1491,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_UserHitAuth_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserHitAuth fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserHitAuth_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserHitAuth_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -1594,7 +1582,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserPassword wakeUp($data)
@@ -1637,7 +1625,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserPassword[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_UserPassword $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserPassword_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -1650,8 +1638,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserPassword_Collection merge(?EO_UserPassword_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserPassword_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_UserPassword_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserPassword_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\UserPasswordTable */
@@ -1666,10 +1655,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_UserPassword_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserPassword fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserPassword_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserPassword_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -1781,7 +1766,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserStoredAuth wakeUp($data)
@@ -1827,7 +1812,7 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserStoredAuth[] getAll()
 	 * @method bool remove(\Bitrix\Main\Authentication\Internal\EO_UserStoredAuth $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Authentication\Internal\EO_UserStoredAuth_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -1840,8 +1825,9 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserStoredAuth_Collection merge(?EO_UserStoredAuth_Collection $collection)
+	 * @method \Bitrix\Main\Authentication\Internal\EO_UserStoredAuth_Collection merge(?\Bitrix\Main\Authentication\Internal\EO_UserStoredAuth_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserStoredAuth_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Authentication\Internal\UserStoredAuthTable */
@@ -1856,10 +1842,6 @@ namespace Bitrix\Main\Authentication\Internal {
 	 * @method EO_UserStoredAuth_Result exec()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserStoredAuth fetchObject()
 	 * @method \Bitrix\Main\Authentication\Internal\EO_UserStoredAuth_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserStoredAuth_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -2001,7 +1983,7 @@ namespace Bitrix\Main\Component {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Component\EO_Parameters wakeUp($data)
@@ -2053,7 +2035,7 @@ namespace Bitrix\Main\Component {
 	 * @method \Bitrix\Main\Component\EO_Parameters[] getAll()
 	 * @method bool remove(\Bitrix\Main\Component\EO_Parameters $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Component\EO_Parameters_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -2066,8 +2048,9 @@ namespace Bitrix\Main\Component {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Parameters_Collection merge(?EO_Parameters_Collection $collection)
+	 * @method \Bitrix\Main\Component\EO_Parameters_Collection merge(?\Bitrix\Main\Component\EO_Parameters_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Parameters_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Component\ParametersTable */
@@ -2082,10 +2065,6 @@ namespace Bitrix\Main\Component {
 	 * @method EO_Parameters_Result exec()
 	 * @method \Bitrix\Main\Component\EO_Parameters fetchObject()
 	 * @method \Bitrix\Main\Component\EO_Parameters_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Parameters_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -2244,7 +2223,7 @@ namespace Bitrix\Main\Composite\Debug\Model {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Composite\Debug\Model\EO_Log wakeUp($data)
@@ -2301,7 +2280,7 @@ namespace Bitrix\Main\Composite\Debug\Model {
 	 * @method \Bitrix\Main\Composite\Debug\Model\EO_Log[] getAll()
 	 * @method bool remove(\Bitrix\Main\Composite\Debug\Model\EO_Log $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Composite\Debug\Model\EO_Log_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -2314,8 +2293,9 @@ namespace Bitrix\Main\Composite\Debug\Model {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Log_Collection merge(?EO_Log_Collection $collection)
+	 * @method \Bitrix\Main\Composite\Debug\Model\EO_Log_Collection merge(?\Bitrix\Main\Composite\Debug\Model\EO_Log_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Log_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Composite\Debug\Model\LogTable */
@@ -2330,10 +2310,6 @@ namespace Bitrix\Main\Composite\Debug\Model {
 	 * @method EO_Log_Result exec()
 	 * @method \Bitrix\Main\Composite\Debug\Model\EO_Log fetchObject()
 	 * @method \Bitrix\Main\Composite\Debug\Model\EO_Log_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Log_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -2485,7 +2461,7 @@ namespace Bitrix\Main\Composite\Internals\Model {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Composite\Internals\Model\EO_Page wakeUp($data)
@@ -2539,7 +2515,7 @@ namespace Bitrix\Main\Composite\Internals\Model {
 	 * @method \Bitrix\Main\Composite\Internals\Model\EO_Page[] getAll()
 	 * @method bool remove(\Bitrix\Main\Composite\Internals\Model\EO_Page $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Composite\Internals\Model\EO_Page_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -2552,8 +2528,9 @@ namespace Bitrix\Main\Composite\Internals\Model {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Page_Collection merge(?EO_Page_Collection $collection)
+	 * @method \Bitrix\Main\Composite\Internals\Model\EO_Page_Collection merge(?\Bitrix\Main\Composite\Internals\Model\EO_Page_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Page_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Composite\Internals\Model\PageTable */
@@ -2568,10 +2545,6 @@ namespace Bitrix\Main\Composite\Internals\Model {
 	 * @method EO_Page_Result exec()
 	 * @method \Bitrix\Main\Composite\Internals\Model\EO_Page fetchObject()
 	 * @method \Bitrix\Main\Composite\Internals\Model\EO_Page_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Page_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -2863,7 +2836,7 @@ namespace Bitrix\Main\Localization {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Context\Culture wakeUp($data)
@@ -2945,7 +2918,7 @@ namespace Bitrix\Main\Localization {
 	 * @method \Bitrix\Main\Context\Culture[] getAll()
 	 * @method bool remove(\Bitrix\Main\Context\Culture $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Localization\EO_Culture_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -2958,8 +2931,9 @@ namespace Bitrix\Main\Localization {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Culture_Collection merge(?EO_Culture_Collection $collection)
+	 * @method \Bitrix\Main\Localization\EO_Culture_Collection merge(?\Bitrix\Main\Localization\EO_Culture_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Culture_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Localization\CultureTable */
@@ -2974,10 +2948,6 @@ namespace Bitrix\Main\Localization {
 	 * @method EO_Culture_Result exec()
 	 * @method \Bitrix\Main\Context\Culture fetchObject()
 	 * @method \Bitrix\Main\Localization\EO_Culture_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Culture_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -2992,6 +2962,320 @@ namespace Bitrix\Main\Localization {
 	 * @method \Bitrix\Main\Localization\EO_Culture_Collection wakeUpCollection($rows)
 	 */
 	class EO_Culture_Entity extends \Bitrix\Main\ORM\Entity {}
+}
+/* ORMENTITYANNOTATION:Bitrix\Main\Data\Internal\CacheCleanPathTable:main/lib/data/internal/cachecleanpathtable.php */
+namespace Bitrix\Main\Data\Internal {
+	/**
+	 * EO_CacheCleanPath
+	 * @see \Bitrix\Main\Data\Internal\CacheCleanPathTable
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \int getId()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath setId(\int|\Bitrix\Main\DB\SqlExpression $id)
+	 * @method bool hasId()
+	 * @method bool isIdFilled()
+	 * @method bool isIdChanged()
+	 * @method \string getPrefix()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath setPrefix(\string|\Bitrix\Main\DB\SqlExpression $prefix)
+	 * @method bool hasPrefix()
+	 * @method bool isPrefixFilled()
+	 * @method bool isPrefixChanged()
+	 * @method \string remindActualPrefix()
+	 * @method \string requirePrefix()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath resetPrefix()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath unsetPrefix()
+	 * @method \string fillPrefix()
+	 * @method \Bitrix\Main\Type\DateTime getCleanFrom()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath setCleanFrom(\Bitrix\Main\Type\DateTime|\Bitrix\Main\DB\SqlExpression $cleanFrom)
+	 * @method bool hasCleanFrom()
+	 * @method bool isCleanFromFilled()
+	 * @method bool isCleanFromChanged()
+	 * @method \Bitrix\Main\Type\DateTime remindActualCleanFrom()
+	 * @method \Bitrix\Main\Type\DateTime requireCleanFrom()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath resetCleanFrom()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath unsetCleanFrom()
+	 * @method \Bitrix\Main\Type\DateTime fillCleanFrom()
+	 * @method \int getClusterGroup()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath setClusterGroup(\int|\Bitrix\Main\DB\SqlExpression $clusterGroup)
+	 * @method bool hasClusterGroup()
+	 * @method bool isClusterGroupFilled()
+	 * @method bool isClusterGroupChanged()
+	 * @method \int remindActualClusterGroup()
+	 * @method \int requireClusterGroup()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath resetClusterGroup()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath unsetClusterGroup()
+	 * @method \int fillClusterGroup()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @property-read array $primary
+	 * @property-read int $state @see \Bitrix\Main\ORM\Objectify\State
+	 * @property-read \Bitrix\Main\Type\Dictionary $customData
+	 * @property \Bitrix\Main\Authentication\Context $authContext
+	 * @method mixed get($fieldName)
+	 * @method mixed remindActual($fieldName)
+	 * @method mixed require($fieldName)
+	 * @method bool has($fieldName)
+	 * @method bool isFilled($fieldName)
+	 * @method bool isChanged($fieldName)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath set($fieldName, $value)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath reset($fieldName)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath unset($fieldName)
+	 * @method void addTo($fieldName, $value)
+	 * @method void removeFrom($fieldName, $value)
+	 * @method void removeAll($fieldName)
+	 * @method \Bitrix\Main\ORM\Data\Result delete()
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
+	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
+	 * @method static \Bitrix\Main\Data\Internal\EO_CacheCleanPath wakeUp($data)
+	 */
+	class EO_CacheCleanPath {
+		/* @var \Bitrix\Main\Data\Internal\CacheCleanPathTable */
+		static public $dataClass = '\Bitrix\Main\Data\Internal\CacheCleanPathTable';
+		/**
+		 * @param bool|array $setDefaultValues
+		 */
+		public function __construct($setDefaultValues = true) {}
+	}
+}
+namespace Bitrix\Main\Data\Internal {
+	/**
+	 * EO_CacheCleanPath_Collection
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \int[] getIdList()
+	 * @method \string[] getPrefixList()
+	 * @method \string[] fillPrefix()
+	 * @method \Bitrix\Main\Type\DateTime[] getCleanFromList()
+	 * @method \Bitrix\Main\Type\DateTime[] fillCleanFrom()
+	 * @method \int[] getClusterGroupList()
+	 * @method \int[] fillClusterGroup()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @method void add(\Bitrix\Main\Data\Internal\EO_CacheCleanPath $object)
+	 * @method bool has(\Bitrix\Main\Data\Internal\EO_CacheCleanPath $object)
+	 * @method bool hasByPrimary($primary)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath getByPrimary($primary)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath[] getAll()
+	 * @method bool remove(\Bitrix\Main\Data\Internal\EO_CacheCleanPath $object)
+	 * @method void removeByPrimary($primary)
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method static \Bitrix\Main\Data\Internal\EO_CacheCleanPath_Collection wakeUp($data)
+	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
+	 * @method void offsetSet() ArrayAccess
+	 * @method void offsetExists() ArrayAccess
+	 * @method void offsetUnset() ArrayAccess
+	 * @method void offsetGet() ArrayAccess
+	 * @method void rewind() Iterator
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath current() Iterator
+	 * @method mixed key() Iterator
+	 * @method void next() Iterator
+	 * @method bool valid() Iterator
+	 * @method int count() Countable
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath_Collection merge(?\Bitrix\Main\Data\Internal\EO_CacheCleanPath_Collection $collection)
+	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
+	 */
+	class EO_CacheCleanPath_Collection implements \ArrayAccess, \Iterator, \Countable {
+		/* @var \Bitrix\Main\Data\Internal\CacheCleanPathTable */
+		static public $dataClass = '\Bitrix\Main\Data\Internal\CacheCleanPathTable';
+	}
+}
+namespace Bitrix\Main\Data\Internal {
+	/**
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @method EO_CacheCleanPath_Result exec()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath fetchObject()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath_Collection fetchCollection()
+	 */
+	class EO_CacheCleanPath_Query extends \Bitrix\Main\ORM\Query\Query {}
+	/**
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath fetchObject()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath_Collection fetchCollection()
+	 */
+	class EO_CacheCleanPath_Result extends \Bitrix\Main\ORM\Query\Result {}
+	/**
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath createObject($setDefaultValues = true)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath_Collection createCollection()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath wakeUpObject($row)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheCleanPath_Collection wakeUpCollection($rows)
+	 */
+	class EO_CacheCleanPath_Entity extends \Bitrix\Main\ORM\Entity {}
+}
+/* ORMENTITYANNOTATION:Bitrix\Main\Data\Internal\CacheTagTable:main/lib/data/internal/cachetagtable.php */
+namespace Bitrix\Main\Data\Internal {
+	/**
+	 * EO_CacheTag
+	 * @see \Bitrix\Main\Data\Internal\CacheTagTable
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \int getId()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag setId(\int|\Bitrix\Main\DB\SqlExpression $id)
+	 * @method bool hasId()
+	 * @method bool isIdFilled()
+	 * @method bool isIdChanged()
+	 * @method \string getSiteId()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag setSiteId(\string|\Bitrix\Main\DB\SqlExpression $siteId)
+	 * @method bool hasSiteId()
+	 * @method bool isSiteIdFilled()
+	 * @method bool isSiteIdChanged()
+	 * @method \string remindActualSiteId()
+	 * @method \string requireSiteId()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag resetSiteId()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag unsetSiteId()
+	 * @method \string fillSiteId()
+	 * @method \string getCacheSalt()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag setCacheSalt(\string|\Bitrix\Main\DB\SqlExpression $cacheSalt)
+	 * @method bool hasCacheSalt()
+	 * @method bool isCacheSaltFilled()
+	 * @method bool isCacheSaltChanged()
+	 * @method \string remindActualCacheSalt()
+	 * @method \string requireCacheSalt()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag resetCacheSalt()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag unsetCacheSalt()
+	 * @method \string fillCacheSalt()
+	 * @method \string getRelativePath()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag setRelativePath(\string|\Bitrix\Main\DB\SqlExpression $relativePath)
+	 * @method bool hasRelativePath()
+	 * @method bool isRelativePathFilled()
+	 * @method bool isRelativePathChanged()
+	 * @method \string remindActualRelativePath()
+	 * @method \string requireRelativePath()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag resetRelativePath()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag unsetRelativePath()
+	 * @method \string fillRelativePath()
+	 * @method \string getTag()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag setTag(\string|\Bitrix\Main\DB\SqlExpression $tag)
+	 * @method bool hasTag()
+	 * @method bool isTagFilled()
+	 * @method bool isTagChanged()
+	 * @method \string remindActualTag()
+	 * @method \string requireTag()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag resetTag()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag unsetTag()
+	 * @method \string fillTag()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @property-read array $primary
+	 * @property-read int $state @see \Bitrix\Main\ORM\Objectify\State
+	 * @property-read \Bitrix\Main\Type\Dictionary $customData
+	 * @property \Bitrix\Main\Authentication\Context $authContext
+	 * @method mixed get($fieldName)
+	 * @method mixed remindActual($fieldName)
+	 * @method mixed require($fieldName)
+	 * @method bool has($fieldName)
+	 * @method bool isFilled($fieldName)
+	 * @method bool isChanged($fieldName)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag set($fieldName, $value)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag reset($fieldName)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag unset($fieldName)
+	 * @method void addTo($fieldName, $value)
+	 * @method void removeFrom($fieldName, $value)
+	 * @method void removeAll($fieldName)
+	 * @method \Bitrix\Main\ORM\Data\Result delete()
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
+	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
+	 * @method static \Bitrix\Main\Data\Internal\EO_CacheTag wakeUp($data)
+	 */
+	class EO_CacheTag {
+		/* @var \Bitrix\Main\Data\Internal\CacheTagTable */
+		static public $dataClass = '\Bitrix\Main\Data\Internal\CacheTagTable';
+		/**
+		 * @param bool|array $setDefaultValues
+		 */
+		public function __construct($setDefaultValues = true) {}
+	}
+}
+namespace Bitrix\Main\Data\Internal {
+	/**
+	 * EO_CacheTag_Collection
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \int[] getIdList()
+	 * @method \string[] getSiteIdList()
+	 * @method \string[] fillSiteId()
+	 * @method \string[] getCacheSaltList()
+	 * @method \string[] fillCacheSalt()
+	 * @method \string[] getRelativePathList()
+	 * @method \string[] fillRelativePath()
+	 * @method \string[] getTagList()
+	 * @method \string[] fillTag()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @method void add(\Bitrix\Main\Data\Internal\EO_CacheTag $object)
+	 * @method bool has(\Bitrix\Main\Data\Internal\EO_CacheTag $object)
+	 * @method bool hasByPrimary($primary)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag getByPrimary($primary)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag[] getAll()
+	 * @method bool remove(\Bitrix\Main\Data\Internal\EO_CacheTag $object)
+	 * @method void removeByPrimary($primary)
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method static \Bitrix\Main\Data\Internal\EO_CacheTag_Collection wakeUp($data)
+	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
+	 * @method void offsetSet() ArrayAccess
+	 * @method void offsetExists() ArrayAccess
+	 * @method void offsetUnset() ArrayAccess
+	 * @method void offsetGet() ArrayAccess
+	 * @method void rewind() Iterator
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag current() Iterator
+	 * @method mixed key() Iterator
+	 * @method void next() Iterator
+	 * @method bool valid() Iterator
+	 * @method int count() Countable
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag_Collection merge(?\Bitrix\Main\Data\Internal\EO_CacheTag_Collection $collection)
+	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
+	 */
+	class EO_CacheTag_Collection implements \ArrayAccess, \Iterator, \Countable {
+		/* @var \Bitrix\Main\Data\Internal\CacheTagTable */
+		static public $dataClass = '\Bitrix\Main\Data\Internal\CacheTagTable';
+	}
+}
+namespace Bitrix\Main\Data\Internal {
+	/**
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @method EO_CacheTag_Result exec()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag fetchObject()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag_Collection fetchCollection()
+	 */
+	class EO_CacheTag_Query extends \Bitrix\Main\ORM\Query\Query {}
+	/**
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag fetchObject()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag_Collection fetchCollection()
+	 */
+	class EO_CacheTag_Result extends \Bitrix\Main\ORM\Query\Result {}
+	/**
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag createObject($setDefaultValues = true)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag_Collection createCollection()
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag wakeUpObject($row)
+	 * @method \Bitrix\Main\Data\Internal\EO_CacheTag_Collection wakeUpCollection($rows)
+	 */
+	class EO_CacheTag_Entity extends \Bitrix\Main\ORM\Entity {}
 }
 /* ORMENTITYANNOTATION:Bitrix\Main\EventLog\Internal\EventLogTable:main/lib/eventlog/internal/eventlogtable.php */
 namespace Bitrix\Main\EventLog\Internal {
@@ -3149,7 +3433,7 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EventLog\Internal\EO_EventLog wakeUp($data)
@@ -3207,7 +3491,7 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method \Bitrix\Main\EventLog\Internal\EO_EventLog[] getAll()
 	 * @method bool remove(\Bitrix\Main\EventLog\Internal\EO_EventLog $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EventLog\Internal\EO_EventLog_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -3220,8 +3504,9 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_EventLog_Collection merge(?EO_EventLog_Collection $collection)
+	 * @method \Bitrix\Main\EventLog\Internal\EO_EventLog_Collection merge(?\Bitrix\Main\EventLog\Internal\EO_EventLog_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_EventLog_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\EventLog\Internal\EventLogTable */
@@ -3236,10 +3521,6 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method EO_EventLog_Result exec()
 	 * @method \Bitrix\Main\EventLog\Internal\EO_EventLog fetchObject()
 	 * @method \Bitrix\Main\EventLog\Internal\EO_EventLog_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_EventLog_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -3341,7 +3622,7 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EventLog\Internal\EO_LogNotificationAction wakeUp($data)
@@ -3386,7 +3667,7 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotificationAction[] getAll()
 	 * @method bool remove(\Bitrix\Main\EventLog\Internal\EO_LogNotificationAction $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EventLog\Internal\EO_LogNotificationAction_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -3399,8 +3680,9 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_LogNotificationAction_Collection merge(?EO_LogNotificationAction_Collection $collection)
+	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotificationAction_Collection merge(?\Bitrix\Main\EventLog\Internal\EO_LogNotificationAction_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_LogNotificationAction_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\EventLog\Internal\LogNotificationActionTable */
@@ -3415,10 +3697,6 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method EO_LogNotificationAction_Result exec()
 	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotificationAction fetchObject()
 	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotificationAction_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_LogNotificationAction_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -3591,7 +3869,7 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EventLog\Internal\EO_LogNotification wakeUp($data)
@@ -3650,7 +3928,7 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotification[] getAll()
 	 * @method bool remove(\Bitrix\Main\EventLog\Internal\EO_LogNotification $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EventLog\Internal\EO_LogNotification_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -3663,8 +3941,9 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_LogNotification_Collection merge(?EO_LogNotification_Collection $collection)
+	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotification_Collection merge(?\Bitrix\Main\EventLog\Internal\EO_LogNotification_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_LogNotification_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\EventLog\Internal\LogNotificationTable */
@@ -3679,10 +3958,6 @@ namespace Bitrix\Main\EventLog\Internal {
 	 * @method EO_LogNotification_Result exec()
 	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotification fetchObject()
 	 * @method \Bitrix\Main\EventLog\Internal\EO_LogNotification_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_LogNotification_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -3759,7 +4034,7 @@ namespace Bitrix\Main\File\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\File\Internal\EO_FileDuplicate wakeUp($data)
@@ -3798,7 +4073,7 @@ namespace Bitrix\Main\File\Internal {
 	 * @method \Bitrix\Main\File\Internal\EO_FileDuplicate[] getAll()
 	 * @method bool remove(\Bitrix\Main\File\Internal\EO_FileDuplicate $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\File\Internal\EO_FileDuplicate_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -3811,8 +4086,9 @@ namespace Bitrix\Main\File\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_FileDuplicate_Collection merge(?EO_FileDuplicate_Collection $collection)
+	 * @method \Bitrix\Main\File\Internal\EO_FileDuplicate_Collection merge(?\Bitrix\Main\File\Internal\EO_FileDuplicate_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_FileDuplicate_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\File\Internal\FileDuplicateTable */
@@ -3827,10 +4103,6 @@ namespace Bitrix\Main\File\Internal {
 	 * @method EO_FileDuplicate_Result exec()
 	 * @method \Bitrix\Main\File\Internal\EO_FileDuplicate fetchObject()
 	 * @method \Bitrix\Main\File\Internal\EO_FileDuplicate_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_FileDuplicate_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -3912,7 +4184,7 @@ namespace Bitrix\Main\File\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\File\Internal\EO_FileHash wakeUp($data)
@@ -3953,7 +4225,7 @@ namespace Bitrix\Main\File\Internal {
 	 * @method \Bitrix\Main\File\Internal\EO_FileHash[] getAll()
 	 * @method bool remove(\Bitrix\Main\File\Internal\EO_FileHash $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\File\Internal\EO_FileHash_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -3966,8 +4238,9 @@ namespace Bitrix\Main\File\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_FileHash_Collection merge(?EO_FileHash_Collection $collection)
+	 * @method \Bitrix\Main\File\Internal\EO_FileHash_Collection merge(?\Bitrix\Main\File\Internal\EO_FileHash_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_FileHash_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\File\Internal\FileHashTable */
@@ -3982,10 +4255,6 @@ namespace Bitrix\Main\File\Internal {
 	 * @method EO_FileHash_Result exec()
 	 * @method \Bitrix\Main\File\Internal\EO_FileHash fetchObject()
 	 * @method \Bitrix\Main\File\Internal\EO_FileHash_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_FileHash_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -4057,7 +4326,7 @@ namespace Bitrix\Main\File\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\File\Internal\EO_FileVersion wakeUp($data)
@@ -4095,7 +4364,7 @@ namespace Bitrix\Main\File\Internal {
 	 * @method \Bitrix\Main\File\Internal\EO_FileVersion[] getAll()
 	 * @method bool remove(\Bitrix\Main\File\Internal\EO_FileVersion $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\File\Internal\EO_FileVersion_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -4108,8 +4377,9 @@ namespace Bitrix\Main\File\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_FileVersion_Collection merge(?EO_FileVersion_Collection $collection)
+	 * @method \Bitrix\Main\File\Internal\EO_FileVersion_Collection merge(?\Bitrix\Main\File\Internal\EO_FileVersion_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_FileVersion_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\File\Internal\FileVersionTable */
@@ -4124,10 +4394,6 @@ namespace Bitrix\Main\File\Internal {
 	 * @method EO_FileVersion_Result exec()
 	 * @method \Bitrix\Main\File\Internal\EO_FileVersion fetchObject()
 	 * @method \Bitrix\Main\File\Internal\EO_FileVersion_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_FileVersion_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -4309,7 +4575,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_File wakeUp($data)
@@ -4370,7 +4636,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_File[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_File $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_File_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -4383,8 +4649,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_File_Collection merge(?EO_File_Collection $collection)
+	 * @method \Bitrix\Main\EO_File_Collection merge(?\Bitrix\Main\EO_File_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_File_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\FileTable */
@@ -4399,10 +4666,6 @@ namespace Bitrix\Main {
 	 * @method EO_File_Result exec()
 	 * @method \Bitrix\Main\EO_File fetchObject()
 	 * @method \Bitrix\Main\EO_File_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_File_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -4557,7 +4820,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_FinderDest wakeUp($data)
@@ -4617,7 +4880,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_FinderDest[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_FinderDest $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_FinderDest_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -4630,8 +4893,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_FinderDest_Collection merge(?EO_FinderDest_Collection $collection)
+	 * @method \Bitrix\Main\EO_FinderDest_Collection merge(?\Bitrix\Main\EO_FinderDest_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_FinderDest_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\FinderDestTable */
@@ -4646,10 +4910,6 @@ namespace Bitrix\Main {
 	 * @method EO_FinderDest_Result exec()
 	 * @method \Bitrix\Main\EO_FinderDest fetchObject()
 	 * @method \Bitrix\Main\EO_FinderDest_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_FinderDest_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -4804,7 +5064,7 @@ namespace Bitrix\Main\UI\EntitySelector {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UI\EntitySelector\EO_EntityUsage wakeUp($data)
@@ -4864,7 +5124,7 @@ namespace Bitrix\Main\UI\EntitySelector {
 	 * @method \Bitrix\Main\UI\EntitySelector\EO_EntityUsage[] getAll()
 	 * @method bool remove(\Bitrix\Main\UI\EntitySelector\EO_EntityUsage $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UI\EntitySelector\EO_EntityUsage_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -4877,8 +5137,9 @@ namespace Bitrix\Main\UI\EntitySelector {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_EntityUsage_Collection merge(?EO_EntityUsage_Collection $collection)
+	 * @method \Bitrix\Main\UI\EntitySelector\EO_EntityUsage_Collection merge(?\Bitrix\Main\UI\EntitySelector\EO_EntityUsage_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_EntityUsage_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UI\EntitySelector\EntityUsageTable */
@@ -4893,10 +5154,6 @@ namespace Bitrix\Main\UI\EntitySelector {
 	 * @method EO_EntityUsage_Result exec()
 	 * @method \Bitrix\Main\UI\EntitySelector\EO_EntityUsage fetchObject()
 	 * @method \Bitrix\Main\UI\EntitySelector\EO_EntityUsage_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_EntityUsage_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -5038,7 +5295,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_Group wakeUp($data)
@@ -5090,7 +5347,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_Group[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_Group $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_Group_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -5103,8 +5360,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Group_Collection merge(?EO_Group_Collection $collection)
+	 * @method \Bitrix\Main\EO_Group_Collection merge(?\Bitrix\Main\EO_Group_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Group_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\GroupTable */
@@ -5119,10 +5377,6 @@ namespace Bitrix\Main {
 	 * @method EO_Group_Result exec()
 	 * @method \Bitrix\Main\EO_Group fetchObject()
 	 * @method \Bitrix\Main\EO_Group_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Group_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -5209,7 +5463,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_GroupTask wakeUp($data)
@@ -5252,7 +5506,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_GroupTask[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_GroupTask $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_GroupTask_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -5265,8 +5519,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_GroupTask_Collection merge(?EO_GroupTask_Collection $collection)
+	 * @method \Bitrix\Main\EO_GroupTask_Collection merge(?\Bitrix\Main\EO_GroupTask_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_GroupTask_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\GroupTaskTable */
@@ -5281,10 +5536,6 @@ namespace Bitrix\Main {
 	 * @method EO_GroupTask_Result exec()
 	 * @method \Bitrix\Main\EO_GroupTask fetchObject()
 	 * @method \Bitrix\Main\EO_GroupTask_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_GroupTask_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -5420,7 +5671,7 @@ namespace Bitrix\Main\Localization {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Localization\EO_Language wakeUp($data)
@@ -5473,7 +5724,7 @@ namespace Bitrix\Main\Localization {
 	 * @method \Bitrix\Main\Localization\EO_Language[] getAll()
 	 * @method bool remove(\Bitrix\Main\Localization\EO_Language $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Localization\EO_Language_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -5486,8 +5737,9 @@ namespace Bitrix\Main\Localization {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Language_Collection merge(?EO_Language_Collection $collection)
+	 * @method \Bitrix\Main\Localization\EO_Language_Collection merge(?\Bitrix\Main\Localization\EO_Language_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Language_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Localization\LanguageTable */
@@ -5502,10 +5754,6 @@ namespace Bitrix\Main\Localization {
 	 * @method EO_Language_Result exec()
 	 * @method \Bitrix\Main\Localization\EO_Language fetchObject()
 	 * @method \Bitrix\Main\Localization\EO_Language_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Language_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -5587,7 +5835,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_Blacklist wakeUp($data)
@@ -5627,7 +5875,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_Blacklist[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_Blacklist $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_Blacklist_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -5640,8 +5888,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Blacklist_Collection merge(?EO_Blacklist_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_Blacklist_Collection merge(?\Bitrix\Main\Mail\Internal\EO_Blacklist_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Blacklist_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\BlacklistTable */
@@ -5656,10 +5905,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_Blacklist_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_Blacklist fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_Blacklist_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Blacklist_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -5801,7 +6046,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_Event wakeUp($data)
@@ -5853,7 +6098,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_Event[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_Event $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_Event_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -5866,8 +6111,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Event_Collection merge(?EO_Event_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_Event_Collection merge(?\Bitrix\Main\Mail\Internal\EO_Event_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Event_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\EventTable */
@@ -5882,10 +6128,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_Event_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_Event fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_Event_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Event_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -5967,7 +6209,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventAttachment wakeUp($data)
@@ -6008,7 +6250,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventAttachment[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_EventAttachment $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventAttachment_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -6021,8 +6263,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_EventAttachment_Collection merge(?EO_EventAttachment_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_EventAttachment_Collection merge(?\Bitrix\Main\Mail\Internal\EO_EventAttachment_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_EventAttachment_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\EventAttachmentTable */
@@ -6037,10 +6280,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_EventAttachment_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventAttachment fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventAttachment_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_EventAttachment_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -6322,7 +6561,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventMessage wakeUp($data)
@@ -6403,7 +6642,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessage[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_EventMessage $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventMessage_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -6416,8 +6655,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_EventMessage_Collection merge(?EO_EventMessage_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessage_Collection merge(?\Bitrix\Main\Mail\Internal\EO_EventMessage_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_EventMessage_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\EventMessageTable */
@@ -6432,10 +6672,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_EventMessage_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessage fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessage_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_EventMessage_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -6492,7 +6728,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventMessageAttachment wakeUp($data)
@@ -6527,7 +6763,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageAttachment[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_EventMessageAttachment $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventMessageAttachment_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -6540,8 +6776,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_EventMessageAttachment_Collection merge(?EO_EventMessageAttachment_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageAttachment_Collection merge(?\Bitrix\Main\Mail\Internal\EO_EventMessageAttachment_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_EventMessageAttachment_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\EventMessageAttachmentTable */
@@ -6556,10 +6793,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_EventMessageAttachment_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageAttachment fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageAttachment_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_EventMessageAttachment_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -6616,7 +6849,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventMessageSite wakeUp($data)
@@ -6651,7 +6884,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageSite[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_EventMessageSite $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventMessageSite_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -6664,8 +6897,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_EventMessageSite_Collection merge(?EO_EventMessageSite_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageSite_Collection merge(?\Bitrix\Main\Mail\Internal\EO_EventMessageSite_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_EventMessageSite_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\EventMessageSiteTable */
@@ -6680,10 +6914,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_EventMessageSite_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageSite fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventMessageSite_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_EventMessageSite_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -6795,7 +7025,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventType wakeUp($data)
@@ -6841,7 +7071,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventType[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_EventType $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_EventType_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -6854,8 +7084,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_EventType_Collection merge(?EO_EventType_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_EventType_Collection merge(?\Bitrix\Main\Mail\Internal\EO_EventType_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_EventType_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\EventTypeTable */
@@ -6870,10 +7101,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_EventType_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventType fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_EventType_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_EventType_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -7005,7 +7232,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\Sender wakeUp($data)
@@ -7055,7 +7282,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\Sender[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\Sender $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_Sender_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -7068,8 +7295,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Sender_Collection merge(?EO_Sender_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_Sender_Collection merge(?\Bitrix\Main\Mail\Internal\EO_Sender_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Sender_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\SenderTable */
@@ -7084,10 +7312,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_Sender_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\Sender fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_Sender_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Sender_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -7154,7 +7378,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Mail\Internal\EO_SenderSendCounter wakeUp($data)
@@ -7191,7 +7415,7 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method \Bitrix\Main\Mail\Internal\EO_SenderSendCounter[] getAll()
 	 * @method bool remove(\Bitrix\Main\Mail\Internal\EO_SenderSendCounter $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Mail\Internal\EO_SenderSendCounter_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -7204,8 +7428,9 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_SenderSendCounter_Collection merge(?EO_SenderSendCounter_Collection $collection)
+	 * @method \Bitrix\Main\Mail\Internal\EO_SenderSendCounter_Collection merge(?\Bitrix\Main\Mail\Internal\EO_SenderSendCounter_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_SenderSendCounter_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Mail\Internal\SenderSendCounterTable */
@@ -7220,10 +7445,6 @@ namespace Bitrix\Main\Mail\Internal {
 	 * @method EO_SenderSendCounter_Result exec()
 	 * @method \Bitrix\Main\Mail\Internal\EO_SenderSendCounter fetchObject()
 	 * @method \Bitrix\Main\Mail\Internal\EO_SenderSendCounter_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_SenderSendCounter_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -7285,7 +7506,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_Module wakeUp($data)
@@ -7321,7 +7542,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_Module[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_Module $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_Module_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -7334,8 +7555,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Module_Collection merge(?EO_Module_Collection $collection)
+	 * @method \Bitrix\Main\EO_Module_Collection merge(?\Bitrix\Main\EO_Module_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Module_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\ModuleTable */
@@ -7350,10 +7572,6 @@ namespace Bitrix\Main {
 	 * @method EO_Module_Result exec()
 	 * @method \Bitrix\Main\EO_Module fetchObject()
 	 * @method \Bitrix\Main\EO_Module_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Module_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -7495,7 +7713,7 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Numerator\Model\EO_Numerator wakeUp($data)
@@ -7547,7 +7765,7 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method \Bitrix\Main\Numerator\Model\EO_Numerator[] getAll()
 	 * @method bool remove(\Bitrix\Main\Numerator\Model\EO_Numerator $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Numerator\Model\EO_Numerator_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -7560,8 +7778,9 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Numerator_Collection merge(?EO_Numerator_Collection $collection)
+	 * @method \Bitrix\Main\Numerator\Model\EO_Numerator_Collection merge(?\Bitrix\Main\Numerator\Model\EO_Numerator_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Numerator_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Numerator\Model\NumeratorTable */
@@ -7576,10 +7795,6 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method EO_Numerator_Result exec()
 	 * @method \Bitrix\Main\Numerator\Model\EO_Numerator fetchObject()
 	 * @method \Bitrix\Main\Numerator\Model\EO_Numerator_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Numerator_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -7666,7 +7881,7 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Numerator\Model\EO_NumeratorSequence wakeUp($data)
@@ -7707,7 +7922,7 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method \Bitrix\Main\Numerator\Model\EO_NumeratorSequence[] getAll()
 	 * @method bool remove(\Bitrix\Main\Numerator\Model\EO_NumeratorSequence $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Numerator\Model\EO_NumeratorSequence_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -7720,8 +7935,9 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_NumeratorSequence_Collection merge(?EO_NumeratorSequence_Collection $collection)
+	 * @method \Bitrix\Main\Numerator\Model\EO_NumeratorSequence_Collection merge(?\Bitrix\Main\Numerator\Model\EO_NumeratorSequence_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_NumeratorSequence_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Numerator\Model\NumeratorSequenceTable */
@@ -7736,10 +7952,6 @@ namespace Bitrix\Main\Numerator\Model {
 	 * @method EO_NumeratorSequence_Result exec()
 	 * @method \Bitrix\Main\Numerator\Model\EO_NumeratorSequence fetchObject()
 	 * @method \Bitrix\Main\Numerator\Model\EO_NumeratorSequence_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_NumeratorSequence_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -7831,7 +8043,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_Operation wakeUp($data)
@@ -7873,7 +8085,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_Operation[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_Operation $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_Operation_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -7886,8 +8098,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Operation_Collection merge(?EO_Operation_Collection $collection)
+	 * @method \Bitrix\Main\EO_Operation_Collection merge(?\Bitrix\Main\EO_Operation_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Operation_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\OperationTable */
@@ -7902,10 +8115,6 @@ namespace Bitrix\Main {
 	 * @method EO_Operation_Result exec()
 	 * @method \Bitrix\Main\EO_Operation fetchObject()
 	 * @method \Bitrix\Main\EO_Operation_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Operation_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -8067,7 +8276,7 @@ namespace Bitrix\Main\Rating {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Rating\EO_Rating wakeUp($data)
@@ -8123,7 +8332,7 @@ namespace Bitrix\Main\Rating {
 	 * @method \Bitrix\Main\Rating\EO_Rating[] getAll()
 	 * @method bool remove(\Bitrix\Main\Rating\EO_Rating $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Rating\EO_Rating_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -8136,8 +8345,9 @@ namespace Bitrix\Main\Rating {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Rating_Collection merge(?EO_Rating_Collection $collection)
+	 * @method \Bitrix\Main\Rating\EO_Rating_Collection merge(?\Bitrix\Main\Rating\EO_Rating_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Rating_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Rating\RatingTable */
@@ -8152,10 +8362,6 @@ namespace Bitrix\Main\Rating {
 	 * @method EO_Rating_Result exec()
 	 * @method \Bitrix\Main\Rating\EO_Rating fetchObject()
 	 * @method \Bitrix\Main\Rating\EO_Rating_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Rating_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -8287,7 +8493,7 @@ namespace Bitrix\Main\Rating {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Rating\EO_Results wakeUp($data)
@@ -8338,7 +8544,7 @@ namespace Bitrix\Main\Rating {
 	 * @method \Bitrix\Main\Rating\EO_Results[] getAll()
 	 * @method bool remove(\Bitrix\Main\Rating\EO_Results $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Rating\EO_Results_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -8351,8 +8557,9 @@ namespace Bitrix\Main\Rating {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Results_Collection merge(?EO_Results_Collection $collection)
+	 * @method \Bitrix\Main\Rating\EO_Results_Collection merge(?\Bitrix\Main\Rating\EO_Results_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Results_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Rating\ResultsTable */
@@ -8367,10 +8574,6 @@ namespace Bitrix\Main\Rating {
 	 * @method EO_Results_Result exec()
 	 * @method \Bitrix\Main\Rating\EO_Results fetchObject()
 	 * @method \Bitrix\Main\Rating\EO_Results_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Results_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -8385,6 +8588,293 @@ namespace Bitrix\Main\Rating {
 	 * @method \Bitrix\Main\Rating\EO_Results_Collection wakeUpCollection($rows)
 	 */
 	class EO_Results_Entity extends \Bitrix\Main\ORM\Entity {}
+}
+/* ORMENTITYANNOTATION:Bitrix\Main\Security\Notifications\VendorNotificationSignTable:main/lib/security/notifications/vendornotificationsigntable.php */
+namespace Bitrix\Main\Security\Notifications {
+	/**
+	 * EO_VendorNotificationSign
+	 * @see \Bitrix\Main\Security\Notifications\VendorNotificationSignTable
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \int getId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign setId(\int|\Bitrix\Main\DB\SqlExpression $id)
+	 * @method bool hasId()
+	 * @method bool isIdFilled()
+	 * @method bool isIdChanged()
+	 * @method \int getUserId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign setUserId(\int|\Bitrix\Main\DB\SqlExpression $userId)
+	 * @method bool hasUserId()
+	 * @method bool isUserIdFilled()
+	 * @method bool isUserIdChanged()
+	 * @method \int remindActualUserId()
+	 * @method \int requireUserId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign resetUserId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign unsetUserId()
+	 * @method \int fillUserId()
+	 * @method \string getNotificationVendorId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign setNotificationVendorId(\string|\Bitrix\Main\DB\SqlExpression $notificationVendorId)
+	 * @method bool hasNotificationVendorId()
+	 * @method bool isNotificationVendorIdFilled()
+	 * @method bool isNotificationVendorIdChanged()
+	 * @method \string remindActualNotificationVendorId()
+	 * @method \string requireNotificationVendorId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign resetNotificationVendorId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign unsetNotificationVendorId()
+	 * @method \string fillNotificationVendorId()
+	 * @method \Bitrix\Main\Type\DateTime getDate()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign setDate(\Bitrix\Main\Type\DateTime|\Bitrix\Main\DB\SqlExpression $date)
+	 * @method bool hasDate()
+	 * @method bool isDateFilled()
+	 * @method bool isDateChanged()
+	 * @method \Bitrix\Main\Type\DateTime remindActualDate()
+	 * @method \Bitrix\Main\Type\DateTime requireDate()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign resetDate()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign unsetDate()
+	 * @method \Bitrix\Main\Type\DateTime fillDate()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @property-read array $primary
+	 * @property-read int $state @see \Bitrix\Main\ORM\Objectify\State
+	 * @property-read \Bitrix\Main\Type\Dictionary $customData
+	 * @property \Bitrix\Main\Authentication\Context $authContext
+	 * @method mixed get($fieldName)
+	 * @method mixed remindActual($fieldName)
+	 * @method mixed require($fieldName)
+	 * @method bool has($fieldName)
+	 * @method bool isFilled($fieldName)
+	 * @method bool isChanged($fieldName)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign set($fieldName, $value)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign reset($fieldName)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign unset($fieldName)
+	 * @method void addTo($fieldName, $value)
+	 * @method void removeFrom($fieldName, $value)
+	 * @method void removeAll($fieldName)
+	 * @method \Bitrix\Main\ORM\Data\Result delete()
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
+	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
+	 * @method static \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign wakeUp($data)
+	 */
+	class EO_VendorNotificationSign {
+		/* @var \Bitrix\Main\Security\Notifications\VendorNotificationSignTable */
+		static public $dataClass = '\Bitrix\Main\Security\Notifications\VendorNotificationSignTable';
+		/**
+		 * @param bool|array $setDefaultValues
+		 */
+		public function __construct($setDefaultValues = true) {}
+	}
+}
+namespace Bitrix\Main\Security\Notifications {
+	/**
+	 * EO_VendorNotificationSign_Collection
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \int[] getIdList()
+	 * @method \int[] getUserIdList()
+	 * @method \int[] fillUserId()
+	 * @method \string[] getNotificationVendorIdList()
+	 * @method \string[] fillNotificationVendorId()
+	 * @method \Bitrix\Main\Type\DateTime[] getDateList()
+	 * @method \Bitrix\Main\Type\DateTime[] fillDate()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @method void add(\Bitrix\Main\Security\Notifications\EO_VendorNotificationSign $object)
+	 * @method bool has(\Bitrix\Main\Security\Notifications\EO_VendorNotificationSign $object)
+	 * @method bool hasByPrimary($primary)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign getByPrimary($primary)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign[] getAll()
+	 * @method bool remove(\Bitrix\Main\Security\Notifications\EO_VendorNotificationSign $object)
+	 * @method void removeByPrimary($primary)
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method static \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign_Collection wakeUp($data)
+	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
+	 * @method void offsetSet() ArrayAccess
+	 * @method void offsetExists() ArrayAccess
+	 * @method void offsetUnset() ArrayAccess
+	 * @method void offsetGet() ArrayAccess
+	 * @method void rewind() Iterator
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign current() Iterator
+	 * @method mixed key() Iterator
+	 * @method void next() Iterator
+	 * @method bool valid() Iterator
+	 * @method int count() Countable
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign_Collection merge(?\Bitrix\Main\Security\Notifications\EO_VendorNotificationSign_Collection $collection)
+	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
+	 */
+	class EO_VendorNotificationSign_Collection implements \ArrayAccess, \Iterator, \Countable {
+		/* @var \Bitrix\Main\Security\Notifications\VendorNotificationSignTable */
+		static public $dataClass = '\Bitrix\Main\Security\Notifications\VendorNotificationSignTable';
+	}
+}
+namespace Bitrix\Main\Security\Notifications {
+	/**
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @method EO_VendorNotificationSign_Result exec()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign fetchObject()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign_Collection fetchCollection()
+	 */
+	class EO_VendorNotificationSign_Query extends \Bitrix\Main\ORM\Query\Query {}
+	/**
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign fetchObject()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign_Collection fetchCollection()
+	 */
+	class EO_VendorNotificationSign_Result extends \Bitrix\Main\ORM\Query\Result {}
+	/**
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign createObject($setDefaultValues = true)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign_Collection createCollection()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign wakeUpObject($row)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotificationSign_Collection wakeUpCollection($rows)
+	 */
+	class EO_VendorNotificationSign_Entity extends \Bitrix\Main\ORM\Entity {}
+}
+/* ORMENTITYANNOTATION:Bitrix\Main\Security\Notifications\VendorNotificationTable:main/lib/security/notifications/vendornotificationtable.php */
+namespace Bitrix\Main\Security\Notifications {
+	/**
+	 * EO_VendorNotification
+	 * @see \Bitrix\Main\Security\Notifications\VendorNotificationTable
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \string getVendorId()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification setVendorId(\string|\Bitrix\Main\DB\SqlExpression $vendorId)
+	 * @method bool hasVendorId()
+	 * @method bool isVendorIdFilled()
+	 * @method bool isVendorIdChanged()
+	 * @method \string getData()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification setData(\string|\Bitrix\Main\DB\SqlExpression $data)
+	 * @method bool hasData()
+	 * @method bool isDataFilled()
+	 * @method bool isDataChanged()
+	 * @method \string remindActualData()
+	 * @method \string requireData()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification resetData()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification unsetData()
+	 * @method \string fillData()
+	 * @method \boolean getNotSigned()
+	 * @method \boolean remindActualNotSigned()
+	 * @method \boolean requireNotSigned()
+	 * @method bool hasNotSigned()
+	 * @method bool isNotSignedFilled()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification unsetNotSigned()
+	 * @method \boolean fillNotSigned()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @property-read array $primary
+	 * @property-read int $state @see \Bitrix\Main\ORM\Objectify\State
+	 * @property-read \Bitrix\Main\Type\Dictionary $customData
+	 * @property \Bitrix\Main\Authentication\Context $authContext
+	 * @method mixed get($fieldName)
+	 * @method mixed remindActual($fieldName)
+	 * @method mixed require($fieldName)
+	 * @method bool has($fieldName)
+	 * @method bool isFilled($fieldName)
+	 * @method bool isChanged($fieldName)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification set($fieldName, $value)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification reset($fieldName)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification unset($fieldName)
+	 * @method void addTo($fieldName, $value)
+	 * @method void removeFrom($fieldName, $value)
+	 * @method void removeAll($fieldName)
+	 * @method \Bitrix\Main\ORM\Data\Result delete()
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
+	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
+	 * @method static \Bitrix\Main\Security\Notifications\EO_VendorNotification wakeUp($data)
+	 */
+	class EO_VendorNotification {
+		/* @var \Bitrix\Main\Security\Notifications\VendorNotificationTable */
+		static public $dataClass = '\Bitrix\Main\Security\Notifications\VendorNotificationTable';
+		/**
+		 * @param bool|array $setDefaultValues
+		 */
+		public function __construct($setDefaultValues = true) {}
+	}
+}
+namespace Bitrix\Main\Security\Notifications {
+	/**
+	 * EO_VendorNotification_Collection
+	 *
+	 * Custom methods:
+	 * ---------------
+	 *
+	 * @method \string[] getVendorIdList()
+	 * @method \string[] getDataList()
+	 * @method \string[] fillData()
+	 * @method \boolean[] getNotSignedList()
+	 * @method \boolean[] fillNotSigned()
+	 *
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @property-read \Bitrix\Main\ORM\Entity $entity
+	 * @method void add(\Bitrix\Main\Security\Notifications\EO_VendorNotification $object)
+	 * @method bool has(\Bitrix\Main\Security\Notifications\EO_VendorNotification $object)
+	 * @method bool hasByPrimary($primary)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification getByPrimary($primary)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification[] getAll()
+	 * @method bool remove(\Bitrix\Main\Security\Notifications\EO_VendorNotification $object)
+	 * @method void removeByPrimary($primary)
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method static \Bitrix\Main\Security\Notifications\EO_VendorNotification_Collection wakeUp($data)
+	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
+	 * @method void offsetSet() ArrayAccess
+	 * @method void offsetExists() ArrayAccess
+	 * @method void offsetUnset() ArrayAccess
+	 * @method void offsetGet() ArrayAccess
+	 * @method void rewind() Iterator
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification current() Iterator
+	 * @method mixed key() Iterator
+	 * @method void next() Iterator
+	 * @method bool valid() Iterator
+	 * @method int count() Countable
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification_Collection merge(?\Bitrix\Main\Security\Notifications\EO_VendorNotification_Collection $collection)
+	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
+	 */
+	class EO_VendorNotification_Collection implements \ArrayAccess, \Iterator, \Countable {
+		/* @var \Bitrix\Main\Security\Notifications\VendorNotificationTable */
+		static public $dataClass = '\Bitrix\Main\Security\Notifications\VendorNotificationTable';
+	}
+}
+namespace Bitrix\Main\Security\Notifications {
+	/**
+	 * Common methods:
+	 * ---------------
+	 *
+	 * @method EO_VendorNotification_Result exec()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification fetchObject()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification_Collection fetchCollection()
+	 */
+	class EO_VendorNotification_Query extends \Bitrix\Main\ORM\Query\Query {}
+	/**
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification fetchObject()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification_Collection fetchCollection()
+	 */
+	class EO_VendorNotification_Result extends \Bitrix\Main\ORM\Query\Result {}
+	/**
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification createObject($setDefaultValues = true)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification_Collection createCollection()
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification wakeUpObject($row)
+	 * @method \Bitrix\Main\Security\Notifications\EO_VendorNotification_Collection wakeUpCollection($rows)
+	 */
+	class EO_VendorNotification_Entity extends \Bitrix\Main\ORM\Entity {}
 }
 /* ORMENTITYANNOTATION:Bitrix\Main\Security\W\Rules\RuleRecordTable:main/lib/security/w/rules/rulerecordtable.php */
 namespace Bitrix\Main\Security\W\Rules {
@@ -8452,7 +8942,7 @@ namespace Bitrix\Main\Security\W\Rules {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Security\W\Rules\EO_RuleRecord wakeUp($data)
@@ -8492,7 +8982,7 @@ namespace Bitrix\Main\Security\W\Rules {
 	 * @method \Bitrix\Main\Security\W\Rules\EO_RuleRecord[] getAll()
 	 * @method bool remove(\Bitrix\Main\Security\W\Rules\EO_RuleRecord $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Security\W\Rules\EO_RuleRecord_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -8505,8 +8995,9 @@ namespace Bitrix\Main\Security\W\Rules {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_RuleRecord_Collection merge(?EO_RuleRecord_Collection $collection)
+	 * @method \Bitrix\Main\Security\W\Rules\EO_RuleRecord_Collection merge(?\Bitrix\Main\Security\W\Rules\EO_RuleRecord_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_RuleRecord_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Security\W\Rules\RuleRecordTable */
@@ -8521,10 +9012,6 @@ namespace Bitrix\Main\Security\W\Rules {
 	 * @method EO_RuleRecord_Result exec()
 	 * @method \Bitrix\Main\Security\W\Rules\EO_RuleRecord fetchObject()
 	 * @method \Bitrix\Main\Security\W\Rules\EO_RuleRecord_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_RuleRecord_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -8616,7 +9103,7 @@ namespace Bitrix\Main\Service\GeoIp {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Service\GeoIp\EO_Handler wakeUp($data)
@@ -8658,7 +9145,7 @@ namespace Bitrix\Main\Service\GeoIp {
 	 * @method \Bitrix\Main\Service\GeoIp\EO_Handler[] getAll()
 	 * @method bool remove(\Bitrix\Main\Service\GeoIp\EO_Handler $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Service\GeoIp\EO_Handler_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -8671,8 +9158,9 @@ namespace Bitrix\Main\Service\GeoIp {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Handler_Collection merge(?EO_Handler_Collection $collection)
+	 * @method \Bitrix\Main\Service\GeoIp\EO_Handler_Collection merge(?\Bitrix\Main\Service\GeoIp\EO_Handler_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Handler_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Service\GeoIp\HandlerTable */
@@ -8687,10 +9175,6 @@ namespace Bitrix\Main\Service\GeoIp {
 	 * @method EO_Handler_Result exec()
 	 * @method \Bitrix\Main\Service\GeoIp\EO_Handler fetchObject()
 	 * @method \Bitrix\Main\Service\GeoIp\EO_Handler_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Handler_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -8757,7 +9241,7 @@ namespace Bitrix\Main\Service\GeoIp\Internal {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Service\GeoIp\Internal\EO_Geoname wakeUp($data)
@@ -8794,7 +9278,7 @@ namespace Bitrix\Main\Service\GeoIp\Internal {
 	 * @method \Bitrix\Main\Service\GeoIp\Internal\EO_Geoname[] getAll()
 	 * @method bool remove(\Bitrix\Main\Service\GeoIp\Internal\EO_Geoname $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Service\GeoIp\Internal\EO_Geoname_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -8807,8 +9291,9 @@ namespace Bitrix\Main\Service\GeoIp\Internal {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Geoname_Collection merge(?EO_Geoname_Collection $collection)
+	 * @method \Bitrix\Main\Service\GeoIp\Internal\EO_Geoname_Collection merge(?\Bitrix\Main\Service\GeoIp\Internal\EO_Geoname_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Geoname_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Service\GeoIp\Internal\GeonameTable */
@@ -8823,10 +9308,6 @@ namespace Bitrix\Main\Service\GeoIp\Internal {
 	 * @method EO_Geoname_Result exec()
 	 * @method \Bitrix\Main\Service\GeoIp\Internal\EO_Geoname fetchObject()
 	 * @method \Bitrix\Main\Service\GeoIp\Internal\EO_Geoname_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Geoname_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -8898,7 +9379,7 @@ namespace Bitrix\Main\Session\Handlers\Table {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Session\Handlers\Table\EO_UserSession wakeUp($data)
@@ -8936,7 +9417,7 @@ namespace Bitrix\Main\Session\Handlers\Table {
 	 * @method \Bitrix\Main\Session\Handlers\Table\EO_UserSession[] getAll()
 	 * @method bool remove(\Bitrix\Main\Session\Handlers\Table\EO_UserSession $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Session\Handlers\Table\EO_UserSession_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -8949,8 +9430,9 @@ namespace Bitrix\Main\Session\Handlers\Table {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserSession_Collection merge(?EO_UserSession_Collection $collection)
+	 * @method \Bitrix\Main\Session\Handlers\Table\EO_UserSession_Collection merge(?\Bitrix\Main\Session\Handlers\Table\EO_UserSession_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserSession_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Session\Handlers\Table\UserSessionTable */
@@ -8965,10 +9447,6 @@ namespace Bitrix\Main\Session\Handlers\Table {
 	 * @method EO_UserSession_Result exec()
 	 * @method \Bitrix\Main\Session\Handlers\Table\EO_UserSession fetchObject()
 	 * @method \Bitrix\Main\Session\Handlers\Table\EO_UserSession_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserSession_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -9090,7 +9568,7 @@ namespace Bitrix\Main\SidePanel {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\SidePanel\EO_ToolbarItem wakeUp($data)
@@ -9138,7 +9616,7 @@ namespace Bitrix\Main\SidePanel {
 	 * @method \Bitrix\Main\SidePanel\EO_ToolbarItem[] getAll()
 	 * @method bool remove(\Bitrix\Main\SidePanel\EO_ToolbarItem $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\SidePanel\EO_ToolbarItem_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -9151,8 +9629,9 @@ namespace Bitrix\Main\SidePanel {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_ToolbarItem_Collection merge(?EO_ToolbarItem_Collection $collection)
+	 * @method \Bitrix\Main\SidePanel\EO_ToolbarItem_Collection merge(?\Bitrix\Main\SidePanel\EO_ToolbarItem_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_ToolbarItem_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\SidePanel\ToolbarItemTable */
@@ -9167,10 +9646,6 @@ namespace Bitrix\Main\SidePanel {
 	 * @method EO_ToolbarItem_Result exec()
 	 * @method \Bitrix\Main\SidePanel\EO_ToolbarItem fetchObject()
 	 * @method \Bitrix\Main\SidePanel\EO_ToolbarItem_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_ToolbarItem_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -9272,7 +9747,7 @@ namespace Bitrix\Main\SidePanel {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\SidePanel\EO_Toolbar wakeUp($data)
@@ -9317,7 +9792,7 @@ namespace Bitrix\Main\SidePanel {
 	 * @method \Bitrix\Main\SidePanel\EO_Toolbar[] getAll()
 	 * @method bool remove(\Bitrix\Main\SidePanel\EO_Toolbar $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\SidePanel\EO_Toolbar_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -9330,8 +9805,9 @@ namespace Bitrix\Main\SidePanel {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Toolbar_Collection merge(?EO_Toolbar_Collection $collection)
+	 * @method \Bitrix\Main\SidePanel\EO_Toolbar_Collection merge(?\Bitrix\Main\SidePanel\EO_Toolbar_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Toolbar_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\SidePanel\ToolbarTable */
@@ -9346,10 +9822,6 @@ namespace Bitrix\Main\SidePanel {
 	 * @method EO_Toolbar_Result exec()
 	 * @method \Bitrix\Main\SidePanel\EO_Toolbar fetchObject()
 	 * @method \Bitrix\Main\SidePanel\EO_Toolbar_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Toolbar_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -9562,7 +10034,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_Site wakeUp($data)
@@ -9632,7 +10104,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_Site[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_Site $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_Site_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -9645,8 +10117,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Site_Collection merge(?EO_Site_Collection $collection)
+	 * @method \Bitrix\Main\EO_Site_Collection merge(?\Bitrix\Main\EO_Site_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Site_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\SiteTable */
@@ -9661,10 +10134,6 @@ namespace Bitrix\Main {
 	 * @method EO_Site_Result exec()
 	 * @method \Bitrix\Main\EO_Site fetchObject()
 	 * @method \Bitrix\Main\EO_Site_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Site_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -9738,7 +10207,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_SiteDomain wakeUp($data)
@@ -9778,7 +10247,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_SiteDomain[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_SiteDomain $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_SiteDomain_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -9791,8 +10260,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_SiteDomain_Collection merge(?EO_SiteDomain_Collection $collection)
+	 * @method \Bitrix\Main\EO_SiteDomain_Collection merge(?\Bitrix\Main\EO_SiteDomain_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_SiteDomain_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\SiteDomainTable */
@@ -9807,10 +10277,6 @@ namespace Bitrix\Main {
 	 * @method EO_SiteDomain_Result exec()
 	 * @method \Bitrix\Main\EO_SiteDomain fetchObject()
 	 * @method \Bitrix\Main\EO_SiteDomain_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_SiteDomain_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -9919,7 +10385,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_SiteTemplate wakeUp($data)
@@ -9966,7 +10432,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_SiteTemplate[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_SiteTemplate $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_SiteTemplate_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -9979,8 +10445,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_SiteTemplate_Collection merge(?EO_SiteTemplate_Collection $collection)
+	 * @method \Bitrix\Main\EO_SiteTemplate_Collection merge(?\Bitrix\Main\EO_SiteTemplate_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_SiteTemplate_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\SiteTemplateTable */
@@ -9995,10 +10462,6 @@ namespace Bitrix\Main {
 	 * @method EO_SiteTemplate_Result exec()
 	 * @method \Bitrix\Main\EO_SiteTemplate fetchObject()
 	 * @method \Bitrix\Main\EO_SiteTemplate_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_SiteTemplate_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -10121,7 +10584,7 @@ namespace Bitrix\Main\Sms {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Sms\Template wakeUp($data)
@@ -10170,7 +10633,7 @@ namespace Bitrix\Main\Sms {
 	 * @method \Bitrix\Main\Sms\Template[] getAll()
 	 * @method bool remove(\Bitrix\Main\Sms\Template $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Sms\EO_Template_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -10183,8 +10646,9 @@ namespace Bitrix\Main\Sms {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Template_Collection merge(?EO_Template_Collection $collection)
+	 * @method \Bitrix\Main\Sms\EO_Template_Collection merge(?\Bitrix\Main\Sms\EO_Template_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Template_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Sms\TemplateTable */
@@ -10199,10 +10663,6 @@ namespace Bitrix\Main\Sms {
 	 * @method EO_Template_Result exec()
 	 * @method \Bitrix\Main\Sms\Template fetchObject()
 	 * @method \Bitrix\Main\Sms\EO_Template_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Template_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -10314,7 +10774,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_Task wakeUp($data)
@@ -10360,7 +10820,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_Task[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_Task $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_Task_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -10373,8 +10833,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Task_Collection merge(?EO_Task_Collection $collection)
+	 * @method \Bitrix\Main\EO_Task_Collection merge(?\Bitrix\Main\EO_Task_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Task_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\TaskTable */
@@ -10389,10 +10850,6 @@ namespace Bitrix\Main {
 	 * @method EO_Task_Result exec()
 	 * @method \Bitrix\Main\EO_Task fetchObject()
 	 * @method \Bitrix\Main\EO_Task_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Task_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -10469,7 +10926,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_TaskOperation wakeUp($data)
@@ -10510,7 +10967,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_TaskOperation[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_TaskOperation $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_TaskOperation_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -10523,8 +10980,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_TaskOperation_Collection merge(?EO_TaskOperation_Collection $collection)
+	 * @method \Bitrix\Main\EO_TaskOperation_Collection merge(?\Bitrix\Main\EO_TaskOperation_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_TaskOperation_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\TaskOperationTable */
@@ -10539,10 +10997,6 @@ namespace Bitrix\Main {
 	 * @method EO_TaskOperation_Result exec()
 	 * @method \Bitrix\Main\EO_TaskOperation fetchObject()
 	 * @method \Bitrix\Main\EO_TaskOperation_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_TaskOperation_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -10625,7 +11079,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Test\Typography\EO_Author wakeUp($data)
@@ -10666,7 +11120,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method \Bitrix\Main\Test\Typography\EO_Author[] getAll()
 	 * @method bool remove(\Bitrix\Main\Test\Typography\EO_Author $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Test\Typography\EO_Author_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -10679,8 +11133,9 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Author_Collection merge(?EO_Author_Collection $collection)
+	 * @method \Bitrix\Main\Test\Typography\EO_Author_Collection merge(?\Bitrix\Main\Test\Typography\EO_Author_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Author_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Test\Typography\AuthorTable */
@@ -10695,10 +11150,6 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method EO_Author_Result exec()
 	 * @method \Bitrix\Main\Test\Typography\EO_Author fetchObject()
 	 * @method \Bitrix\Main\Test\Typography\EO_Author_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Author_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -10832,7 +11283,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Test\Typography\Book wakeUp($data)
@@ -10885,7 +11336,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method \Bitrix\Main\Test\Typography\Book[] getAll()
 	 * @method bool remove(\Bitrix\Main\Test\Typography\Book $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Test\Typography\Books wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -10898,8 +11349,9 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method Books merge(?Books $collection)
+	 * @method \Bitrix\Main\Test\Typography\Books merge(?\Bitrix\Main\Test\Typography\Books $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Book_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Test\Typography\BookTable */
@@ -10914,10 +11366,6 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method EO_Book_Result exec()
 	 * @method \Bitrix\Main\Test\Typography\Book fetchObject()
 	 * @method \Bitrix\Main\Test\Typography\Books fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Book_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -11000,7 +11448,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Test\Typography\EO_Publisher wakeUp($data)
@@ -11041,7 +11489,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method \Bitrix\Main\Test\Typography\EO_Publisher[] getAll()
 	 * @method bool remove(\Bitrix\Main\Test\Typography\EO_Publisher $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Test\Typography\EO_Publisher_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -11054,8 +11502,9 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Publisher_Collection merge(?EO_Publisher_Collection $collection)
+	 * @method \Bitrix\Main\Test\Typography\EO_Publisher_Collection merge(?\Bitrix\Main\Test\Typography\EO_Publisher_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Publisher_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Test\Typography\PublisherTable */
@@ -11070,10 +11519,6 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method EO_Publisher_Result exec()
 	 * @method \Bitrix\Main\Test\Typography\EO_Publisher fetchObject()
 	 * @method \Bitrix\Main\Test\Typography\EO_Publisher_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Publisher_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -11160,7 +11605,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Test\Typography\EO_StoreBook wakeUp($data)
@@ -11203,7 +11648,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method \Bitrix\Main\Test\Typography\EO_StoreBook[] getAll()
 	 * @method bool remove(\Bitrix\Main\Test\Typography\EO_StoreBook $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Test\Typography\EO_StoreBook_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -11216,8 +11661,9 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_StoreBook_Collection merge(?EO_StoreBook_Collection $collection)
+	 * @method \Bitrix\Main\Test\Typography\EO_StoreBook_Collection merge(?\Bitrix\Main\Test\Typography\EO_StoreBook_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_StoreBook_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Test\Typography\StoreBookTable */
@@ -11232,10 +11678,6 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method EO_StoreBook_Result exec()
 	 * @method \Bitrix\Main\Test\Typography\EO_StoreBook fetchObject()
 	 * @method \Bitrix\Main\Test\Typography\EO_StoreBook_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_StoreBook_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -11308,7 +11750,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Test\Typography\EO_Store wakeUp($data)
@@ -11347,7 +11789,7 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method \Bitrix\Main\Test\Typography\EO_Store[] getAll()
 	 * @method bool remove(\Bitrix\Main\Test\Typography\EO_Store $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Test\Typography\EO_Store_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -11360,8 +11802,9 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Store_Collection merge(?EO_Store_Collection $collection)
+	 * @method \Bitrix\Main\Test\Typography\EO_Store_Collection merge(?\Bitrix\Main\Test\Typography\EO_Store_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Store_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Test\Typography\StoreTable */
@@ -11376,10 +11819,6 @@ namespace Bitrix\Main\Test\Typography {
 	 * @method EO_Store_Result exec()
 	 * @method \Bitrix\Main\Test\Typography\EO_Store fetchObject()
 	 * @method \Bitrix\Main\Test\Typography\EO_Store_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Store_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -11511,7 +11950,7 @@ namespace Bitrix\Main\UI\Viewer {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UI\Viewer\EO_FilePreview wakeUp($data)
@@ -11564,7 +12003,7 @@ namespace Bitrix\Main\UI\Viewer {
 	 * @method \Bitrix\Main\UI\Viewer\EO_FilePreview[] getAll()
 	 * @method bool remove(\Bitrix\Main\UI\Viewer\EO_FilePreview $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UI\Viewer\EO_FilePreview_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -11577,8 +12016,9 @@ namespace Bitrix\Main\UI\Viewer {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_FilePreview_Collection merge(?EO_FilePreview_Collection $collection)
+	 * @method \Bitrix\Main\UI\Viewer\EO_FilePreview_Collection merge(?\Bitrix\Main\UI\Viewer\EO_FilePreview_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_FilePreview_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UI\Viewer\FilePreviewTable */
@@ -11593,10 +12033,6 @@ namespace Bitrix\Main\UI\Viewer {
 	 * @method EO_FilePreview_Result exec()
 	 * @method \Bitrix\Main\UI\Viewer\EO_FilePreview fetchObject()
 	 * @method \Bitrix\Main\UI\Viewer\EO_FilePreview_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_FilePreview_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -11668,7 +12104,7 @@ namespace Bitrix\Main\Update {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\Update\EO_VersionHistory wakeUp($data)
@@ -11706,7 +12142,7 @@ namespace Bitrix\Main\Update {
 	 * @method \Bitrix\Main\Update\EO_VersionHistory[] getAll()
 	 * @method bool remove(\Bitrix\Main\Update\EO_VersionHistory $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\Update\EO_VersionHistory_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -11719,8 +12155,9 @@ namespace Bitrix\Main\Update {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_VersionHistory_Collection merge(?EO_VersionHistory_Collection $collection)
+	 * @method \Bitrix\Main\Update\EO_VersionHistory_Collection merge(?\Bitrix\Main\Update\EO_VersionHistory_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_VersionHistory_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\Update\VersionHistoryTable */
@@ -11735,10 +12172,6 @@ namespace Bitrix\Main\Update {
 	 * @method EO_VersionHistory_Result exec()
 	 * @method \Bitrix\Main\Update\EO_VersionHistory fetchObject()
 	 * @method \Bitrix\Main\Update\EO_VersionHistory_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_VersionHistory_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -11830,7 +12263,7 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UrlPreview\EO_Route wakeUp($data)
@@ -11872,7 +12305,7 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method \Bitrix\Main\UrlPreview\EO_Route[] getAll()
 	 * @method bool remove(\Bitrix\Main\UrlPreview\EO_Route $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UrlPreview\EO_Route_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -11885,8 +12318,9 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Route_Collection merge(?EO_Route_Collection $collection)
+	 * @method \Bitrix\Main\UrlPreview\EO_Route_Collection merge(?\Bitrix\Main\UrlPreview\EO_Route_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Route_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UrlPreview\RouteTable */
@@ -11901,10 +12335,6 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method EO_Route_Result exec()
 	 * @method \Bitrix\Main\UrlPreview\EO_Route fetchObject()
 	 * @method \Bitrix\Main\UrlPreview\EO_Route_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Route_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -12056,7 +12486,7 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UrlPreview\EO_UrlMetadata wakeUp($data)
@@ -12110,7 +12540,7 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method \Bitrix\Main\UrlPreview\EO_UrlMetadata[] getAll()
 	 * @method bool remove(\Bitrix\Main\UrlPreview\EO_UrlMetadata $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UrlPreview\EO_UrlMetadata_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -12123,8 +12553,9 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UrlMetadata_Collection merge(?EO_UrlMetadata_Collection $collection)
+	 * @method \Bitrix\Main\UrlPreview\EO_UrlMetadata_Collection merge(?\Bitrix\Main\UrlPreview\EO_UrlMetadata_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UrlMetadata_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UrlPreview\UrlMetadataTable */
@@ -12139,10 +12570,6 @@ namespace Bitrix\Main\UrlPreview {
 	 * @method EO_UrlMetadata_Result exec()
 	 * @method \Bitrix\Main\UrlPreview\EO_UrlMetadata fetchObject()
 	 * @method \Bitrix\Main\UrlPreview\EO_UrlMetadata_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UrlMetadata_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -12837,7 +13264,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_User wakeUp($data)
@@ -13008,7 +13435,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_User[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_User $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_User_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -13021,8 +13448,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_User_Collection merge(?EO_User_Collection $collection)
+	 * @method \Bitrix\Main\EO_User_Collection merge(?\Bitrix\Main\EO_User_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_User_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserTable */
@@ -13037,10 +13465,6 @@ namespace Bitrix\Main {
 	 * @method EO_User_Result exec()
 	 * @method \Bitrix\Main\EO_User fetchObject()
 	 * @method \Bitrix\Main\EO_User_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_User_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -13102,7 +13526,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserAccess wakeUp($data)
@@ -13138,7 +13562,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserAccess[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserAccess $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserAccess_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -13151,8 +13575,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserAccess_Collection merge(?EO_UserAccess_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserAccess_Collection merge(?\Bitrix\Main\EO_UserAccess_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserAccess_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserAccessTable */
@@ -13167,10 +13592,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserAccess_Result exec()
 	 * @method \Bitrix\Main\EO_UserAccess fetchObject()
 	 * @method \Bitrix\Main\EO_UserAccess_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserAccess_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -13272,7 +13693,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserAuthAction wakeUp($data)
@@ -13316,7 +13737,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserAuthAction[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserAuthAction $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserAuthAction_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -13329,8 +13750,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserAuthAction_Collection merge(?EO_UserAuthAction_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserAuthAction_Collection merge(?\Bitrix\Main\EO_UserAuthAction_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserAuthAction_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserAuthActionTable */
@@ -13345,10 +13767,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserAuthAction_Result exec()
 	 * @method \Bitrix\Main\EO_UserAuthAction fetchObject()
 	 * @method \Bitrix\Main\EO_UserAuthAction_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserAuthAction_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -13530,7 +13948,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_Agreement wakeUp($data)
@@ -13590,7 +14008,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Agreement[] getAll()
 	 * @method bool remove(\Bitrix\Main\UserConsent\Internals\EO_Agreement $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_Agreement_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -13603,8 +14021,9 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Agreement_Collection merge(?EO_Agreement_Collection $collection)
+	 * @method \Bitrix\Main\UserConsent\Internals\EO_Agreement_Collection merge(?\Bitrix\Main\UserConsent\Internals\EO_Agreement_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Agreement_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserConsent\Internals\AgreementTable */
@@ -13619,10 +14038,6 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method EO_Agreement_Result exec()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Agreement fetchObject()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Agreement_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Agreement_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -13765,7 +14180,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_Consent wakeUp($data)
@@ -13819,7 +14234,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Consent[] getAll()
 	 * @method bool remove(\Bitrix\Main\UserConsent\Internals\EO_Consent $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_Consent_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -13832,8 +14247,9 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Consent_Collection merge(?EO_Consent_Collection $collection)
+	 * @method \Bitrix\Main\UserConsent\Internals\EO_Consent_Collection merge(?\Bitrix\Main\UserConsent\Internals\EO_Consent_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Consent_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserConsent\Internals\ConsentTable */
@@ -13848,10 +14264,6 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method EO_Consent_Result exec()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Consent fetchObject()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Consent_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Consent_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -13933,7 +14345,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_Field wakeUp($data)
@@ -13973,7 +14385,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Field[] getAll()
 	 * @method bool remove(\Bitrix\Main\UserConsent\Internals\EO_Field $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_Field_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -13986,8 +14398,9 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_Field_Collection merge(?EO_Field_Collection $collection)
+	 * @method \Bitrix\Main\UserConsent\Internals\EO_Field_Collection merge(?\Bitrix\Main\UserConsent\Internals\EO_Field_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_Field_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserConsent\Internals\FieldTable */
@@ -14002,10 +14415,6 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method EO_Field_Result exec()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Field fetchObject()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_Field_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_Field_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -14087,7 +14496,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_UserConsentItem wakeUp($data)
@@ -14128,7 +14537,7 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_UserConsentItem[] getAll()
 	 * @method bool remove(\Bitrix\Main\UserConsent\Internals\EO_UserConsentItem $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UserConsent\Internals\EO_UserConsentItem_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -14141,8 +14550,9 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserConsentItem_Collection merge(?EO_UserConsentItem_Collection $collection)
+	 * @method \Bitrix\Main\UserConsent\Internals\EO_UserConsentItem_Collection merge(?\Bitrix\Main\UserConsent\Internals\EO_UserConsentItem_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserConsentItem_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserConsent\Internals\UserConsentItemTable */
@@ -14157,10 +14567,6 @@ namespace Bitrix\Main\UserConsent\Internals {
 	 * @method EO_UserConsentItem_Result exec()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_UserConsentItem fetchObject()
 	 * @method \Bitrix\Main\UserConsent\Internals\EO_UserConsentItem_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserConsentItem_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -14292,7 +14698,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserCounter wakeUp($data)
@@ -14343,7 +14749,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserCounter[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserCounter $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserCounter_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -14356,8 +14762,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserCounter_Collection merge(?EO_UserCounter_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserCounter_Collection merge(?\Bitrix\Main\EO_UserCounter_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserCounter_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserCounterTable */
@@ -14372,10 +14779,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserCounter_Result exec()
 	 * @method \Bitrix\Main\EO_UserCounter fetchObject()
 	 * @method \Bitrix\Main\EO_UserCounter_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserCounter_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -14497,7 +14900,7 @@ namespace Bitrix\Main\UserField\Access\Permission {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\UserField\Access\Permission\UserFieldPermission wakeUp($data)
@@ -14547,7 +14950,7 @@ namespace Bitrix\Main\UserField\Access\Permission {
 	 * @method \Bitrix\Main\UserField\Access\Permission\UserFieldPermission[] getAll()
 	 * @method bool remove(\Bitrix\Main\UserField\Access\Permission\UserFieldPermission $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\UserField\Access\Permission\EO_UserFieldPermission_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -14560,8 +14963,9 @@ namespace Bitrix\Main\UserField\Access\Permission {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserFieldPermission_Collection merge(?EO_UserFieldPermission_Collection $collection)
+	 * @method \Bitrix\Main\UserField\Access\Permission\EO_UserFieldPermission_Collection merge(?\Bitrix\Main\UserField\Access\Permission\EO_UserFieldPermission_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserFieldPermission_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserField\Access\Permission\UserFieldPermissionTable */
@@ -14576,10 +14980,6 @@ namespace Bitrix\Main\UserField\Access\Permission {
 	 * @method EO_UserFieldPermission_Result exec()
 	 * @method \Bitrix\Main\UserField\Access\Permission\UserFieldPermission fetchObject()
 	 * @method \Bitrix\Main\UserField\Access\Permission\EO_UserFieldPermission_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserFieldPermission_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -14751,7 +15151,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserField wakeUp($data)
@@ -14809,7 +15209,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserField[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserField $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserField_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -14822,8 +15222,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserField_Collection merge(?EO_UserField_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserField_Collection merge(?\Bitrix\Main\EO_UserField_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserField_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserFieldTable */
@@ -14838,10 +15239,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserField_Result exec()
 	 * @method \Bitrix\Main\EO_UserField fetchObject()
 	 * @method \Bitrix\Main\EO_UserField_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserField_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -14953,7 +15350,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserFieldConfirm wakeUp($data)
@@ -14999,7 +15396,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserFieldConfirm[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserFieldConfirm $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserFieldConfirm_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -15012,8 +15409,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserFieldConfirm_Collection merge(?EO_UserFieldConfirm_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserFieldConfirm_Collection merge(?\Bitrix\Main\EO_UserFieldConfirm_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserFieldConfirm_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserFieldConfirmTable */
@@ -15028,10 +15426,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserFieldConfirm_Result exec()
 	 * @method \Bitrix\Main\EO_UserFieldConfirm fetchObject()
 	 * @method \Bitrix\Main\EO_UserFieldConfirm_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserFieldConfirm_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -15148,7 +15542,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserFieldLang wakeUp($data)
@@ -15196,7 +15590,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserFieldLang[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserFieldLang $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserFieldLang_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -15209,8 +15603,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserFieldLang_Collection merge(?EO_UserFieldLang_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserFieldLang_Collection merge(?\Bitrix\Main\EO_UserFieldLang_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserFieldLang_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserFieldLangTable */
@@ -15225,10 +15620,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserFieldLang_Result exec()
 	 * @method \Bitrix\Main\EO_UserFieldLang fetchObject()
 	 * @method \Bitrix\Main\EO_UserFieldLang_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserFieldLang_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -15325,7 +15716,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserGroup wakeUp($data)
@@ -15370,7 +15761,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserGroup[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserGroup $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserGroup_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -15383,8 +15774,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserGroup_Collection merge(?EO_UserGroup_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserGroup_Collection merge(?\Bitrix\Main\EO_UserGroup_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserGroup_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserGroupTable */
@@ -15399,10 +15791,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserGroup_Result exec()
 	 * @method \Bitrix\Main\EO_UserGroup fetchObject()
 	 * @method \Bitrix\Main\EO_UserGroup_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserGroup_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -15534,7 +15922,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserIndex wakeUp($data)
@@ -15584,7 +15972,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserIndex[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserIndex $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserIndex_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -15597,8 +15985,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserIndex_Collection merge(?EO_UserIndex_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserIndex_Collection merge(?\Bitrix\Main\EO_UserIndex_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserIndex_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserIndexTable */
@@ -15613,10 +16002,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserIndex_Result exec()
 	 * @method \Bitrix\Main\EO_UserIndex fetchObject()
 	 * @method \Bitrix\Main\EO_UserIndex_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserIndex_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -15728,7 +16113,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserPhoneAuth wakeUp($data)
@@ -15775,7 +16160,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserPhoneAuth[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserPhoneAuth $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserPhoneAuth_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -15788,8 +16173,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserPhoneAuth_Collection merge(?EO_UserPhoneAuth_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserPhoneAuth_Collection merge(?\Bitrix\Main\EO_UserPhoneAuth_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserPhoneAuth_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserPhoneAuthTable */
@@ -15804,10 +16190,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserPhoneAuth_Result exec()
 	 * @method \Bitrix\Main\EO_UserPhoneAuth fetchObject()
 	 * @method \Bitrix\Main\EO_UserPhoneAuth_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserPhoneAuth_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -15929,7 +16311,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserProfileHistory wakeUp($data)
@@ -15977,7 +16359,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserProfileHistory[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserProfileHistory $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserProfileHistory_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -15990,8 +16372,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserProfileHistory_Collection merge(?EO_UserProfileHistory_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserProfileHistory_Collection merge(?\Bitrix\Main\EO_UserProfileHistory_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserProfileHistory_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserProfileHistoryTable */
@@ -16006,10 +16389,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserProfileHistory_Result exec()
 	 * @method \Bitrix\Main\EO_UserProfileHistory fetchObject()
 	 * @method \Bitrix\Main\EO_UserProfileHistory_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserProfileHistory_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**
@@ -16101,7 +16480,7 @@ namespace Bitrix\Main {
 	 * @method void removeFrom($fieldName, $value)
 	 * @method void removeAll($fieldName)
 	 * @method \Bitrix\Main\ORM\Data\Result delete()
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method mixed fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method mixed[] collectValues($valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL)
 	 * @method \Bitrix\Main\ORM\Data\AddResult|\Bitrix\Main\ORM\Data\UpdateResult|\Bitrix\Main\ORM\Data\Result save()
 	 * @method static \Bitrix\Main\EO_UserProfileRecord wakeUp($data)
@@ -16144,7 +16523,7 @@ namespace Bitrix\Main {
 	 * @method \Bitrix\Main\EO_UserProfileRecord[] getAll()
 	 * @method bool remove(\Bitrix\Main\EO_UserProfileRecord $object)
 	 * @method void removeByPrimary($primary)
-	 * @method void fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
+	 * @method array|\Bitrix\Main\ORM\Objectify\Collection|null fill($fields = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL) flag or array of field names
 	 * @method static \Bitrix\Main\EO_UserProfileRecord_Collection wakeUp($data)
 	 * @method \Bitrix\Main\ORM\Data\Result save($ignoreEvents = false)
 	 * @method void offsetSet() ArrayAccess
@@ -16157,8 +16536,9 @@ namespace Bitrix\Main {
 	 * @method void next() Iterator
 	 * @method bool valid() Iterator
 	 * @method int count() Countable
-	 * @method EO_UserProfileRecord_Collection merge(?EO_UserProfileRecord_Collection $collection)
+	 * @method \Bitrix\Main\EO_UserProfileRecord_Collection merge(?\Bitrix\Main\EO_UserProfileRecord_Collection $collection)
 	 * @method bool isEmpty()
+	 * @method array collectValues(int $valuesType = \Bitrix\Main\ORM\Objectify\Values::ALL, int $fieldsMask = \Bitrix\Main\ORM\Fields\FieldTypeMask::ALL, bool $recursive = false)
 	 */
 	class EO_UserProfileRecord_Collection implements \ArrayAccess, \Iterator, \Countable {
 		/* @var \Bitrix\Main\UserProfileRecordTable */
@@ -16173,10 +16553,6 @@ namespace Bitrix\Main {
 	 * @method EO_UserProfileRecord_Result exec()
 	 * @method \Bitrix\Main\EO_UserProfileRecord fetchObject()
 	 * @method \Bitrix\Main\EO_UserProfileRecord_Collection fetchCollection()
-	 *
-	 * Custom methods:
-	 * ---------------
-	 *
 	 */
 	class EO_UserProfileRecord_Query extends \Bitrix\Main\ORM\Query\Query {}
 	/**

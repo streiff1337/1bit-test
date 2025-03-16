@@ -29,7 +29,6 @@ export const Content = {
 		'options',
 		'params',
 		'context',
-		'onToggleOption',
 	],
 
 	data()
@@ -216,18 +215,26 @@ export const Content = {
 				this.selectAll();
 			}
 		},
-		select(id: string): void
+		select(id: string, value: boolean = true): void
 		{
 			const option = this.getOptionRefs().find((item) => item.id === id);
-			option?.setValue(true);
+			option?.setValue(value);
 		},
 		selectAll()
 		{
-			this.getOptionRefs().forEach((option) => !option.isLocked && option.setValue(true));
+			const visibleOptionIds: Set<string> = new Set(this.getOptions().map((option) => option.id));
+
+			this.getOptionRefs().forEach((option) => {
+				return !option.isLocked && visibleOptionIds.has(option.getId()) && option.setValue(true);
+			});
 		},
 		deselectAll()
 		{
-			this.getOptionRefs().forEach((option) => !option.isLocked && option.setValue(false));
+			const visibleOptionIds: Set<string> = new Set(this.getOptions().map((option) => option.id));
+
+			this.getOptionRefs().forEach((option) => {
+				return !option.isLocked && visibleOptionIds.has(option.getId()) && option.setValue(false);
+			});
 		},
 		getOptionRefs(): []
 		{
@@ -324,6 +331,15 @@ export const Content = {
 				Type.isArrayFilled(this.dataSections)
 				&& this.dataSections.every((section) => section.value === false)
 			);
+		},
+		onToggleOption(event)
+		{
+			if (this.dataOptions.has(event.id))
+			{
+				const option = this.dataOptions.get(event.id);
+				option.value = event.isChecked;
+				this.dataOptions.set(event.id, option);
+			}
 		},
 	},
 

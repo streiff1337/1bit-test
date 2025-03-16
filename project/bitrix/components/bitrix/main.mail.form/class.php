@@ -1,5 +1,7 @@
 <?php
 
+use Bitrix\Crm\Settings\ActivitySettings;
+use Bitrix\Crm\Activity;
 use Bitrix\Main\Engine\Contract\Controllerable;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Web\Uri;
@@ -135,6 +137,19 @@ class MainMailFormComponent extends CBitrixComponent implements Controllerable
 			$extensionsList[] = 'socnetlogdest';
 		}
 		\CJSCore::init($extensionsList);
+
+		$this->arParams['OLD_RECIPIENTS_MODE'] = false;
+		$this->arParams['OWNER_CATEGORY_ID'] = 0;
+
+		if (Loader::includeModule('crm'))
+		{
+			$this->arParams['OLD_RECIPIENTS_MODE'] = ActivitySettings::getCurrent()->getEnableUnconnectedRecipients();
+
+			if (!empty($this->arParams['OWNER_TYPE_ID']) && !empty($this->arParams['OWNER_ID']))
+			{
+				$this->arParams['OWNER_CATEGORY_ID'] = Activity\Mail\Message::getRecipientCategoryId((int) $this->arParams['OWNER_TYPE_ID'], (int) $this->arParams['OWNER_ID']);
+			}
+		}
 
 		$this->arParams['FIELDS'] = $this->arParams['~FIELDS'];
 		$this->arParams['FIELDS_EXT'] = $this->arParams['~FIELDS_EXT'] ?? '';
@@ -319,6 +334,8 @@ class MainMailFormComponent extends CBitrixComponent implements Controllerable
 				if($this->arParams['USE_CALENDAR_SHARING'] && Loader::includeModule('calendar'))
 				{
 					$field['showCalendarSharingButton']  = true;
+					$field['sharingFeatureLimitEnable'] = Calendar\Integration\Bitrix24Manager::isFeatureEnabled('calendar_sharing');
+					$field['crmSharingFeatureLimitEnable'] = Calendar\Integration\Bitrix24Manager::isFeatureEnabled('crm_event_sharing');
 					$field['showCalendarSharingTour'] = $this->isSharingCalendarTourAvailable();
 				}
 

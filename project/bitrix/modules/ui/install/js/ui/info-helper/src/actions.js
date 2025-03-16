@@ -117,7 +117,7 @@ export class Actions
 			const callback = (result) => {
 				const slider = BX.SidePanel.Instance.getTopSlider();
 
-				if (slider)
+				if (slider && result.error)
 				{
 					BX.UI.InfoHelper.sliderProviderForOldFormat?.getFrame().contentWindow.postMessage(
 						{
@@ -132,7 +132,7 @@ export class Actions
 				{
 					const settings = Extension.getSettings('ui.info-helper');
 
-					if (settings.licenseNeverPayed)
+					if (settings.region === 'ru' && settings.licenseNeverPayed)
 					{
 						Actions.openInformer({ code: 'limit_market_trial_active' });
 					}
