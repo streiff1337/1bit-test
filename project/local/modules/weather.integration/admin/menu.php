@@ -3,7 +3,7 @@
 use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
-
+global $USER;
 if (!$USER->IsAdmin()) {
     return;
 }

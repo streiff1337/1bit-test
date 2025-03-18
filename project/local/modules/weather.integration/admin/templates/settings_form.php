@@ -1,6 +1,7 @@
 <?php
 use Bitrix\Main\Localization\Loc;
-
+use Weather\Integration\SettingsForm;
+global $APPLICATION;
 /**
  * @var SettingsForm $form
  */

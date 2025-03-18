@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_ad
 
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Loader;
-
+global $APPLICATION;
 
 Loc::loadMessages(__FILE__);
 
