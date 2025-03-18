@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
 
+COPY ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
+
 WORKDIR /var/www/html
 
-ENV LANG ru_RU.UTF-8
-ENV LC_ALL ru_RU.UTF-8
 
 USER "${USER_ID}:${GROUP_ID}"
 
@@ -33,4 +33,4 @@ RUN mkdir -p /tmp/php_upload/www \
 
 EXPOSE 9000
 
-CMD ["php-fpm"]
+CMD php-fpm

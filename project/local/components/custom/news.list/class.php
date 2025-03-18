@@ -7,6 +7,7 @@ use Bitrix\Iblock\ElementTable;
 use Bitrix\Iblock\IblockTable;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UI\PageNavigation;
+use Bitrix\Main\LoaderException;
 
 class NewsListComponent extends CBitrixComponent
 {
@@ -45,12 +46,12 @@ class NewsListComponent extends CBitrixComponent
     /**
      * Checks if the iblock module is installed.
      *
-     * @throws Main\LoaderException If the module is not found.
+     * @throws LoaderException If the module is not found.
      */
     protected function checkModules(): void
     {
         if (!Loader::includeModule('iblock')) {
-            throw new Main\LoaderException(Loc::getMessage("IBLOCK_MODULE_NOT_INSTALLED"));
+            throw new LoaderException(Loc::getMessage("IBLOCK_MODULE_NOT_INSTALLED"));
         }
     }
 
