@@ -22,7 +22,7 @@ global $APPLICATION;
         <table class="adm-detail-content-table">
             <tbody>
             <tr>
-                <td width="40%"><?= Loc::getMessage('WEATHER_API_KEY_LABEL') ?>:</td>
+                <td><?= Loc::getMessage('WEATHER_API_KEY_LABEL') ?>:</td>
                 <td>
                     <label>
                         <input type="text"
